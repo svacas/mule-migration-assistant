@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by julianpascual on 10/24/16.
- */
 public class AddAttributeTest {
     private AddAttribute attributeStep;
 

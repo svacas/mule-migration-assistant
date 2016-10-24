@@ -5,9 +5,6 @@ import org.jdom2.Element;
 
 import java.util.List;
 
-/**
- * Created by julianpascual on 10/24/16.
- */
 public abstract class MigrationStep implements IMigrationStep {
 
     private List<Element> nodes;

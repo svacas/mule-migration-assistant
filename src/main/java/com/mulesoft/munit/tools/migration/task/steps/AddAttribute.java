@@ -3,9 +3,6 @@ package com.mulesoft.munit.tools.migration.task.steps;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
-/**
- * Created by julianpascual on 10/24/16.
- */
 public class AddAttribute extends MigrationStep {
 
     private String attributeName;

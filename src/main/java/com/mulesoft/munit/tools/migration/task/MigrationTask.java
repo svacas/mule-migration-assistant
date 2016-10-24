@@ -10,7 +10,6 @@ import org.jdom2.xpath.XPathFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MigrationTask {
 
     private String xpathSelector;

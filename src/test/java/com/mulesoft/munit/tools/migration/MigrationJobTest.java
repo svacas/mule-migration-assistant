@@ -5,9 +5,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by julianpascual on 10/24/16.
- */
 public class MigrationJobTest {
     private MigrationJob migrationJob;
 

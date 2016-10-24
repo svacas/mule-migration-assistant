@@ -1,9 +1,5 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-
 public interface IMigrationStep {
 
     /**
