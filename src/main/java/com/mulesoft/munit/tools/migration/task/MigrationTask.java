@@ -14,7 +14,7 @@ import java.util.List;
 public class MigrationTask {
 
     private String xpathSelector;
-    private ArrayList<MigrationStep> steps;
+    private ArrayList<MigrationStep> steps = new ArrayList<MigrationStep>();
     private Document doc;
     private List<Element> nodes;
 
@@ -22,16 +22,18 @@ public class MigrationTask {
         this.doc = document;
     }
 
-    public MigrationTask(String xpathSelector, ArrayList<MigrationStep> steps) {
+    public MigrationTask(String xpathSelector) {
         this.xpathSelector = xpathSelector;
-        this.steps = steps;
-        this.nodes = getNodesFromXPath(xpathSelector);
+    }
+
+    public void addStep(MigrationStep step) {
+        this.steps.add(step);
     }
 
     public void execute() throws Exception {
         for (MigrationStep step : steps) {
-            step.setDocument(doc);
-            step.setNodes(nodes);
+            step.setDocument(this.doc);
+            step.setNodes(getNodesFromXPath(this.xpathSelector));
             step.execute();
         }
     }
