@@ -14,7 +14,7 @@ public class AddAttribute extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        for (Element node : getNodes()) {
+        for (Element node : this.getNodes()) {
             Attribute att = new Attribute(attributeName, attributeValue);
             node.setAttribute(att);
         }

@@ -14,6 +14,9 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
     public void execute() throws Exception {
         for (Element node : getNodes()) {
             Attribute att = node.getAttribute(attribute);
+            if (att != null) {
+                
+            }
             //TODO extraxt attribute and create subchild node with it
         }
     }

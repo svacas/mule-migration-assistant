@@ -14,13 +14,15 @@ public class ReplaceNodesQName extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        Namespace namespace = getDocument().getRootElement().getNamespace(newNamespace);
-        if (namespace == null) {
-            throw new Exception("Namespace not found on schema definition.");
-        }
-        for (Element node : getNodes()) {
-            node.setNamespace(namespace);
-            node.setName(namespaceName);
+        if (getDocument() != null) {
+            Namespace namespace = getDocument().getRootElement().getNamespace(newNamespace);
+            if (namespace != null) {
+                for (Element node : getNodes()) {
+                    node.setNamespace(namespace);
+                    node.setName(namespaceName);
+                }
+            }
         }
     }
+
 }

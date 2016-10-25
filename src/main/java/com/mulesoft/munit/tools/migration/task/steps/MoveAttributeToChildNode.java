@@ -14,7 +14,9 @@ public class MoveAttributeToChildNode extends MigrationStep {
     public void execute() throws Exception {
         for (Element node : getNodes()) {
             Attribute att = node.getAttribute(attribute);
+            if (att != null) {
 
+            }
             //TODO extract attribut and move it to a different node
         }
     }
