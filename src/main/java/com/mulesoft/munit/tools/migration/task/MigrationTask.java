@@ -29,9 +29,10 @@ public class MigrationTask {
     }
 
     public void execute() throws Exception {
+        nodes = getNodesFromXPath(this.xpathSelector);
         for (MigrationStep step : steps) {
             step.setDocument(this.doc);
-            step.setNodes(getNodesFromXPath(this.xpathSelector));
+            step.setNodes(nodes);
             step.execute();
         }
     }

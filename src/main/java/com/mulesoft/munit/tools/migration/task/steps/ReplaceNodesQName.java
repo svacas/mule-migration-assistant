@@ -5,21 +5,21 @@ import org.jdom2.Namespace;
 
 public class ReplaceNodesQName extends MigrationStep {
 
-    private String newNamespace;
-    private String namespaceName;
+    private String nodeNamespace;
+    private String newNodeName;
 
-    public ReplaceNodesQName(String newNamespace, String namespaceName) {
-        this.newNamespace = newNamespace;
-        this.namespaceName = namespaceName;
+    public ReplaceNodesQName(String nodeNamespace, String newNodeName) {
+        this.nodeNamespace = nodeNamespace;
+        this.newNodeName = newNodeName;
     }
 
     public void execute() throws Exception {
         if (getDocument() != null) {
-            Namespace namespace = getDocument().getRootElement().getNamespace(newNamespace);
+            Namespace namespace = getDocument().getRootElement().getNamespace(nodeNamespace);
             if (namespace != null) {
                 for (Element node : getNodes()) {
                     node.setNamespace(namespace);
-                    node.setName(namespaceName);
+                    node.setName(newNodeName);
                 }
             }
         }
