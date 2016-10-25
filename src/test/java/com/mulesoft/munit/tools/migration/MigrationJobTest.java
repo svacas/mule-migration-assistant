@@ -55,4 +55,24 @@ public class MigrationJobTest {
 
     }
 
+    @Test
+    public void checkMoveSetMessagePayloadExecution() throws Exception {
+
+        MigrationTask task = new MigrationTask("//munit:test/munit:set");
+        MigrationStep step;
+
+        step = new CreateChildNodeFromAttribute("payload");
+        task.addStep(step);
+
+        step = new MoveAttributeToChildNode("encoding", "payload");
+        task.addStep(step);
+
+        step = new MoveAttributeToChildNode("mimeType", "payload");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+        migrationJob.execute();
+
+    }
+
 }

@@ -15,9 +15,13 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
         for (Element node : getNodes()) {
             Attribute att = node.getAttribute(attribute);
             if (att != null) {
-                
+                Element child = new Element(attribute);
+                child.setNamespace(node.getNamespace());
+                Attribute newAtt = new Attribute("value", att.getValue());
+                child.setAttribute(newAtt);
+                node.addContent(child);
+                node.removeAttribute(att);
             }
-            //TODO extraxt attribute and create subchild node with it
         }
     }
 }

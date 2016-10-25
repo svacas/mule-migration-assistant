@@ -12,3 +12,4 @@
 .settings
 *.DS_Store
 */*/.DS_Store
+testout.xml

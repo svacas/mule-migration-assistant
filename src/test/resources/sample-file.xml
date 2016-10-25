@@ -5,6 +5,7 @@
     <spring:import resource="classpath:encoding.xml" />
   </spring:beans>
   <munit:test name="MockXMLPayload" description="MyNewDescription3">
+    <munit:set payload="#[lalala]" doc:name="Set Message" encoding="Shift_JIS" mimeType="text/xml" />
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
