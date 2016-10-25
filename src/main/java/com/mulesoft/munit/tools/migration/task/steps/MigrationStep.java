@@ -5,7 +5,7 @@ import org.jdom2.Element;
 
 import java.util.List;
 
-public abstract class MigrationStep implements IMigrationStep {
+public abstract class MigrationStep {
 
     private List<Element> nodes;
     private Document document;
@@ -27,4 +27,5 @@ public abstract class MigrationStep implements IMigrationStep {
         return this.document;
     }
 
+    public abstract void execute() throws Exception;
 }
