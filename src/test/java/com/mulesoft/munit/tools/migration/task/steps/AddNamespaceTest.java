@@ -16,7 +16,7 @@ public class AddNamespaceTest {
         addNamespaceStep = new AddNamespace("lala","http://local","http://lala.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
-        assertTrue(addNamespaceStep.getDocument().getRootElement().getAdditionalNamespaces().size() == 9);
+        assertTrue(addNamespaceStep.getDocument().getRootElement().getAdditionalNamespaces().size() == 8);
     }
 
     @Test

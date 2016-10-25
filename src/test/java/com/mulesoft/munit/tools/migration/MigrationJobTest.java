@@ -1,5 +1,7 @@
 package com.mulesoft.munit.tools.migration;
 
+import com.mulesoft.munit.tools.migration.task.MigrationTask;
+import com.mulesoft.munit.tools.migration.task.steps.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +19,40 @@ public class MigrationJobTest {
     public void testExecuteEmptySteps() throws Exception {
         migrationJob.execute();
         assertNotNull(migrationJob);
+    }
+
+
+    @Test
+    public void checkStepExecution() throws Exception {
+
+        MigrationTask task = new MigrationTask("//munit:test");
+        MigrationStep step;
+
+        step = new AddAttribute("description", "MyNewDescription2");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+        migrationJob.execute();
+
+    }
+
+    @Test
+    public void checkMultipleStepExecution() throws Exception {
+
+        MigrationTask task = new MigrationTask("//munit:test");
+        MigrationStep step;
+
+        step = new AddAttribute("description", "MyNewDescription4");
+
+        task.addStep(step);
+
+        step = new AddAttribute("enable", "false");
+
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+        migrationJob.execute();
+
     }
 
 }

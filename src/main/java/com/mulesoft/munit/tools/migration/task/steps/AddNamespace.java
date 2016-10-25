@@ -22,7 +22,14 @@ public class AddNamespace extends MigrationStep {
             Element mule = getDocument().getRootElement();
             mule.addNamespaceDeclaration(nspc);
             Attribute muleSchemaLocation = mule.getAttributes().get(0);
-            muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
+            if (schemaLocationNotDefined()) {
+                muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
+            }
         }
+    }
+
+    private boolean schemaLocationNotDefined() {
+        return true;
+        //TODO define check
     }
 }

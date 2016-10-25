@@ -7,8 +7,7 @@ import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MigrationTask {
 
@@ -38,8 +37,12 @@ public class MigrationTask {
     }
 
     private List<Element> getNodesFromXPath(String XpathExpression) {
-        XPathExpression<Element> xpath = XPathFactory.instance().compile(XpathExpression, Filters.element(), null, doc.getRootElement().getAdditionalNamespaces());
-        List<Element> nodes = xpath.evaluate(doc);
-        return nodes;
+        if (XpathExpression != null) {
+            XPathExpression<Element> xpath = XPathFactory.instance().compile(XpathExpression, Filters.element(), null, doc.getRootElement().getAdditionalNamespaces());
+            List<Element> nodes = xpath.evaluate(doc);
+            return nodes;
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
