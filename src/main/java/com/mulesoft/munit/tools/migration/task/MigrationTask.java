@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task;
 
+import com.google.common.base.Strings;
 import com.mulesoft.munit.tools.migration.task.steps.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -7,7 +8,9 @@ import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MigrationTask {
 
@@ -25,7 +28,9 @@ public class MigrationTask {
     }
 
     public void addStep(MigrationStep step) {
-        this.steps.add(step);
+        if(step != null) {
+            this.steps.add(step);
+        }
     }
 
     public void execute() throws Exception {
@@ -38,7 +43,7 @@ public class MigrationTask {
     }
 
     private List<Element> getNodesFromXPath(String XpathExpression) {
-        if (XpathExpression != null) {
+        if (!Strings.isNullOrEmpty(XpathExpression) && doc != null) {
             XPathExpression<Element> xpath = XPathFactory.instance().compile(XpathExpression, Filters.element(), null, doc.getRootElement().getAdditionalNamespaces());
             List<Element> nodes = xpath.evaluate(doc);
             return nodes;

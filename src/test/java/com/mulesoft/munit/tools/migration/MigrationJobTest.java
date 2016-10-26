@@ -2,9 +2,14 @@ package com.mulesoft.munit.tools.migration;
 
 import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import com.mulesoft.munit.tools.migration.task.steps.*;
+import org.jdom2.Element;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getElementsFromDocument;
 import static org.junit.Assert.*;
 
 public class MigrationJobTest {
@@ -53,6 +58,8 @@ public class MigrationJobTest {
         migrationJob.addTask(task);
         migrationJob.execute();
 
+        List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test");
+        assertEquals(34, nodesModified.size());
     }
 
     @Test
@@ -76,6 +83,8 @@ public class MigrationJobTest {
         migrationJob.addTask(task);
         migrationJob.execute();
 
+        List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test/munit:set-event");
+        assertEquals(3, nodesModified.size());
     }
 
 }

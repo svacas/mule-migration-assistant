@@ -3,14 +3,14 @@ package com.mulesoft.munit.tools.migration.task.steps;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
-import org.jdom2.input.SAXBuilder;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.List;
 
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getElementsFromDocument;
 import static org.junit.Assert.*;
 
 public class ReplaceNodesNameTest {
@@ -37,11 +37,8 @@ public class ReplaceNodesNameTest {
 
 
     private void InitializeNodesForTest(String Xpath) throws Exception{
-        SAXBuilder saxBuilder = new SAXBuilder();
-        File file = new File("src/test/resources/sample-file.xml");
-        Document document = saxBuilder.build(file);
-        XPathExpression<Element> xpath = XPathFactory.instance().compile(Xpath, Filters.element(), null, document.getRootElement().getAdditionalNamespaces());
-        List<Element> nodes = xpath.evaluate(document);
+        Document document = getDocument("src/test/resources/sample-file.xml");
+        List<Element> nodes = getElementsFromDocument(document, Xpath);
         replaceQName.setDocument(document);
         replaceQName.setNodes(nodes);
     }
