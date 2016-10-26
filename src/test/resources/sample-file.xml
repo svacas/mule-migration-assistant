@@ -17,6 +17,7 @@
     <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />
   </munit:test>
   <munit:test name="MockXMLPayload-WithProperties" description="MyNewDescription3">
+    <munit:set payload="#[lalala]" doc:name="Set Message" mimeType="text/xml" />
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
@@ -38,6 +39,7 @@
       </mock:with-attributes>
       <mock:then-return payload="#[samePayload()]" />
     </mock:when>
+    <munit:set payload="#[lalala]" doc:name="Set Message" />
     <flow-ref name="setXMLMimeType" doc:name="setXMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]  &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
     <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />

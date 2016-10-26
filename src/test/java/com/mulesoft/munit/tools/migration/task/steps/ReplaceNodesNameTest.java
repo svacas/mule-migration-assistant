@@ -13,12 +13,12 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class ReplaceNodesQNameTest {
-    private ReplaceNodesQName replaceQName;
+public class ReplaceNodesNameTest {
+    private ReplaceNodesName replaceQName;
 
     @Test
     public void replaceQNameTestNodes() throws Exception {
-        replaceQName = new ReplaceNodesQName("munit", "test2");
+        replaceQName = new ReplaceNodesName("munit", "test2");
         InitializeNodesForTest("//munit:test");
         replaceQName.execute();
         String newName = replaceQName.getNodes().get(0).getName();
@@ -27,7 +27,7 @@ public class ReplaceNodesQNameTest {
 
     @Test
     public void replaceQNameSubChildNodes() throws Exception {
-        replaceQName = new ReplaceNodesQName("mock", "mock");
+        replaceQName = new ReplaceNodesName("mock", "mock");
         InitializeNodesForTest("//mock:when");
         replaceQName.execute();
         String newName = replaceQName.getNodes().get(0).getName();

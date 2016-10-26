@@ -27,6 +27,14 @@ public class AddNamespaceTest {
         assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("lala.xsd"));
     }
 
+    @Test
+    public void addDuplicateNamespace() throws Exception {
+        addNamespaceStep = new AddNamespace("munit","http://www.mulesoft.org/schema/mule/munit","http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd");
+        InitializeDocForTest();
+        addNamespaceStep.execute();
+        assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("munit.xsd"));
+    }
+
     private void InitializeDocForTest() throws Exception{
         SAXBuilder saxBuilder = new SAXBuilder();
         File file = new File("src/test/resources/sample-file.xml");

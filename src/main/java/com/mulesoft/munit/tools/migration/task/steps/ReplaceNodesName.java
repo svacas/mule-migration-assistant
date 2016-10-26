@@ -3,12 +3,12 @@ package com.mulesoft.munit.tools.migration.task.steps;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
-public class ReplaceNodesQName extends MigrationStep {
+public class ReplaceNodesName extends MigrationStep {
 
     private String nodeNamespace;
     private String newNodeName;
 
-    public ReplaceNodesQName(String nodeNamespace, String newNodeName) {
+    public ReplaceNodesName(String nodeNamespace, String newNodeName) {
         this.nodeNamespace = nodeNamespace;
         this.newNodeName = newNodeName;
     }

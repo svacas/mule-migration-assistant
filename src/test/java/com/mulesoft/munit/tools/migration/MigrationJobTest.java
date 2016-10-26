@@ -61,7 +61,7 @@ public class MigrationJobTest {
         MigrationTask task = new MigrationTask("//munit:test/munit:set");
         MigrationStep step;
 
-        step = new ReplaceNodesQName("munit", "set-event");
+        step = new ReplaceNodesName("munit", "set-event");
         task.addStep(step);
 
         step = new CreateChildNodeFromAttribute("payload");
