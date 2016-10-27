@@ -2,9 +2,6 @@ package com.mulesoft.munit.tools.migration.task.steps;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.filter.Filters;
-import org.jdom2.xpath.XPathExpression;
-import org.jdom2.xpath.XPathFactory;
 import org.junit.Test;
 
 import java.util.List;

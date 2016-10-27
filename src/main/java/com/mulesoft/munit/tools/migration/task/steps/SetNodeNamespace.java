@@ -5,13 +5,13 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.w3c.dom.Attr;
 
-public class AddNamespace extends MigrationStep {
+public class SetNodeNamespace extends MigrationStep {
 
     private String newNamespace;
     private String newNameSpaceUri;
     private String schemaLocationUrl;
 
-    public AddNamespace(String newNamespace, String newNameSpaceUri, String schemaLocationUrl) {
+    public SetNodeNamespace(String newNamespace, String newNameSpaceUri, String schemaLocationUrl) {
         this.newNamespace = newNamespace;
         this.newNameSpaceUri = newNameSpaceUri;
         this.schemaLocationUrl = schemaLocationUrl;
@@ -25,6 +25,9 @@ public class AddNamespace extends MigrationStep {
             Attribute muleSchemaLocation = muleNode.getAttributes().get(0);
             if (schemaLocationNotDefined(muleNode)) {
                 muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
+            }
+            for (Element node : this.getNodes()) {
+                node.setNamespace(nspc);
             }
         }
     }

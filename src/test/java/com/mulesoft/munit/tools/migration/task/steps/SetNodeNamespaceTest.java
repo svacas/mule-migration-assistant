@@ -8,12 +8,12 @@ import java.io.File;
 
 import static org.junit.Assert.*;
 
-public class AddNamespaceTest {
-    private AddNamespace addNamespaceStep;
+public class SetNodeNamespaceTest {
+    private SetNodeNamespace addNamespaceStep;
 
     @Test
     public void addNamespace() throws Exception {
-        addNamespaceStep = new AddNamespace("lala","http://local","http://lala.xsd");
+        addNamespaceStep = new SetNodeNamespace("lala","http://local","http://lala.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
         assertTrue(addNamespaceStep.getDocument().getRootElement().getAdditionalNamespaces().size() == 8);
@@ -21,7 +21,7 @@ public class AddNamespaceTest {
 
     @Test
     public void addNamespaceCheckSchemaLocationIsAdded() throws Exception {
-        addNamespaceStep = new AddNamespace("lala","http://local","http://lala.xsd");
+        addNamespaceStep = new SetNodeNamespace("lala","http://local","http://lala.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
         assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("lala.xsd"));
@@ -29,7 +29,7 @@ public class AddNamespaceTest {
 
     @Test
     public void addDuplicateNamespace() throws Exception {
-        addNamespaceStep = new AddNamespace("munit","http://www.mulesoft.org/schema/mule/munit","http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd");
+        addNamespaceStep = new SetNodeNamespace("munit","http://www.mulesoft.org/schema/mule/munit","http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
         assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("munit.xsd"));

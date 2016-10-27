@@ -10,9 +10,6 @@ import java.util.List;
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
 import static org.junit.Assert.*;
 
-/**
- * Created by julianpascual on 10/26/16.
- */
 public class MigrationTaskTest {
     private MigrationTask migrationTask;
 

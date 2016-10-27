@@ -10,9 +10,6 @@ import org.jdom2.xpath.XPathFactory;
 import java.io.File;
 import java.util.List;
 
-/**
- * Created by julianpascual on 10/26/16.
- */
 public class DocumentHelpers {
 
     public static Document getDocument(String path) throws Exception {

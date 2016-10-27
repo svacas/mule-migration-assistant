@@ -38,7 +38,6 @@ public class MigrationJobTest {
 
         migrationJob.addTask(task);
         migrationJob.execute();
-
     }
 
     @Test
@@ -77,14 +76,125 @@ public class MigrationJobTest {
         step = new MoveAttributeToChildNode("encoding", "payload");
         task.addStep(step);
 
-        step = new MoveAttributeToChildNode("mimeType", "payload");
+        step = new UpdateAttribute("mimeType", "mediaType");
+        task.addStep(step);
+
+        step = new MoveAttributeToChildNode("mediaType", "payload");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+
+        task = new MigrationTask("//munit:test/munit:set-event/munit:invocation-properties");
+
+        step = new ReplaceNodesName("munit", "variables");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+
+        task = new MigrationTask("//munit:test/munit:set-event/munit:variables/munit:invocation-property");
+
+        step = new ReplaceNodesName("munit", "variable");
         task.addStep(step);
 
         migrationJob.addTask(task);
         migrationJob.execute();
 
         List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test/munit:set-event");
-        assertEquals(3, nodesModified.size());
+        assertEquals(4, nodesModified.size());
     }
 
+
+    @Test
+    public void changeAssertDSL() throws Exception {
+        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
+
+        SetTasksForAssertsNodes();
+
+        migrationJob.execute();
+    }
+
+    private void SetTasksForAssertsNodes() {
+
+        MigrationTask assertTask;
+        MigrationStep step;
+
+        assertTask  = new MigrationTask("//munit:test/*[contains(local-name(),'assert') or contains(local-name(),'fail') or contains(local-name(),'run-custom')]");
+        step = new SetNodeNamespace("assert", "http://www.mulesoft.org/schema/mule/assert", "http://www.mulesoft.org/schema/mule/munit/current/mule-assert.xsd");
+        assertTask.addStep(step);
+
+        step = new RemoveAssertFromNodeName();
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'payload-equals')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new AddAttribute("expression", "#[payload]");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("expectedValue", "is");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'not-null')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new AddAttribute("expression", "#[payload]");
+        assertTask.addStep(step);
+        step = new AddAttribute("is", "#[not(nullValue())]");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'null')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new AddAttribute("expression", "#[payload]");
+        assertTask.addStep(step);
+        step = new AddAttribute("is", "#[nullValue()]");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'false')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("condition", "expression");
+        assertTask.addStep(step);
+        step = new AddAttribute("is", "#[false]");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'true')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("condition", "expression");
+        assertTask.addStep(step);
+        step = new AddAttribute("is", "#[true]");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'on-equals')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("expectedValue", "expression");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("actualValue", "is");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'on-equals')]");
+        step = new ReplaceNodesName("assert", "that");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("expectedValue", "expression");
+        assertTask.addStep(step);
+        step = new UpdateAttributeName("actualValue", "is");
+        assertTask.addStep(step);
+
+        migrationJob.addTask(assertTask);
+    }
 }
