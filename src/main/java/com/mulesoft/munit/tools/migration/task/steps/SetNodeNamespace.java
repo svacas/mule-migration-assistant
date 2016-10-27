@@ -26,8 +26,10 @@ public class SetNodeNamespace extends MigrationStep {
             if (schemaLocationNotDefined(muleNode)) {
                 muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
             }
-            for (Element node : this.getNodes()) {
-                node.setNamespace(nspc);
+            if (this.getNodes() != null) {
+                for (Element node : this.getNodes()) {
+                    node.setNamespace(nspc);
+                }
             }
         }
     }

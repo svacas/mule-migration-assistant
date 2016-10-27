@@ -64,39 +64,10 @@ public class MigrationJobTest {
     @Test
     public void checkMoveSetMessagePayloadExecution() throws Exception {
 
-        MigrationTask task = new MigrationTask("//munit:test/munit:set");
-        MigrationStep step;
+        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
 
-        step = new ReplaceNodesName("munit", "set-event");
-        task.addStep(step);
+        SetTasksForSetMessageNodesMigration();
 
-        step = new CreateChildNodeFromAttribute("payload");
-        task.addStep(step);
-
-        step = new MoveAttributeToChildNode("encoding", "payload");
-        task.addStep(step);
-
-        step = new UpdateAttribute("mimeType", "mediaType");
-        task.addStep(step);
-
-        step = new MoveAttributeToChildNode("mediaType", "payload");
-        task.addStep(step);
-
-        migrationJob.addTask(task);
-
-        task = new MigrationTask("//munit:test/munit:set-event/munit:invocation-properties");
-
-        step = new ReplaceNodesName("munit", "variables");
-        task.addStep(step);
-
-        migrationJob.addTask(task);
-
-        task = new MigrationTask("//munit:test/munit:set-event/munit:variables/munit:invocation-property");
-
-        step = new ReplaceNodesName("munit", "variable");
-        task.addStep(step);
-
-        migrationJob.addTask(task);
         migrationJob.execute();
 
         List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test/munit:set-event");
@@ -108,12 +79,12 @@ public class MigrationJobTest {
     public void changeAssertDSL() throws Exception {
         migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
 
-        SetTasksForAssertsNodes();
+        SetTasksForAssertsNodesMigration();
 
         migrationJob.execute();
     }
 
-    private void SetTasksForAssertsNodes() {
+    private void SetTasksForAssertsNodesMigration() {
 
         MigrationTask assertTask;
         MigrationStep step;
@@ -198,5 +169,40 @@ public class MigrationJobTest {
         assertTask.addStep(step);
 
         migrationJob.addTask(assertTask);
+    }
+
+    private void SetTasksForSetMessageNodesMigration() {
+
+        MigrationTask task = new MigrationTask("//munit:test/munit:set");
+        MigrationStep step;
+
+        step = new ReplaceNodesName("munit", "set-event");
+        task.addStep(step);
+        step = new CreateChildNodeFromAttribute("payload");
+        task.addStep(step);
+        step = new MoveAttributeToChildNode("encoding", "payload");
+        task.addStep(step);
+        step = new MoveAttributeToChildNode("mimeType", "payload");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+
+        task = new MigrationTask("/descendant::*[attribute::mimeType]");
+        step = new UpdateAttributeName("mimeType", "mediaType");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+
+        task = new MigrationTask("//munit:test/munit:set-event/munit:invocation-properties");
+        step = new ReplaceNodesName("munit", "variables");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
+
+        task = new MigrationTask("//munit:test/munit:set-event/munit:variables/munit:invocation-property");
+        step = new ReplaceNodesName("munit", "variable");
+        task.addStep(step);
+
+        migrationJob.addTask(task);
     }
 }

@@ -22,4 +22,41 @@
         <munit:assert-true condition="#[]" doc:name="Assert True"/>
         <munit:run-custom assertion-ref="" doc:name="Custom Assertion"/>
     </munit:test>
+
+    <munit:test name="MockJsonPayload" description="MyNewDescription3">
+        <munit:set payload="a simple payload" encoding="UTF-8" mimeType="text/plain">
+            <munit:inbound-properties>
+                <munit:inbound-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain"/>
+            </munit:inbound-properties>
+            <munit:session-properties>
+                <munit:session-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain"/>
+            </munit:session-properties>
+            <munit:outbound-properties>
+                <munit:outbound-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain"/>
+            </munit:outbound-properties>
+        </munit:set>
+    </munit:test>
+
+    <munit:test name="MockJsonPayload" description="MyNewDescription3">
+        <munit:set payload="a simple payload" encoding="UTF-8" mimeType="text/plain">
+            <munit:invocation-properties>
+                <munit:invocation-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain"/>
+            </munit:invocation-properties>
+            <munit:inbound-properties>
+                <munit:inbound-property key="prop_key" value="prop_value" encoding="UTF-8" />
+            </munit:inbound-properties>
+            <munit:session-properties>
+                <munit:session-property key="prop_key" value="prop_value" mimeType="text/plain"/>
+            </munit:session-properties>
+        </munit:set>
+    </munit:test>
+
+    <munit:test name="MockJsonPayload" description="MyNewDescription3">
+        <munit:set payload="a simple payload" encoding="UTF-8" mimeType="text/plain">
+        </munit:set>
+    </munit:test>
+
+    <munit:test name="MockJsonPayload" description="MyNewDescription3">
+        <munit:set payload="a simple payload" encoding="UTF-8" />
+    </munit:test>
 </mule>
