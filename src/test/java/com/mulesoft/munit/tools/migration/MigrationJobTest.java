@@ -180,19 +180,21 @@ public class MigrationJobTest {
         assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'on-equals')]");
         step = new ReplaceNodesName("assert", "that");
         assertTask.addStep(step);
-        step = new UpdateAttributeName("expectedValue", "expression");
+        step = new UpdateAttributeName("expectedValue", "is");
         assertTask.addStep(step);
-        step = new UpdateAttributeName("actualValue", "is");
+        step = new UpdateAttributeName("actualValue", "expression");
         assertTask.addStep(step);
 
         migrationJob.addTask(assertTask);
 
-        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'on-equals')]");
+        assertTask = new MigrationTask("//munit:test/*[contains(local-name(),'not-same')]");
         step = new ReplaceNodesName("assert", "that");
         assertTask.addStep(step);
-        step = new UpdateAttributeName("expectedValue", "expression");
+        step = new UpdateAttributeName("expectedValue", "is");
         assertTask.addStep(step);
-        step = new UpdateAttributeName("actualValue", "is");
+        step = new UpdateAttributeName("actualValue", "expression");
+        assertTask.addStep(step);
+        step= new NegateAttributeValue("is");
         assertTask.addStep(step);
 
         migrationJob.addTask(assertTask);
