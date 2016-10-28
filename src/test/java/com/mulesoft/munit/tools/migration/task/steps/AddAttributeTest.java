@@ -1,10 +1,12 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.InitializeNodesForTest;
 import static org.junit.Assert.assertTrue;
 
 public class AddAttributeTest {
@@ -13,7 +15,7 @@ public class AddAttributeTest {
     @Test
     public void addAtributeOnNode() throws Exception {
         attributeStep = new AddAttribute("pepe", "lala");
-        InitializeNodesForTest();
+        InitializeNodesForTest(attributeStep);
         attributeStep.execute();
         assertTrue(attributeStep.getNodes().get(0).hasAttributes() == true );
     }
@@ -21,7 +23,7 @@ public class AddAttributeTest {
     @Test
     public void addAtributeOnNodeComplexValue() throws Exception {
         attributeStep = new AddAttribute("pepe", "#[payload().asString()]");
-        InitializeNodesForTest();
+        InitializeNodesForTest(attributeStep);
         attributeStep.execute();
         assertTrue(attributeStep.getNodes().get(0).hasAttributes() == true );
     }
@@ -29,18 +31,25 @@ public class AddAttributeTest {
     @Test
     public void addAtributeOnNodeAlreadyExistsOverwrites() throws Exception {
         attributeStep = new AddAttribute("pepe", "lala");
-        InitializeNodesForTest();
+        InitializeNodesForTest(attributeStep);
         attributeStep.execute();
         attributeStep.execute();
-        assertTrue(attributeStep.getNodes().get(0).getAttributes().size() == 1 );
+        assertTrue(attributeStep.getNodes().get(0).hasAttributes() == true );
     }
 
+    @Test(expected = MigrationStepException.class)
+    public void addNullAttribute() throws Exception {
+        attributeStep = new AddAttribute(null, "lala");
+        InitializeNodesForTest(attributeStep);
+        attributeStep.execute();
+    }
 
-    private void InitializeNodesForTest() {
-        ArrayList<Element> nodes = new ArrayList<Element>();
-        Element node = new Element("munitNode");
-        nodes.add(node);
-        attributeStep.setNodes(nodes);
+    @Test
+    public void addEmptyAttribute() throws Exception {
+        attributeStep = new AddAttribute("ignore", "");
+        InitializeNodesForTest(attributeStep);
+        attributeStep.execute();
+        assertTrue(attributeStep.getNodes().get(0).hasAttributes() == true );
     }
 
 }

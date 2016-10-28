@@ -103,7 +103,7 @@ public class MigrationJobTest {
         step = new SetNodeNamespace("assert", "http://www.mulesoft.org/schema/mule/assert", "http://www.mulesoft.org/schema/mule/munit/current/mule-assert.xsd");
         assertTask.addStep(step);
 
-        step = new RemoveAssertFromNodeName();
+        step = new ReplaceStringOnNodeName("assert-", "");
         assertTask.addStep(step);
 
         migrationJob.addTask(assertTask);

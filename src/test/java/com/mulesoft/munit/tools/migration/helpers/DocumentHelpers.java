@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.helpers;
 
+import com.mulesoft.munit.tools.migration.task.steps.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
@@ -8,6 +9,7 @@ import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentHelpers {
@@ -23,6 +25,13 @@ public class DocumentHelpers {
         XPathExpression<Element> xpath = XPathFactory.instance().compile(xPathExpression, Filters.element(), null, doc.getRootElement().getAdditionalNamespaces());
         List<Element> nodes = xpath.evaluate(doc);
         return nodes;
+    }
+
+    public static void InitializeNodesForTest(MigrationStep step) {
+        ArrayList<Element> nodes = new ArrayList<Element>();
+        Element node = new Element("munitNode");
+        nodes.add(node);
+        step.setNodes(nodes);
     }
 
 }

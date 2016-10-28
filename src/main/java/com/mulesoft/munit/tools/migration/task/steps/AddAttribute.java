@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -14,9 +15,13 @@ public class AddAttribute extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        for (Element node : this.getNodes()) {
-            Attribute att = new Attribute(attributeName, attributeValue);
-            node.setAttribute(att);
+        try {
+            for (Element node : this.getNodes()) {
+                Attribute att = new Attribute(attributeName, attributeValue);
+                node.setAttribute(att);
+            }
+        } catch (Exception ex) {
+            throw new MigrationStepException(ex.getMessage());
         }
     }
 }

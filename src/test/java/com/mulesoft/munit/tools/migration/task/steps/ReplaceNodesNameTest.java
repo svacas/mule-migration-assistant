@@ -31,7 +31,19 @@ public class ReplaceNodesNameTest {
         assertEquals("mock", newName);
     }
 
+    @Test
+    public void replaceQNameNotFoundNameSpace() throws Exception {
+        replaceQName = new ReplaceNodesName("lalero", "mock");
+        InitializeNodesForTest("//mock:when");
+        replaceQName.execute();
+    }
 
+    @Test
+    public void replaceQNameEmptyNodes() throws Exception {
+        replaceQName = new ReplaceNodesName("mock", "mock");
+        InitializeNodesForTest("//mock:when2423");
+        replaceQName.execute();
+    }
 
     private void InitializeNodesForTest(String Xpath) throws Exception{
         Document document = getDocument("src/test/resources/sample-file.xml");
@@ -39,7 +51,5 @@ public class ReplaceNodesNameTest {
         replaceQName.setDocument(document);
         replaceQName.setNodes(nodes);
     }
-
-
 
 }

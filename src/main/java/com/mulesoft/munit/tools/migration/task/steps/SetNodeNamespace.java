@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
@@ -18,19 +19,23 @@ public class SetNodeNamespace extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        Namespace nspc = Namespace.getNamespace(newNamespace , newNameSpaceUri);
-        if (nspc != null && getDocument() != null) {
-            Element muleNode = getDocument().getRootElement();
-            muleNode.addNamespaceDeclaration(nspc);
-            Attribute muleSchemaLocation = muleNode.getAttributes().get(0);
-            if (schemaLocationNotDefined(muleNode)) {
-                muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
-            }
-            if (this.getNodes() != null) {
-                for (Element node : this.getNodes()) {
-                    node.setNamespace(nspc);
+        try {
+            Namespace nspc = Namespace.getNamespace(newNamespace, newNameSpaceUri);
+            if (nspc != null && getDocument() != null) {
+                Element muleNode = getDocument().getRootElement();
+                muleNode.addNamespaceDeclaration(nspc);
+                Attribute muleSchemaLocation = muleNode.getAttributes().get(0);
+                if (schemaLocationNotDefined(muleNode)) {
+                    muleSchemaLocation.setValue(muleSchemaLocation.getValue() + " " + newNameSpaceUri + " " + schemaLocationUrl + " ");
+                }
+                if (this.getNodes() != null) {
+                    for (Element node : this.getNodes()) {
+                        node.setNamespace(nspc);
+                    }
                 }
             }
+        } catch (Exception ex) {
+            throw new MigrationStepException(ex.getMessage());
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
 import org.junit.Test;
@@ -33,6 +34,27 @@ public class SetNodeNamespaceTest {
         InitializeDocForTest();
         addNamespaceStep.execute();
         assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("munit.xsd"));
+    }
+
+    @Test
+    public void addNameSpaceEmptySchemaUrl() throws Exception {
+        addNamespaceStep = new SetNodeNamespace("test", "htp://localhost", null);
+        InitializeDocForTest();
+        addNamespaceStep.execute();
+    }
+
+    @Test (expected = MigrationStepException.class)
+    public void addNameSpaceEmptyUrl() throws Exception {
+        addNamespaceStep = new SetNodeNamespace("test", null, "http://localhost/m.xsd");
+        InitializeDocForTest();
+        addNamespaceStep.execute();
+    }
+
+    @Test
+    public void addNameSpaceEmptyNamespace() throws Exception {
+        addNamespaceStep = new SetNodeNamespace("test", "htp://localhost", "http://localhost/m.xsd");
+        InitializeDocForTest();
+        addNamespaceStep.execute();
     }
 
     private void InitializeDocForTest() throws Exception{
