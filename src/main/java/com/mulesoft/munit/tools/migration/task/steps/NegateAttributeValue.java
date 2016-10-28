@@ -6,9 +6,6 @@ import org.jdom2.Element;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by julianpascual on 10/27/16.
- */
 public class NegateAttributeValue extends MigrationStep {
 
     private String attrbuteName;

@@ -84,6 +84,16 @@ public class MigrationJobTest {
         migrationJob.execute();
     }
 
+    @Test
+    public void executeMultipleTasks() throws Exception {
+        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
+
+        SetTasksForAssertsNodesMigration();
+        SetTasksForSetMessageNodesMigration();
+
+        migrationJob.execute();
+    }
+
     private void SetTasksForAssertsNodesMigration() {
 
         MigrationTask assertTask;
