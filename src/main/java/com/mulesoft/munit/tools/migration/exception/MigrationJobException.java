@@ -1,6 +1,6 @@
 package com.mulesoft.munit.tools.migration.exception;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 
 public class MigrationJobException extends Exception {
 
