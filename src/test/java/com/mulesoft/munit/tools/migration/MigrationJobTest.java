@@ -6,6 +6,8 @@ import org.jdom2.Element;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
@@ -17,7 +19,8 @@ public class MigrationJobTest {
 
     @Before
     public void setUp() throws Exception {
-        migrationJob = new MigrationJob("src/test/resources/sample-file.xml");
+        migrationJob = new MigrationJob();
+        migrationJob.setDocument("src/test/resources/sample-file.xml");
     }
 
     @Test
@@ -64,7 +67,8 @@ public class MigrationJobTest {
     @Test
     public void checkMoveSetMessagePayloadExecution() throws Exception {
 
-        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
+        migrationJob = new MigrationJob();
+        migrationJob.setDocument("src/test/resources/set-payload.xml");
 
         SetTasksForSetMessageNodesMigration();
 
@@ -77,7 +81,8 @@ public class MigrationJobTest {
 
     @Test
     public void changeAssertDSL() throws Exception {
-        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
+        migrationJob = new MigrationJob();
+        migrationJob.setDocument("src/test/resources/set-payload.xml");
 
         SetTasksForAssertsNodesMigration();
 
@@ -86,12 +91,29 @@ public class MigrationJobTest {
 
     @Test
     public void executeMultipleTasks() throws Exception {
-        migrationJob = new MigrationJob("src/test/resources/set-payload.xml");
+        migrationJob = new MigrationJob();
+        migrationJob.setDocument("src/test/resources/set-payload.xml");
 
         SetTasksForAssertsNodesMigration();
         SetTasksForSetMessageNodesMigration();
 
         migrationJob.execute();
+    }
+
+    @Test
+    public void migrateMultipleFiles() throws Exception {
+
+        List<String> files = Arrays.asList("src/test/resources/set-payload.xml","src/test/resources/sample-file.xml");
+
+        SetTasksForAssertsNodesMigration();
+        SetTasksForSetMessageNodesMigration();
+
+        for (String file : files) {
+            migrationJob.setDocument(file);
+            migrationJob.execute();
+        }
+
+
     }
 
     private void SetTasksForAssertsNodesMigration() {

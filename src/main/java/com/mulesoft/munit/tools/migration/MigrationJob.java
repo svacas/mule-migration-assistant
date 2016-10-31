@@ -23,12 +23,6 @@ public class MigrationJob {
 
     public void setDocument(String filePath) throws Exception {
         this.xmlPath = filePath;
-        generateDoc(filePath);
-    }
-
-    public MigrationJob(String filePath) throws Exception{
-        this.xmlPath = filePath;
-        generateDoc(filePath);
     }
 
     public void addTask(MigrationTask task) {
@@ -36,6 +30,7 @@ public class MigrationJob {
     }
 
     public void execute() throws Exception {
+        this.document = generateDoc(this.xmlPath);
         for (MigrationTask task: tasks) {
             task.setDocument(this.document);
             task.execute();
@@ -46,10 +41,10 @@ public class MigrationJob {
         xmlOutputter.output(this.document, new FileOutputStream("testout.xml"));
     }
 
-    public void generateDoc(String filePath) throws Exception {
+    public Document generateDoc(String filePath) throws Exception {
         SAXBuilder saxBuilder = new SAXBuilder();
         File file = new File(filePath);
-        this.document = saxBuilder.build(file);
+        return saxBuilder.build(file);
     }
 
 }
