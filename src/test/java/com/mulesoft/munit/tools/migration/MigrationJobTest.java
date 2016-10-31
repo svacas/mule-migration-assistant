@@ -2,7 +2,9 @@ package com.mulesoft.munit.tools.migration;
 
 import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import com.mulesoft.munit.tools.migration.task.steps.*;
+import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,15 +14,22 @@ import java.util.List;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getElementsFromDocument;
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.restoreTestDocument;
 import static org.junit.Assert.*;
 
 public class MigrationJobTest {
     private MigrationJob migrationJob;
+    private Document docRestoreFile1;
+    private Document docRestoreFile2;
 
     @Before
     public void setUp() throws Exception {
+        String filePath1 = "src/test/resources/sample-file.xml";
+        String filePath2 = "src/test/resources/set-payload.xml";
         migrationJob = new MigrationJob();
-        migrationJob.setDocument("src/test/resources/sample-file.xml");
+        migrationJob.setDocument(filePath1);
+        docRestoreFile1 = getDocument(filePath1);
+        docRestoreFile2 = getDocument(filePath2);
     }
 
     @Test
@@ -113,6 +122,13 @@ public class MigrationJobTest {
             migrationJob.execute();
         }
 
+    }
+
+
+    @After
+    public void restoreFileState() throws Exception {
+        restoreTestDocument(docRestoreFile1,"src/test/resources/sample-file.xml");
+        restoreTestDocument(docRestoreFile2,"src/test/resources/set-payload.xml");
     }
 
     private void SetTasksForAssertsNodesMigration() {
