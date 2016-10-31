@@ -60,7 +60,7 @@ public class MigrationJobTest {
         migrationJob.addTask(task);
         migrationJob.execute();
 
-        List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test");
+        List<Element> nodesModified = getElementsFromDocument(migrationJob.getDocument(), "//munit:test");
         assertEquals(34, nodesModified.size());
     }
 
@@ -74,7 +74,7 @@ public class MigrationJobTest {
 
         migrationJob.execute();
 
-        List<Element> nodesModified = getElementsFromDocument(getDocument("testout.xml"), "//munit:test/munit:set-event");
+        List<Element> nodesModified = getElementsFromDocument(migrationJob.getDocument(), "//munit:test/munit:set-event");
         assertEquals(4, nodesModified.size());
     }
 
@@ -112,7 +112,6 @@ public class MigrationJobTest {
             migrationJob.setDocument(file);
             migrationJob.execute();
         }
-
 
     }
 

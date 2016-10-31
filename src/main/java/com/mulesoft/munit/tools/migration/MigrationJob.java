@@ -37,8 +37,8 @@ public class MigrationJob {
         }
 
         XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        //xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
-        xmlOutputter.output(this.document, new FileOutputStream("testout.xml"));
+        xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
+//        xmlOutputter.output(this.document, new FileOutputStream("testout.xml"));
     }
 
     public Document generateDoc(String filePath) throws Exception {

@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -12,16 +13,20 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        for (Element node : getNodes()) {
-            Attribute att = node.getAttribute(attribute);
-            if (att != null) {
-                Element child = new Element(attribute);
-                child.setNamespace(node.getNamespace());
-                Attribute newAtt = new Attribute("value", att.getValue());
-                child.setAttribute(newAtt);
-                node.addContent(child);
-                node.removeAttribute(att);
+        try {
+            for (Element node : getNodes()) {
+                Attribute att = node.getAttribute(attribute);
+                if (att != null) {
+                    Element child = new Element(attribute);
+                    child.setNamespace(node.getNamespace());
+                    Attribute newAtt = new Attribute("value", att.getValue());
+                    child.setAttribute(newAtt);
+                    node.addContent(child);
+                    node.removeAttribute(att);
+                }
             }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Create child node exception. " + ex.getMessage());
         }
     }
 }

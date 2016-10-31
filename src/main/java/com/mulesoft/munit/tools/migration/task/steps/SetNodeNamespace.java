@@ -35,7 +35,7 @@ public class SetNodeNamespace extends MigrationStep {
                 }
             }
         } catch (Exception ex) {
-            throw new MigrationStepException(ex.getMessage());
+            throw new MigrationStepException("Set node namespace exception. " + ex.getMessage());
         }
     }
 

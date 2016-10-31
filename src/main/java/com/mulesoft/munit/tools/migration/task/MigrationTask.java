@@ -1,6 +1,8 @@
 package com.mulesoft.munit.tools.migration.task;
 
 import com.google.common.base.Strings;
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
+import com.mulesoft.munit.tools.migration.exception.MigrationTaskException;
 import com.mulesoft.munit.tools.migration.task.steps.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -34,11 +36,15 @@ public class MigrationTask {
     }
 
     public void execute() throws Exception {
-        nodes = getNodesFromXPath(this.xpathSelector);
-        for (MigrationStep step : steps) {
-            step.setDocument(this.doc);
-            step.setNodes(nodes);
-            step.execute();
+        try {
+            nodes = getNodesFromXPath(this.xpathSelector);
+            for (MigrationStep step : steps) {
+                step.setDocument(this.doc);
+                step.setNodes(nodes);
+                step.execute();
+            }
+        } catch (Exception ex) {
+            throw new MigrationTaskException("Task execution exception. " + ex.getMessage());
         }
     }
 

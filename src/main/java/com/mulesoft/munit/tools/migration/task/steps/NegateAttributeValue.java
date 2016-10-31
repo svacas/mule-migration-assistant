@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -16,18 +17,22 @@ public class NegateAttributeValue extends MigrationStep {
 
     public void execute() throws Exception {
         Attribute att;
-        for (Element node : getNodes()) {
-            att = node.getAttribute(this.attrbuteName);
-            if ( att != null) {
-                String attValue = att.getValue();
-                Pattern pattern = Pattern.compile("#\\[(.*?)\\]");
-                Matcher matcher = pattern.matcher(attValue);
-                if (matcher.find()) {
-                    att.setValue("#[not(" + matcher.group(1) + ")]");
-                } else {
-                    att.setValue("#[not(" + attValue + ")]");
+        try {
+            for (Element node : getNodes()) {
+                att = node.getAttribute(this.attrbuteName);
+                if ( att != null) {
+                    String attValue = att.getValue();
+                    Pattern pattern = Pattern.compile("#\\[(.*?)\\]");
+                    Matcher matcher = pattern.matcher(attValue);
+                    if (matcher.find()) {
+                        att.setValue("#[not(" + matcher.group(1) + ")]");
+                    } else {
+                        att.setValue("#[not(" + attValue + ")]");
+                    }
                 }
             }
+        } catch (Exception ex) {
+            throw new MigrationStepException("Negate attribute exception. " + ex.getMessage());
         }
     }
 }

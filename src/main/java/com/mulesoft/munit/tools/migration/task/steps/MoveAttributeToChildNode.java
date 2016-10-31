@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
@@ -15,15 +16,19 @@ public class MoveAttributeToChildNode extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        for (Element node : getNodes()) {
-            Attribute att = node.getAttribute(attribute);
-            if (att != null) {
-                Element child =  node.getChild(childNode, node.getNamespace());
-                if (child != null) {
-                    node.removeAttribute(att);
-                    child.setAttribute(att);
+        try {
+            for (Element node : getNodes()) {
+                Attribute att = node.getAttribute(attribute);
+                if (att != null) {
+                    Element child = node.getChild(childNode, node.getNamespace());
+                    if (child != null) {
+                        node.removeAttribute(att);
+                        child.setAttribute(att);
+                    }
                 }
             }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
         }
     }
 }

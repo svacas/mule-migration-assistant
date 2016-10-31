@@ -21,7 +21,7 @@ public class AddAttribute extends MigrationStep {
                 node.setAttribute(att);
             }
         } catch (Exception ex) {
-            throw new MigrationStepException(ex.getMessage());
+            throw new MigrationStepException("Add Attribute step exception. " + ex.getMessage());
         }
     }
 }

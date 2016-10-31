@@ -1,5 +1,6 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
+import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -14,14 +15,18 @@ public class ReplaceNodesName extends MigrationStep {
     }
 
     public void execute() throws Exception {
-        if (getDocument() != null) {
-            Namespace namespace = getDocument().getRootElement().getNamespace(nodeNamespace);
-            if (namespace != null) {
-                for (Element node : getNodes()) {
-                    node.setNamespace(namespace);
-                    node.setName(newNodeName);
+        try {
+            if (getDocument() != null) {
+                Namespace namespace = getDocument().getRootElement().getNamespace(nodeNamespace);
+                if (namespace != null) {
+                    for (Element node : getNodes()) {
+                        node.setNamespace(namespace);
+                        node.setName(newNodeName);
+                    }
                 }
             }
+        } catch (Exception ex) {
+            throw new MigrationStepException("Replace node name exception. " + ex.getMessage());
         }
     }
 

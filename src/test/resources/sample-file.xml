@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:assert="http://www.mulesoft.org/schema/mule/assert" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd       http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd       http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd       http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd       http://www.mulesoft.org/schema/mule/assert http://www.mulesoft.org/schema/mule/munit/current/mule-assert.xsd ">
   <munit:config name="munit" doc:name="MUnit configuration" />
   <spring:beans>
     <spring:import resource="classpath:encoding.xml" />
   </spring:beans>
   <munit:test name="MockXMLPayload" description="MyNewDescription4" enable="false">
-    <munit:set payload="#[lalala]" doc:name="Set Message" encoding="Shift_JIS" mimeType="text/xml" />
+    <munit:set-event doc:name="Set Message">
+      <munit:payload value="#[lalala]" encoding="Shift_JIS" mediaType="text/xml" />
+    </munit:set-event>
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case XML']" mimeType="application/xml" />
+      <mock:then-return payload="#['Test Case XML']" mediaType="application/xml" />
     </mock:when>
     <flow-ref name="setXMLMimeType" doc:name="setXMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockXMLPayload-WithProperties" description="MyNewDescription4" enable="false">
-    <munit:set payload="#[lalala]" doc:name="Set Message" mimeType="text/xml" />
+    <munit:set-event doc:name="Set Message">
+      <munit:payload value="#[lalala]" mediaType="text/xml" />
+    </munit:set-event>
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test case XML']" mimeType="application/xml">
+      <mock:then-return payload="#['Test case XML']" mediaType="application/xml">
         <mock:invocation-properties>
           <mock:invocation-property key="prop1" value="#[123]" />
         </mock:invocation-properties>
@@ -30,7 +34,7 @@
     </mock:when>
     <flow-ref name="setXMLMimeType" doc:name="setXMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockXMLPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -39,11 +43,13 @@
       </mock:with-attributes>
       <mock:then-return payload="#[samePayload()]" />
     </mock:when>
-    <munit:set payload="#[lalala]" doc:name="Set Message" />
+    <munit:set-event doc:name="Set Message">
+      <munit:payload value="#[lalala]" />
+    </munit:set-event>
     <flow-ref name="setXMLMimeType" doc:name="setXMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]  &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />
-    <munit:assert-payload-equals message="oops!" expectedValue="'#[['value 1','value 2']]" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" is="#[true]" />
+    <assert:that message="oops!" is="'#[['value 1','value 2']]" expression="#[payload]" />
   </munit:test>
   <munit:test name="MockXMLPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -58,26 +64,26 @@
     </mock:when>
     <flow-ref name="setXMLMimeType" doc:name="setXMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]  &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/xml']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockHTMLPayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case HTML']" mimeType="text/html" />
+      <mock:then-return payload="#['Test Case HTML']" mediaType="text/html" />
     </mock:when>
     <flow-ref name="setHTMLMimeType" doc:name="setHTMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" />
-    <munit:run-custom assertion-ref="#[new your.package.CustomAssertion()]" />
+    <assert:that expression="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" is="#[true]" />
+    <assert:run-custom assertion-ref="#[new your.package.CustomAssertion()]" />
   </munit:test>
   <munit:test name="MockHTMLPayload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case HTML']" mimeType="text/html">
+      <mock:then-return payload="#['Test Case HTML']" mediaType="text/html">
         <mock:invocation-properties>
           <mock:invocation-property key="prop1" value="#[1]" />
         </mock:invocation-properties>
@@ -85,7 +91,7 @@
     </mock:when>
     <flow-ref name="setHTMLMimeType" doc:name="setHTMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockHTMLPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -96,8 +102,8 @@
     </mock:when>
     <flow-ref name="setHTMLMimeType" doc:name="setHTMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" />
-    <munit:run-custom assertion-ref="#[new your.package.CustomAssertion()]" />
+    <assert:that expression="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" is="#[true]" />
+    <assert:run-custom assertion-ref="#[new your.package.CustomAssertion()]" />
   </munit:test>
   <munit:test name="MockHTMLPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -110,42 +116,43 @@
         </mock:invocation-properties>
       </mock:then-return>
     </mock:when>
-    <munit:set payload="a simple payload" encoding="UTF-8" mimeType="text/plain">
-      <munit:invocation-properties>
-        <munit:invocation-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
-      </munit:invocation-properties>
+    <munit:set-event>
+      <munit:variables>
+        <munit:variable key="prop_key" value="prop_value" encoding="UTF-8" mediaType="text/plain" />
+      </munit:variables>
       <munit:inbound-properties>
-        <munit:inbound-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
+        <munit:inbound-property key="prop_key" value="prop_value" encoding="UTF-8" mediaType="text/plain" />
       </munit:inbound-properties>
       <munit:session-properties>
-        <munit:session-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
+        <munit:session-property key="prop_key" value="prop_value" encoding="UTF-8" mediaType="text/plain" />
       </munit:session-properties>
       <munit:outbound-properties>
-        <munit:outbound-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
+        <munit:outbound-property key="prop_key" value="prop_value" encoding="UTF-8" mediaType="text/plain" />
       </munit:outbound-properties>
-    </munit:set>
+      <munit:payload value="a simple payload" encoding="UTF-8" mediaType="text/plain" />
+    </munit:set-event>
     <flow-ref name="setHTMLMimeType" doc:name="setHTMLMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" />
-    <munit:fail message="This should not happen" />
+    <assert:that expression="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" is="#[true]" />
+    <assert:fail message="This should not happen" />
   </munit:test>
   <munit:test name="MockJsonPayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case Json']" mimeType="application/json" />
+      <mock:then-return payload="#['Test Case Json']" mediaType="application/json" />
     </mock:when>
     <flow-ref name="setJsonMimeType" doc:name="setJsonMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockJsonPayload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case Json']" mimeType="application/json">
+      <mock:then-return payload="#['Test Case Json']" mediaType="application/json">
         <mock:invocation-properties>
           <mock:invocation-property key="prop1" value="#[1]" />
         </mock:invocation-properties>
@@ -153,7 +160,7 @@
     </mock:when>
     <flow-ref name="setJsonMimeType" doc:name="setJsonMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockJsonPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -164,7 +171,7 @@
     </mock:when>
     <flow-ref name="setJsonMimeType" doc:name="setJsonMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockJsonPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -179,25 +186,25 @@
     </mock:when>
     <flow-ref name="setJsonMimeType" doc:name="setJsonMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockCSVPayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case CSV']" mimeType="application/csv" />
+      <mock:then-return payload="#['Test Case CSV']" mediaType="application/csv" />
     </mock:when>
     <flow-ref name="setCSVMimeType" doc:name="setCSVMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockCSVPayload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['Test Case CSV']" mimeType="application/csv">
+      <mock:then-return payload="#['Test Case CSV']" mediaType="application/csv">
         <mock:invocation-properties>
           <mock:invocation-property key="prop1" value="#[1]" />
         </mock:invocation-properties>
@@ -205,7 +212,7 @@
     </mock:when>
     <flow-ref name="setCSVMimeType" doc:name="setCSVMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockCSVPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -216,7 +223,7 @@
     </mock:when>
     <flow-ref name="setCSVMimeType" doc:name="setCSVMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockCSVPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -231,7 +238,7 @@
     </mock:when>
     <flow-ref name="setCSVMimeType" doc:name="setCSVMimeType" />
     <logger message="Content Type:  #[message.dataType.mimeType] &amp; Message: #[payload]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/csv']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF8Payload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -242,7 +249,7 @@
     </mock:when>
     <flow-ref name="setUTF8Encoding" doc:name="setUTF8Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF8Payload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -257,7 +264,7 @@
     </mock:when>
     <flow-ref name="setUTF8Encoding" doc:name="setUTF8Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF8Payload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -268,7 +275,7 @@
     </mock:when>
     <flow-ref name="setUTF8Encoding" doc:name="setUTF8Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF8Payload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -283,7 +290,7 @@
     </mock:when>
     <flow-ref name="setUTF8Encoding" doc:name="setUTF8Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-8']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF16Payload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -294,7 +301,7 @@
     </mock:when>
     <flow-ref name="setUTF16Encoding" doc:name="setUTF16Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF16Payload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -309,7 +316,7 @@
     </mock:when>
     <flow-ref name="setUTF16Encoding" doc:name="setUTF16Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF16Payload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -320,7 +327,7 @@
     </mock:when>
     <flow-ref name="setUTF16Encoding" doc:name="setUTF16Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockUTF16Payload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -335,8 +342,8 @@
     </mock:when>
     <flow-ref name="setUTF16Encoding" doc:name="setUTF16Encoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" />
-    <munit:assert-false message="oops!" condition="#[ 1 != 1 || payload.length != 0]" />
+    <assert:that expression="#[message.dataType.encoding == 'UTF-16']" doc:name="Assert True" is="#[true]" />
+    <assert:that message="oops!" expression="#[ 1 != 1 || payload.length != 0]" is="#[false]" />
   </munit:test>
   <munit:test name="MockISOPayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -347,7 +354,7 @@
     </mock:when>
     <flow-ref name="setISOEncoding" doc:name="setISOEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockISOPayload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -362,7 +369,7 @@
     </mock:when>
     <flow-ref name="setISOEncoding" doc:name="setISOEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockISOPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -373,7 +380,7 @@
     </mock:when>
     <flow-ref name="setISOEncoding" doc:name="setISOEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockISOPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -388,7 +395,7 @@
     </mock:when>
     <flow-ref name="setISOEncoding" doc:name="setISOEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'ISO-8859-1']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockASCIIPayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -399,8 +406,8 @@
     </mock:when>
     <flow-ref name="setASCIIEncoding" doc:name="setASCIIEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" />
-    <munit:fail message="This should not happen" />
+    <assert:that expression="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" is="#[true]" />
+    <assert:fail message="This should not happen" />
   </munit:test>
   <munit:test name="MockASCIIPayload-WithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
@@ -415,7 +422,7 @@
     </mock:when>
     <flow-ref name="setASCIIEncoding" doc:name="setASCIIEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockASCIIPayload-SamePayload" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -426,7 +433,7 @@
     </mock:when>
     <flow-ref name="setASCIIEncoding" doc:name="setASCIIEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="MockASCIIPayload-SamePayloadWithProperties" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
@@ -441,7 +448,7 @@
     </mock:when>
     <flow-ref name="setASCIIEncoding" doc:name="setASCIIEncoding" />
     <logger message="#[message.dataType.encoding]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.encoding == 'US-ASCII']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="mimeTypeJSONOnDataWeaveTest" description="MyNewDescription4" enable="false">
     <mock:spy messageProcessor=".*:.*" doc:name="Spy">
@@ -454,16 +461,16 @@
     </mock:spy>
     <flow-ref name="mimeTypeJSONOnDataWeave" doc:name="mimeTypeJSONOnDataWeave" />
     <logger message="#[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
     <logger message="Check mime type after assert" level="INFO" doc:name="Logger" />
-    <munit:assert-true condition="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" />
+    <assert:that expression="#[message.dataType.mimeType == 'application/json']" doc:name="Assert True" is="#[true]" />
   </munit:test>
   <munit:test name="mimeTypeXMLOnDataWeaveTest" description="MyNewDescription4" enable="false">
     <mock:when messageProcessor=".*:.*" doc:name="Mock">
       <mock:with-attributes>
         <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
       </mock:with-attributes>
-      <mock:then-return payload="#['&lt;ns2:listAllFlightsResponse xmlns:ns2=&quot;http://soap.training.mulesoft.com/&quot;&gt;&lt;return airlineName=&quot;United&quot;&gt;&lt;code&gt;A1B2C5151&lt;/code&gt;&lt;destination&gt;SFO&lt;/destination&gt;&lt;emptySeats&gt;40&lt;/emptySeats&gt;&lt;origin&gt;MUA&lt;/origin&gt;&lt;planeType&gt;Boing 737&lt;/planeType&gt;&lt;price&gt;400.0&lt;/price&gt;&lt;/return&gt;&lt;return airlineName=&quot;Delta&quot;&gt;&lt;code&gt;AFFFC4&lt;/code&gt;&lt;destination&gt;PDX&lt;/destination&gt;&lt;emptySeats&gt;0&lt;/emptySeats&gt;&lt;origin&gt;MUA&lt;/origin&gt;&lt;planeType&gt;Boing 777&lt;/planeType&gt;&lt;price&gt;283.0&lt;/price&gt;&lt;/return&gt;&lt;/ns2:listAllFlightsResponse&gt;']" mimeType="text/xml" />
+      <mock:then-return payload="#['&lt;ns2:listAllFlightsResponse xmlns:ns2=&quot;http://soap.training.mulesoft.com/&quot;&gt;&lt;return airlineName=&quot;United&quot;&gt;&lt;code&gt;A1B2C5151&lt;/code&gt;&lt;destination&gt;SFO&lt;/destination&gt;&lt;emptySeats&gt;40&lt;/emptySeats&gt;&lt;origin&gt;MUA&lt;/origin&gt;&lt;planeType&gt;Boing 737&lt;/planeType&gt;&lt;price&gt;400.0&lt;/price&gt;&lt;/return&gt;&lt;return airlineName=&quot;Delta&quot;&gt;&lt;code&gt;AFFFC4&lt;/code&gt;&lt;destination&gt;PDX&lt;/destination&gt;&lt;emptySeats&gt;0&lt;/emptySeats&gt;&lt;origin&gt;MUA&lt;/origin&gt;&lt;planeType&gt;Boing 777&lt;/planeType&gt;&lt;price&gt;283.0&lt;/price&gt;&lt;/return&gt;&lt;/ns2:listAllFlightsResponse&gt;']" mediaType="text/xml" />
     </mock:when>
     <mock:spy messageProcessor=".*:.*" doc:name="Spy">
       <mock:with-attributes>
@@ -475,6 +482,6 @@
     </mock:spy>
     <flow-ref name="mimeTypeXMLOnDataWeave" doc:name="mimeTypeXMLOnDataWeave" />
     <logger message="#[message.dataType.mimeType]" level="INFO" doc:name="Logger" />
-    <munit:assert-not-null doc:name="Assert Not Null Payload" />
+    <assert:that doc:name="Assert Not Null Payload" expression="#[payload]" is="#[not(nullValue())]" />
   </munit:test>
 </mule>
