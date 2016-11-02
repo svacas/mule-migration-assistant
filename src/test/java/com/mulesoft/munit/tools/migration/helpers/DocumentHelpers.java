@@ -11,6 +11,7 @@ import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 
+import javax.xml.xpath.XPathConstants;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
