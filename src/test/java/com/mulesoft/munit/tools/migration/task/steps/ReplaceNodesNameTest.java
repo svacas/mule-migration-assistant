@@ -1,14 +1,13 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
-import org.jdom2.Document;
 import org.jdom2.Element;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Collections;
 
-import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
-import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getElementsFromDocument;
-import static org.junit.Assert.*;
+import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.GetNodesFromFile;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ReplaceNodesNameTest {
     private ReplaceNodesName replaceQName;
@@ -16,7 +15,7 @@ public class ReplaceNodesNameTest {
     @Test
     public void replaceQNameTestNodes() throws Exception {
         replaceQName = new ReplaceNodesName("munit", "test2");
-        InitializeNodesForTest("//munit:test");
+        GetNodesFromFile("//munit:test", replaceQName, "src/test/resources/sample-file.xml");
         replaceQName.execute();
         String newName = replaceQName.getNodes().get(0).getName();
         assertEquals("test2", newName);
@@ -25,7 +24,7 @@ public class ReplaceNodesNameTest {
     @Test
     public void replaceQNameSubChildNodes() throws Exception {
         replaceQName = new ReplaceNodesName("mock", "mock");
-        InitializeNodesForTest("//mock:when");
+        GetNodesFromFile("//mock:when", replaceQName, "src/test/resources/sample-file.xml");
         replaceQName.execute();
         String newName = replaceQName.getNodes().get(0).getName();
         assertEquals("mock", newName);
@@ -33,23 +32,18 @@ public class ReplaceNodesNameTest {
 
     @Test
     public void replaceQNameNotFoundNameSpace() throws Exception {
-        replaceQName = new ReplaceNodesName("lalero", "mock");
-        InitializeNodesForTest("//mock:when");
+        replaceQName = new ReplaceNodesName("lalero", "test");
+        GetNodesFromFile("//mock:when", replaceQName, "src/test/resources/sample-file.xml");
         replaceQName.execute();
+        String newName = replaceQName.getNodes().get(0).getName();
+        assertEquals("when", newName);
     }
 
     @Test
     public void replaceQNameEmptyNodes() throws Exception {
-        replaceQName = new ReplaceNodesName("mock", "mock");
-        InitializeNodesForTest("//mock:when2423");
+        replaceQName = new ReplaceNodesName("munit", "lala");
+        GetNodesFromFile("//mock:when2423", replaceQName, "src/test/resources/sample-file.xml");
         replaceQName.execute();
+        assertTrue(replaceQName.getNodes()== Collections.<Element>emptyList());
     }
-
-    private void InitializeNodesForTest(String Xpath) throws Exception{
-        Document document = getDocument("src/test/resources/sample-file.xml");
-        List<Element> nodes = getElementsFromDocument(document, Xpath);
-        replaceQName.setDocument(document);
-        replaceQName.setNodes(nodes);
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.mulesoft.munit.tools.migration;
 
 
+import com.mulesoft.munit.tools.migration.exception.MigrationJobException;
 import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
@@ -21,7 +22,7 @@ public class MigrationJob {
         return document;
     }
 
-    public void setDocument(String filePath) throws Exception {
+    public void setDocument(String filePath) {
         this.xmlPath = filePath;
     }
 
@@ -29,16 +30,18 @@ public class MigrationJob {
         this.tasks.add(task);
     }
 
-    public void execute() throws Exception {
-        this.document = generateDoc(this.xmlPath);
-        for (MigrationTask task: tasks) {
-            task.setDocument(this.document);
-            task.execute();
+    public void execute() throws Exception{
+        try {
+            this.document = generateDoc(this.xmlPath);
+            for (MigrationTask task : tasks) {
+                task.setDocument(this.document);
+                task.execute();
+            }
+            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+            xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
+        } catch (Exception ex) {
+            throw new MigrationJobException("Failure to migrate the file: " + this.xmlPath + ". " + ex.getMessage());
         }
-
-        XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-        xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
-//        xmlOutputter.output(this.document, new FileOutputStream("testout.xml"));
     }
 
     public Document generateDoc(String filePath) throws Exception {

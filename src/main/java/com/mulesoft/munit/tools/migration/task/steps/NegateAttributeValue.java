@@ -18,16 +18,18 @@ public class NegateAttributeValue extends MigrationStep {
     public void execute() throws Exception {
         Attribute att;
         try {
-            for (Element node : getNodes()) {
-                att = node.getAttribute(this.attrbuteName);
-                if ( att != null) {
-                    String attValue = att.getValue();
-                    Pattern pattern = Pattern.compile("#\\[(.*?)\\]");
-                    Matcher matcher = pattern.matcher(attValue);
-                    if (matcher.find()) {
-                        att.setValue("#[not(" + matcher.group(1) + ")]");
-                    } else {
-                        att.setValue("#[not(" + attValue + ")]");
+            if (this.attrbuteName != null) {
+                for (Element node : getNodes()) {
+                    att = node.getAttribute(this.attrbuteName);
+                    if (att != null) {
+                        String attValue = att.getValue();
+                        Pattern pattern = Pattern.compile("#\\[(.*?)\\]");
+                        Matcher matcher = pattern.matcher(attValue);
+                        if (matcher.find()) {
+                            att.setValue("#[not(" + matcher.group(1) + ")]");
+                        } else {
+                            att.setValue("#[not(" + attValue + ")]");
+                        }
                     }
                 }
             }
