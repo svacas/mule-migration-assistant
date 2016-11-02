@@ -38,9 +38,10 @@ public class SetNodeNamespaceTest {
 
     @Test
     public void addNameSpaceEmptySchemaUrl() throws Exception {
-        addNamespaceStep = new SetNodeNamespace("test", "htp://localhost", null);
+        addNamespaceStep = new SetNodeNamespace("test", "http://localhost", null);
         InitializeDocForTest();
         addNamespaceStep.execute();
+        assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("http://localhost"));
     }
 
     @Test (expected = MigrationStepException.class)
@@ -48,6 +49,7 @@ public class SetNodeNamespaceTest {
         addNamespaceStep = new SetNodeNamespace("test", null, "http://localhost/m.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
+        assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("http://localhost/m.xsd"));
     }
 
     @Test
@@ -55,6 +57,8 @@ public class SetNodeNamespaceTest {
         addNamespaceStep = new SetNodeNamespace("test", "htp://localhost", "http://localhost/m.xsd");
         InitializeDocForTest();
         addNamespaceStep.execute();
+        Document doc = addNamespaceStep.getDocument();
+        assertTrue(addNamespaceStep.getDocument().getRootElement().getAttributes().get(0).getValue().contains("http://localhost/m.xsd"));
     }
 
     private void InitializeDocForTest() throws Exception{

@@ -96,6 +96,9 @@ public class MigrationJobTest {
         SetTasksForAssertsNodesMigration();
 
         migrationJob.execute();
+
+        List<Element> nodesModified = getElementsFromDocument(migrationJob.getDocument(), "//munit:test/assert:that");
+        assertEquals(14, nodesModified.size());
     }
 
     @Test
@@ -107,6 +110,9 @@ public class MigrationJobTest {
         SetTasksForSetMessageNodesMigration();
 
         migrationJob.execute();
+
+        List<Element> nodesModified = getElementsFromDocument(migrationJob.getDocument(), "//munit:test/assert:that");
+        assertEquals(14, nodesModified.size());
     }
 
     @Test
