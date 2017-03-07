@@ -40,7 +40,7 @@ public class MigrationJob {
             XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
             xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
         } catch (Exception ex) {
-            throw new MigrationJobException("Failure to migrate the file: " + this.xmlPath + ". " + ex.getMessage());
+            throw new MigrationJobException("Failure to migrate the file: " + this.xmlPath + ". " + ex.getMessage() + "/n" + ex.getStackTrace());
         }
     }
 

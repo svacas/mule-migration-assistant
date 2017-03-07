@@ -143,7 +143,7 @@ public class MigrationJobTest {
         MigrationStep step;
 
         assertTask  = new MigrationTask("//munit:test/*[contains(local-name(),'assert') or contains(local-name(),'fail') or contains(local-name(),'run-custom')]");
-        step = new SetNodeNamespace("assert", "http://www.mulesoft.org/schema/mule/assert", "http://www.mulesoft.org/schema/mule/munit/current/mule-assert.xsd");
+        step = new SetNodeNamespace("assert", "http://www.mulesoft.org/schema/mule/assert", "http://www.mulesoft.org/schema/mule/assert/current/mule-assert.xsd");
         assertTask.addStep(step);
 
         step = new ReplaceStringOnNodeName("assert-", "");
