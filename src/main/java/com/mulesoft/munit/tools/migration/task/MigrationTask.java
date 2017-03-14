@@ -20,6 +20,15 @@ public class MigrationTask {
     private ArrayList<MigrationStep> steps = new ArrayList<MigrationStep>();
     private Document doc;
     private List<Element> nodes;
+    private String taskDescriptor;
+
+    public void setTaskDescriptor(String descriptor) {
+        this.taskDescriptor = descriptor;
+    }
+
+    public String getTaskDescriptor() {
+        return this.taskDescriptor;
+    }
 
     public void setDocument(Document document) {
         this.doc = document;

@@ -1,0 +1,25 @@
+package com.mulesoft.munit.tools.migration;
+
+/**
+ * Created by julianpascual on 3/13/17.
+ */
+public class MigrationRunner {
+    public static final String CONFIG_FILE_PARAMETER = "-migrationConfigFile";
+
+    public static void main(String args[]) throws Exception {
+
+        String configFile = null;
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equalsIgnoreCase(CONFIG_FILE_PARAMETER)) {
+                configFile = args[i + 1];
+            }
+        }
+
+        MigrationJob job = new MigrationJob();
+        job.setConfigFilePath(configFile);
+
+        job.execute();
+    }
+
+}

@@ -1,0 +1,27 @@
+{
+  "tasks":
+  [
+    {
+      "selector" : "//munit:test/*[contains(local-name(),'on-equals')]",
+      "description" : "Update MUnit Assert On Equals message processor",
+      "steps" : [
+        {
+          "description" : "Update assertion namespace",
+          "type" : "ReplaceNodesName",
+          "parameters" : ["munit-ext", "assert-that"]
+        },
+        {
+          "description" : "Update attribute expectedValue to new DSL",
+          "type" : "UpdateAttributeName",
+          "parameters" : ["expectedValue", "is"]
+        },
+        {
+          "description" : "Update attribute actualValue to new DSL",
+          "type" : "UpdateAttributeName",
+          "parameters" : ["actualValue", "expression"]
+        }
+      ]
+    }
+  ]
+}
+

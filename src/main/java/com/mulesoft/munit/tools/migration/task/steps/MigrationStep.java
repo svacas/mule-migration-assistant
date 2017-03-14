@@ -9,7 +9,15 @@ public abstract class MigrationStep {
 
     private List<Element> nodes;
     private Document document;
+    private String stepDescriptor;
 
+    public void setStepDescriptor(String descriptor) {
+        this.stepDescriptor = descriptor;
+    }
+
+    public String getStepDescriptor() {
+        return this.stepDescriptor;
+    }
 
     public void setNodes(List<Element> nodes) {
         this.nodes = nodes;

@@ -10,37 +10,54 @@ import org.jdom2.output.XMLOutputter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.*;
 import java.util.ArrayList;
 
 public class MigrationJob {
 
-    private String xmlPath;
+    private ArrayList<String> filePaths;
     private ArrayList<MigrationTask> tasks = new ArrayList<MigrationTask>();
+    private String configFilePath;
     private Document document;
+    private Boolean backup = false;
+    private File destFolder = new File("backup");
 
-    public Document getDocument() {
-        return document;
+    public void setBackUpProfile(Boolean backUpProfile) {
+        this.backup = backUpProfile;
     }
 
-    public void setDocument(String filePath) {
-        this.xmlPath = filePath;
+    public void setConfigFilePath(String configFile) {
+        this.configFilePath = configFile;
+    }
+
+    public void setDocuments(ArrayList<String> filePaths) {
+        this.filePaths = filePaths;
     }
 
     public void addTask(MigrationTask task) {
         this.tasks.add(task);
     }
 
-    public void execute() throws Exception{
+    public void execute() throws Exception {
+
+        parseConfigurationFile(configFilePath);
+
+        if (backup) {
+            saveCopyOfFiles(filePaths);
+        }
+
         try {
-            this.document = generateDoc(this.xmlPath);
-            for (MigrationTask task : tasks) {
-                task.setDocument(this.document);
-                task.execute();
+            for (String filePath : this.filePaths){
+                this.document = generateDoc(filePath);
+                for (MigrationTask task : tasks) {
+                    task.setDocument(this.document);
+                    task.execute();
+                }
+                XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+                xmlOutputter.output(this.document, new FileOutputStream(filePath));
             }
-            XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
-            xmlOutputter.output(this.document, new FileOutputStream(this.xmlPath));
         } catch (Exception ex) {
-            throw new MigrationJobException("Failure to migrate the file: " + this.xmlPath + ". " + ex.getMessage() + "/n" + ex.getStackTrace());
+            throw new MigrationJobException("Failed to migrate the file: " + this.document.getBaseURI() + ". " + ex.getMessage() + "/n" + ex.getStackTrace());
         }
     }
 
@@ -48,6 +65,29 @@ public class MigrationJob {
         SAXBuilder saxBuilder = new SAXBuilder();
         File file = new File(filePath);
         return saxBuilder.build(file);
+    }
+
+    public void parseConfigurationFile(String configFilePath) throws Exception {
+        //TODO
+        try {
+
+        } catch (Exception ex) {
+            throw new Exception("Failed to parse Configuration file " + this.configFilePath + ". " + ex.getMessage());
+        }
+    }
+
+    public void saveCopyOfFiles(ArrayList<String> filePaths) throws Exception{
+
+        for (String filePath : filePaths) {
+            File copyFile = new File(filePath);
+            Path targetPath = destFolder.toPath().resolve(copyFile.getParent());
+
+            if (!Files.exists(targetPath)) {
+                Files.createDirectories(targetPath);
+            }
+
+            Files.copy(copyFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 
 }
