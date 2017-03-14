@@ -99,26 +99,4 @@
     <munit:assert-true condition="#[message.dataType.mimeType == 'text/html']" doc:name="Assert True" />
     <munit:run-custom assertion-ref="#[new your.package.CustomAssertion()]" />
   </munit:test>
-  <munit:test name="MockHTMLPayload-SamePayloadWithProperties" description="MyNewDescription3">
-    <mock:when messageProcessor="mule:set-Payload" doc:name="Mock">
-      <mock:with-attributes>
-        <mock:with-attribute name="doc:name" whereValue="#['Set Payload']" />
-      </mock:with-attributes>
-      <mock:then-return payload="#[samePayload()]">
-        <mock:invocation-properties>
-          <mock:invocation-property key="prop1" value="#['test']" />
-        </mock:invocation-properties>
-      </mock:then-return>
-    </mock:when>
-    <munit:set payload="a simple payload" encoding="UTF-8" mimeType="text/plain">
-      <munit:invocation-properties>
-        <munit:invocation-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
-      </munit:invocation-properties>
-      <munit:inbound-properties>
-        <munit:inbound-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
-      </munit:inbound-properties>
-      <munit:session-properties>
-        <munit:session-property key="prop_key" value="prop_value" encoding="UTF-8" mimeType="text/plain" />
-      </munit:session-properties>
-      <munit:outbound-properties>
-        <munit:
+</mule>
