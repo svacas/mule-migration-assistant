@@ -133,6 +133,15 @@ public class MigrationJobTest {
 
     }
 
+    @Test
+    public void jobWithTasksOnConfigFile() throws Exception {
+        ArrayList<String> files = new ArrayList<String>(Arrays.asList("src/test/resources/set-payload.xml","src/test/resources/sample-file.xml"));
+
+        migrationJob.setDocuments(files);
+        migrationJob.setConfigFilePath("src/test/resources/migrationPOJO.json");
+        migrationJob.execute();
+    }
+
 
     @After
     public void restoreFileState() throws Exception {

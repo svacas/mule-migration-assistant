@@ -7,9 +7,12 @@ import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.nio.file.*;
 import java.util.ArrayList;
 
@@ -68,8 +71,11 @@ public class MigrationJob {
     }
 
     public void parseConfigurationFile(String configFilePath) throws Exception {
-        //TODO
         try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader(configFilePath));
+            JSONObject jsonObject = (JSONObject) obj;
+
 
         } catch (Exception ex) {
             throw new Exception("Failed to parse Configuration file " + this.configFilePath + ". " + ex.getMessage());
@@ -78,15 +84,19 @@ public class MigrationJob {
 
     public void saveCopyOfFiles(ArrayList<String> filePaths) throws Exception{
 
-        for (String filePath : filePaths) {
-            File copyFile = new File(filePath);
-            Path targetPath = destFolder.toPath().resolve(copyFile.getParent());
+        try {
+            for (String filePath : filePaths) {
+                File copyFile = new File(filePath);
+                Path targetPath = destFolder.toPath().resolve(copyFile.getParent());
 
-            if (!Files.exists(targetPath)) {
-                Files.createDirectories(targetPath);
+                if (!Files.exists(targetPath)) {
+                    Files.createDirectories(targetPath);
+                }
+
+                Files.copy(copyFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
             }
-
-            Files.copy(copyFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception ex) {
+            throw new Exception("Failed to backup files. Exception: " + ex.getMessage() + " " + ex.getStackTrace());
         }
     }
 
