@@ -6,24 +6,24 @@
       "taskDescriptor" : "Update MUnit Assert On Equals message processor",
       "stepsDefinition" : [
         {
-          "description" : "Update assertion namespace",
-          "type" : "ReplaceNodesName",
+          "stepDescriptor" : "Update assertion namespace",
+          "type" : "com.mulesoft.munit.tools.migration.task.steps.ReplaceNodesName",
           "parameters" : {
             "nodeNamespace" : "munit-ext",
             "newNodeName" : "assert-that"
           }
         },
         {
-          "description" : "Update attribute expectedValue to new DSL",
-          "type" : "UpdateAttributeName",
+          "stepDescriptor" : "Update attribute expectedValue to new DSL",
+          "type" : "com.mulesoft.munit.tools.migration.task.steps.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "expectedValue",
             "newValue" : "is"
           }
         },
         {
-          "description" : "Update attribute actualValue to new DSL",
-          "type" : "UpdateAttributeName",
+          "stepDescriptor" : "Update attribute actualValue to new DSL",
+          "type" : "com.mulesoft.munit.tools.migration.task.steps.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "actualValue",
             "newValue" : "expression"

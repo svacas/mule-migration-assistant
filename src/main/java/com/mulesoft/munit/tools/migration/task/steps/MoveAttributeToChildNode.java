@@ -9,18 +9,35 @@ public class MoveAttributeToChildNode extends MigrationStep {
     private String attribute;
     private String childNode;
 
-    public MoveAttributeToChildNode(String attribute, String childNode) {
+    public String getAttribute() {
+        return attribute;
+    }
 
+    public void setAttribute(String attribute) {
         this.attribute = attribute;
+    }
+
+    public String getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(String childNode) {
         this.childNode = childNode;
     }
+
+    public MoveAttributeToChildNode(String attribute, String childNode) {
+        setAttribute(attribute);
+        setChildNode(childNode);
+    }
+
+    public MoveAttributeToChildNode(){}
 
     public void execute() throws Exception {
         try {
             for (Element node : getNodes()) {
-                Attribute att = node.getAttribute(attribute);
+                Attribute att = node.getAttribute(getAttribute());
                 if (att != null) {
-                    Element child = node.getChild(childNode, node.getNamespace());
+                    Element child = node.getChild(getChildNode(), node.getNamespace());
                     if (child != null) {
                         node.removeAttribute(att);
                         child.setAttribute(att);

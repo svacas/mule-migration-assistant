@@ -3,17 +3,15 @@ package com.mulesoft.munit.tools.migration;
 import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import com.mulesoft.munit.tools.migration.task.steps.*;
 import org.jdom2.Document;
-import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getDocument;
-import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.getElementsFromDocument;
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.restoreTestDocument;
 import static org.junit.Assert.*;
 
@@ -36,13 +34,14 @@ public class MigrationJobTest {
         docRestoreFile2 = getDocument(filePath2.get(0));
     }
 
+    @Ignore
     @Test
     public void testExecuteEmptySteps() throws Exception {
         migrationJob.execute();
         assertNotNull(migrationJob);
     }
 
-
+    @Ignore
     @Test
     public void checkStepExecution() throws Exception {
 
@@ -50,6 +49,7 @@ public class MigrationJobTest {
         MigrationStep step;
 
         step = new AddAttribute("description", "MyNewDescription2");
+
         task.addStep(step);
 
         migrationJob.addTask(task);
@@ -119,6 +119,7 @@ public class MigrationJobTest {
 //        assertEquals(14, nodesModified.size());
 //    }
 
+    @Ignore
     @Test
     public void migrateMultipleFiles() throws Exception {
 

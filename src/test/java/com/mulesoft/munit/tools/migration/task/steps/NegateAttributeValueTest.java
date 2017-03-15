@@ -3,7 +3,6 @@ package com.mulesoft.munit.tools.migration.task.steps;
 import org.jdom2.Element;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.InitializeNodesForTest;

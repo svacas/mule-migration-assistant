@@ -1,7 +1,6 @@
 package com.mulesoft.munit.tools.migration.helpers;
 
 import com.mulesoft.munit.tools.migration.task.steps.MigrationStep;
-import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
@@ -11,7 +10,6 @@ import org.jdom2.output.XMLOutputter;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 
-import javax.xml.xpath.XPathConstants;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;

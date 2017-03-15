@@ -4,7 +4,6 @@ import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.GetNodesFromFile;

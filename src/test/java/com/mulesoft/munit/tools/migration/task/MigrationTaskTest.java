@@ -49,7 +49,7 @@ public class MigrationTaskTest {
         migrationTask = new MigrationTask("//munit:test");
         migrationTask.setDocument(getDocument("src/test/resources/sample-file.xml"));
         migrationTask.execute();
-        assertEquals(34, getListSize(migrationTask));
+        assertEquals(7, getListSize(migrationTask));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class MigrationTaskTest {
         MigrationStep step = new AddAttribute("pepe", "pepa");
         migrationTask.addStep(step);
         migrationTask.execute();
-        assertEquals(34, getListSize(migrationTask));
+        assertEquals(7, getListSize(migrationTask));
     }
 
     @Test

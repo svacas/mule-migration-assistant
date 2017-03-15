@@ -1,10 +1,7 @@
 package com.mulesoft.munit.tools.migration.task.steps;
 
 import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
-import org.jdom2.Element;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static com.mulesoft.munit.tools.migration.helpers.DocumentHelpers.InitializeNodesForTest;
 import static org.junit.Assert.assertTrue;

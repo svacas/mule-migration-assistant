@@ -17,7 +17,7 @@ public class MigrationTask {
 
     private String xpathSelector;
     private Document doc;
-    private ArrayList<MigrationStep> steps = new ArrayList<MigrationStep>();
+    private ArrayList<MigrationStep> steps;
     private List<Element> nodes;
     private String taskDescriptor;
 
@@ -35,6 +35,11 @@ public class MigrationTask {
 
     public MigrationTask(String xpathSelector) {
         this.xpathSelector = xpathSelector;
+        this.steps = new ArrayList<>();
+    }
+
+    public MigrationTask() {
+        this.steps = new ArrayList<>();
     }
 
     public void addStep(MigrationStep step) {
