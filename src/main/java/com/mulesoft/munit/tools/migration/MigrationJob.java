@@ -1,19 +1,23 @@
 package com.mulesoft.munit.tools.migration;
 
 
+import com.mulesoft.munit.tools.migration.builder.TaskBuilder;
 import com.mulesoft.munit.tools.migration.exception.MigrationJobException;
 import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class MigrationJob {
@@ -76,7 +80,12 @@ public class MigrationJob {
             Object obj = parser.parse(new FileReader(configFilePath));
             JSONObject jsonObject = (JSONObject) obj;
 
+            JSONArray tasks = (JSONArray) jsonObject.get("tasks");
 
+            for (Object task : tasks) {
+                JSONObject taskObj = (JSONObject) task;
+                this.addTask(TaskBuilder.build(taskObj));
+            }
 
         } catch (Exception ex) {
             throw new Exception("Failed to parse Configuration file " + this.configFilePath + ". " + ex.getMessage());

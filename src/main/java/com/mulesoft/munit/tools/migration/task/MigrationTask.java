@@ -1,7 +1,6 @@
 package com.mulesoft.munit.tools.migration.task;
 
 import com.google.common.base.Strings;
-import com.mulesoft.munit.tools.migration.exception.MigrationStepException;
 import com.mulesoft.munit.tools.migration.exception.MigrationTaskException;
 import com.mulesoft.munit.tools.migration.task.steps.MigrationStep;
 import org.jdom2.Document;
@@ -17,8 +16,8 @@ import java.util.List;
 public class MigrationTask {
 
     private String xpathSelector;
-    private ArrayList<MigrationStep> steps = new ArrayList<MigrationStep>();
     private Document doc;
+    private ArrayList<MigrationStep> steps = new ArrayList<MigrationStep>();
     private List<Element> nodes;
     private String taskDescriptor;
 

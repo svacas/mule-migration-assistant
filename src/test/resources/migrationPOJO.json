@@ -2,23 +2,32 @@
   "tasks":
   [
     {
-      "selector" : "//munit:test/*[contains(local-name(),'on-equals')]",
-      "description" : "Update MUnit Assert On Equals message processor",
-      "steps" : [
+      "xpathSelector" : "//munit:test/*[contains(local-name(),'on-equals')]",
+      "taskDescriptor" : "Update MUnit Assert On Equals message processor",
+      "stepsDefinition" : [
         {
           "description" : "Update assertion namespace",
           "type" : "ReplaceNodesName",
-          "parameters" : ["munit-ext", "assert-that"]
+          "parameters" : {
+            "nodeNamespace" : "munit-ext",
+            "newNodeName" : "assert-that"
+          }
         },
         {
           "description" : "Update attribute expectedValue to new DSL",
           "type" : "UpdateAttributeName",
-          "parameters" : ["expectedValue", "is"]
+          "parameters" : {
+            "attributeName" : "expectedValue",
+            "newValue" : "is"
+          }
         },
         {
           "description" : "Update attribute actualValue to new DSL",
           "type" : "UpdateAttributeName",
-          "parameters" : ["actualValue", "expression"]
+          "parameters" : {
+            "attributeName" : "actualValue",
+            "newValue" : "expression"
+          }
         }
       ]
     }
