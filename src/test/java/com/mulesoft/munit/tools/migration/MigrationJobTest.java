@@ -129,7 +129,6 @@ public class MigrationJobTest {
         SetTasksForSetMessageNodesMigration();
 
         migrationJob.setDocuments(files);
-
         migrationJob.execute();
 
     }
