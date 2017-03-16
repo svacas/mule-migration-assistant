@@ -22,12 +22,15 @@ import java.util.ArrayList;
 
 public class MigrationJob {
 
+    public static final String TASK_FIELD = "tasks";
+    public static final String BACKUP_FOLDER = "backup";
+
     private ArrayList<String> filePaths;
     private ArrayList<MigrationTask> tasks = new ArrayList<MigrationTask>();
     private String configFilePath;
     private Document document;
     private Boolean backup = false;
-    private File destFolder = new File("backup");
+    private File destFolder = new File(BACKUP_FOLDER);
 
     public void setBackUpProfile(Boolean backUpProfile) {
         this.backup = backUpProfile;
@@ -80,7 +83,7 @@ public class MigrationJob {
             Object obj = parser.parse(new FileReader(configFilePath));
             JSONObject jsonObject = (JSONObject) obj;
 
-            JSONArray tasks = (JSONArray) jsonObject.get("tasks");
+            JSONArray tasks = (JSONArray) jsonObject.get(TASK_FIELD);
 
             for (Object task : tasks) {
                 JSONObject taskObj = (JSONObject) task;

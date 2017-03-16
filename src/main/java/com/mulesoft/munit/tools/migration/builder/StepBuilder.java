@@ -15,11 +15,18 @@ import java.util.Map;
  */
 public class StepBuilder {
 
+    public static final String TYPE_FIELD = "type";
+    public static final String PARAMETERS_FIELD = "parameters";
+    public static final String DESCRIPTION_FIELD = "stepDescriptor";
+    public static final String SET_METHOD = "set";
+    public static final String DESCRIPTION_SET_METHOD = "setStepDescriptor";
+
+
     public static MigrationStep build(JSONObject stepDef) throws Exception{
 
-        String stepType = stepDef.get("type").toString();
-        String stepParameters = stepDef.get("parameters").toString();
-        String description = stepDef.get("stepDescriptor").toString();
+        String stepType = stepDef.get(TYPE_FIELD).toString();
+        String stepParameters = stepDef.get(PARAMETERS_FIELD).toString();
+        String description = stepDef.get(DESCRIPTION_FIELD).toString();
         String methodName;
         Method method;
 
@@ -32,12 +39,12 @@ public class StepBuilder {
             MigrationStep step = (MigrationStep) clazz.newInstance();
 
             for (String parameter : parameters.keySet()) {
-                methodName = "set" + StringUtils.capitalize(parameter);
+                methodName = SET_METHOD + StringUtils.capitalize(parameter);
                 method = clazz.getMethod(methodName, String.class);
                 method.invoke(step, parameters.get(parameter));
             }
 
-            method = clazz.getMethod("setStepDescriptor", String.class);
+            method = clazz.getMethod(DESCRIPTION_SET_METHOD, String.class);
             method.invoke(step, description);
 
             return step;
