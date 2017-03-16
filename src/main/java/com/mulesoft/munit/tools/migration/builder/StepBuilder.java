@@ -10,9 +10,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-/**
- * Created by julianpascual on 3/15/17.
- */
 public class StepBuilder {
 
     public static final String TYPE_FIELD = "type";

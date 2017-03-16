@@ -1,8 +1,5 @@
 package com.mulesoft.munit.tools.migration;
 
-/**
- * Created by julianpascual on 3/13/17.
- */
 public class MigrationRunner {
     public static final String CONFIG_FILE_PARAMETER = "-migrationConfigFile";
     public static final String FILES_PARAMETER = "-files";

@@ -5,9 +5,6 @@ import com.mulesoft.munit.tools.migration.task.MigrationTask;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-/**
- * Created by julianpascual on 3/15/17.
- */
 public class TaskBuilder {
 
     public static MigrationTask build(JSONObject taskDef) throws Exception {
