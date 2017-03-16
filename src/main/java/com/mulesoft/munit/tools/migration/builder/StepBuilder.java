@@ -19,8 +19,6 @@ public class StepBuilder {
     public static final String PARAMETERS_FIELD = "parameters";
     public static final String DESCRIPTION_FIELD = "stepDescriptor";
     public static final String SET_METHOD = "set";
-    public static final String DESCRIPTION_SET_METHOD = "setStepDescriptor";
-
 
     public static MigrationStep build(JSONObject stepDef) throws Exception{
 
@@ -44,7 +42,7 @@ public class StepBuilder {
                 method.invoke(step, parameters.get(parameter));
             }
 
-            method = clazz.getMethod(DESCRIPTION_SET_METHOD, String.class);
+            method = clazz.getMethod(SET_METHOD + StringUtils.capitalize(DESCRIPTION_FIELD), String.class);
             method.invoke(step, description);
 
             return step;
