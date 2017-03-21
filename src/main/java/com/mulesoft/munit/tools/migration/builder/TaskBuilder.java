@@ -6,12 +6,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class TaskBuilder {
+    public static final String STEPS_FIELD = "stepsDefinition";
 
     public static MigrationTask build(JSONObject taskDef) throws Exception {
 
         MigrationTask migrationTask = new Gson().fromJson(taskDef.toJSONString(), MigrationTask.class);
 
-        JSONArray steps = (JSONArray) taskDef.get("stepsDefinition");
+        JSONArray steps = (JSONArray) taskDef.get(STEPS_FIELD);
 
         for (Object step : steps) {
             JSONObject stepObj = (JSONObject) step;
