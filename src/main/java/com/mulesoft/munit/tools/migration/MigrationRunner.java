@@ -1,6 +1,9 @@
 package com.mulesoft.munit.tools.migration;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MigrationRunner {
 
@@ -20,17 +23,20 @@ public class MigrationRunner {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equalsIgnoreCase(CONFIG_FILE_PARAMETER)) {
                 configFile = args[i + 1];
-            }
-            if (args[i].equalsIgnoreCase(FILES_PARAMETER)) {
+            } else if (args[i].equalsIgnoreCase(FILES_PARAMETER)) {
                 paths = args[i + 1];
-
-                if (paths.contains(";")) {
-
+                if (StringUtils.isEmpty(paths)) {
+                    throw new  IllegalArgumentException("Need to provide the paths of files to migrate. Argument: " + FILES_PARAMETER + ":<path1;path2...etc>");
+                } else {
+                    files = new ArrayList<>(Arrays.asList(paths.split(";")));
                 }
-            }
-            if (args[i].equalsIgnoreCase(BACKUP_PARAMETER)) {
+            } else if (args[i].equalsIgnoreCase(BACKUP_PARAMETER)) {
                 backUp = Boolean.parseBoolean(args[i + 1]);
             }
+        }
+
+        if (StringUtils.isEmpty(configFile)) {
+            throw new  IllegalArgumentException("Need to provide a configuration file with the details of the migration. Argument: " + CONFIG_FILE_PARAMETER + ":<path>");
         }
 
         MigrationJob job = new MigrationJob();
