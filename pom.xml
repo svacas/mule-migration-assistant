@@ -34,7 +34,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>${lib-dir}</classpathPrefix>
-                            <mainClass>com.mulesoft.munit.tools.migration.MigrationRunner</mainClass>
+                            <mainClass>com.mulesoft.tools.migration.MigrationRunner</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
