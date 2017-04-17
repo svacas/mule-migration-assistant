@@ -56,7 +56,7 @@
           "stepDescriptor" : "Move HTT Request Config attributes to Request Connection child node",
           "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributesToChildNode",
           "parameters" : {
-            "attributes" : "host;protocol;port;basePath;usePersistentConnections;connectionIdleTimeout;responseTimeout;tlsContext-ref",
+            "attributes" : "host;protocol;port;basePath;usePersistentConnections;connectionIdleTimeout;responseTimeout;tlsContext-ref;clientSocketProperties-ref",
             "childNode" : "request-connection"
           }
         },
@@ -69,12 +69,80 @@
           }
         },
         {
+          "stepDescriptor" : "Rename clientSocketProperties attribute",
+          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "parameters" : {
+            "attributeName" : "clientSocketProperties-ref",
+            "newName" : "clientSocketProperties"
+          }
+        },
+        {
           "stepDescriptor" : "Move tls node to child node",
           "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "context",
             "sourceNodeNamespace" : "tls",
             "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/tls",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move proxy node to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "proxy",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move NTLM proxy node to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "ntlm-proxy",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move Basic Auth node to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "basic-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move NTLM Auth node to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "ntlm-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move Digest Auth node to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "digest-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
             "targetNode" : "request-connection",
             "targetNodeNamespace" : "httpn",
             "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
@@ -106,6 +174,66 @@
             "sourceNodeNamespace" : "tcp",
             "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/tcp",
             "targetNode" : "client-socket-properties",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move proxy node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "proxy",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "proxy-config",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move NTLM proxy node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "ntlm-proxy",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "proxy-config",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move Basic Auth node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "basic-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "authentication",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move NTLM Auth node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "ntlm-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "authentication",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        },
+        {
+          "stepDescriptor" : "Move Digest Auth node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "digest-authentication",
+            "sourceNodeNamespace" : "httpn",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",
+            "targetNode" : "authentication",
             "targetNodeNamespace" : "httpn",
             "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
           }
