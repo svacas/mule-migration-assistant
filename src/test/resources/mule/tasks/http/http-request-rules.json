@@ -79,6 +79,59 @@
             "targetNodeNamespace" : "httpn",
             "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
           }
+        },
+        {
+          "stepDescriptor" : "Move client socket properties request connection child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "parameters" : {
+            "sourceNode" : "client-socket-properties",
+            "sourceNodeNamespace" : "tcp",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/tcp",
+            "targetNode" : "request-connection",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        }
+      ]
+    },
+    {
+      "xpathSelector" : "//httpn:request-connection",
+      "taskDescriptor" : "Update Mule HTTP Request Connection elements",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Move client socket properties node to new child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToNewChildNode",
+          "parameters" : {
+            "sourceNode" : "client-socket-properties",
+            "sourceNodeNamespace" : "tcp",
+            "sourceNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/tcp",
+            "targetNode" : "client-socket-properties",
+            "targetNodeNamespace" : "httpn",
+            "targetNodeNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn"
+          }
+        }
+      ]
+    },
+    {
+      "xpathSelector" : "//tcp:client-socket-properties",
+      "taskDescriptor" : "Update Client Socket Namespace",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Update client socket namespace",
+          "type" : "com.mulesoft.tools.migration.task.steps.SetNodeNamespace",
+          "parameters" : {
+            "newNamespace" : "sockets",
+            "newNamespaceUri" : "http://www.mulesoft.org/schema/mule/sockets",
+            "schemaLocationUrl":"http://www.mulesoft.org/schema/mule/sockets/current/mule-sockets.xsd"
+          }
+        },
+        {
+          "stepDescriptor" : "Rename client socket properties",
+          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "parameters" : {
+            "stringToReplace" : "client-socket-properties",
+            "newValue" : "tcp-client-socket-properties"
+          }
         }
       ]
     },
