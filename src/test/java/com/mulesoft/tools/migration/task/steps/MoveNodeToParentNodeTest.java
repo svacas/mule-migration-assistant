@@ -10,7 +10,7 @@ public class MoveNodeToParentNodeTest {
 
     private MoveNodeToParentNode moveNodeToParentNodeStep;
 
-    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http-all-use-case.xml";
+    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http/http-all-use-case.xml";
 
     @Test
     public void testMoveNodeToParentNode() throws Exception {

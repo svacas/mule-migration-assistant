@@ -10,7 +10,7 @@ public class DeleteNamespaceTest {
 
     private DeleteNamespace deleteNamespaceStep;
 
-    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http-all-use-case.xml";
+    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http/http-all-use-case.xml";
 
     @Test
     @Ignore

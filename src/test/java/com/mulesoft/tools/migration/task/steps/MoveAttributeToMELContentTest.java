@@ -9,7 +9,7 @@ public class MoveAttributeToMELContentTest {
 
     private MoveAttributeToMELContent moveAttributeToMELContentStep;
 
-    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http-all-use-case.xml";
+    private static final String EXAMPLE_FILE_PATH = "src/test/resources/mule/examples/http/http-all-use-case.xml";
 
     @Test
     public void testMoveAttributeToMELContent() throws Exception {
