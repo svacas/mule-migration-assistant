@@ -13,9 +13,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 
   <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
 
-  <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8081" doc:name="HTTP Request Configuration" >
-    <tcp:client-socket-properties connectionTimeout="30000" keepAlive="true" receiveBufferSize="12" sendBufferSize="12" />
-  </http:request-config>
+  <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8081" doc:name="HTTP Request Configuration" />
 
   <flow name="use-case-proxy-sender">
     <http:listener config-ref="HTTP_Listener_Configuration" path="/" doc:name="HTTP"/>
