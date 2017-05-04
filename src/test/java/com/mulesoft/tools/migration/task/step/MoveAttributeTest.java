@@ -1,6 +1,6 @@
 package com.mulesoft.tools.migration.task.step;
 
-import com.mulesoft.tools.migration.helpers.DocumentHelpers;
+import com.mulesoft.tools.migration.helper.DocumentHelper;
 import org.jdom2.Element;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class MoveAttributeTest {
     public void testMoveAttribute() throws Exception {
         moveAttribute = new MoveAttribute("mtomEnabled", "consumer-config", "ws", "http://www.mulesoft.org/schema/mule/ws",
                 "config-ref", "name");
-        DocumentHelpers.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
+        DocumentHelper.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
         moveAttribute.execute();
         Element node = moveAttribute.getNodes().get(0);
         assertNull(node.getAttribute("mtomEnabled"));
@@ -27,7 +27,7 @@ public class MoveAttributeTest {
     public void testBadTargetNode() throws Exception {
         moveAttribute = new MoveAttribute("mtomEnabled", "consumer-config1", "ws", "http://www.mulesoft.org/schema/mule/ws",
                 "config-ref", "name");
-        DocumentHelpers.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
+        DocumentHelper.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
         moveAttribute.execute();
         Element node = moveAttribute.getNodes().get(0);
         assertNotNull(node.getAttribute("mtomEnabled"));
@@ -37,7 +37,7 @@ public class MoveAttributeTest {
     public void testEmptyAttribute() throws Exception {
         moveAttribute = new MoveAttribute("", "consumer-config", "ws", "http://www.mulesoft.org/schema/mule/ws",
                 "config-ref", "name");
-        DocumentHelpers.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
+        DocumentHelper.getNodesFromFile("//ws:consumer", moveAttribute, EXAMPLE_FILE_PATH);
         moveAttribute.execute();
         Element node = moveAttribute.getNodes().get(0);
         assertNotNull(node.getAttribute("mtomEnabled"));

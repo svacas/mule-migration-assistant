@@ -1,7 +1,7 @@
 package com.mulesoft.tools.migration;
 
 import com.mulesoft.tools.migration.task.MigrationTask;
-import com.mulesoft.tools.migration.helpers.DocumentHelpers;
+import com.mulesoft.tools.migration.helper.DocumentHelper;
 import com.mulesoft.tools.migration.task.step.*;
 import org.jdom2.Document;
 import org.junit.After;
@@ -34,8 +34,8 @@ public class MigrationJobTest {
         migrationJob = new MigrationJob();
         migrationJob.setDocuments(filePath1);
 
-        docRestoreFile1 = DocumentHelpers.getDocument(filePath1.get(0));
-        docRestoreFile2 = DocumentHelpers.getDocument(filePath2.get(0));
+        docRestoreFile1 = DocumentHelper.getDocument(filePath1.get(0));
+        docRestoreFile2 = DocumentHelper.getDocument(filePath2.get(0));
     }
 
     @Ignore
@@ -149,8 +149,8 @@ public class MigrationJobTest {
 
     @After
     public void restoreFileState() throws Exception {
-        DocumentHelpers.restoreTestDocument(docRestoreFile1, EXAMPLE_1_FILE_PATH);
-        DocumentHelpers.restoreTestDocument(docRestoreFile2, EXAMPLE_2_FILE_PATH);
+        DocumentHelper.restoreTestDocument(docRestoreFile1, EXAMPLE_1_FILE_PATH);
+        DocumentHelper.restoreTestDocument(docRestoreFile2, EXAMPLE_2_FILE_PATH);
     }
 
     private void setTasksForAssertsNodesMigration() {

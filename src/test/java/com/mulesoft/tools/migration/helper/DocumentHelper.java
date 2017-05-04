@@ -1,4 +1,4 @@
-package com.mulesoft.tools.migration.helpers;
+package com.mulesoft.tools.migration.helper;
 
 import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.jdom2.Document;
@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class DocumentHelpers {
+public class DocumentHelper {
 
     public static Document getDocument(String path) throws Exception {
         SAXBuilder saxBuilder = new SAXBuilder();

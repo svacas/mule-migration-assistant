@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getNodesFromFile;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getNodesFromFile;
 import static org.junit.Assert.*;
 
 public class NegateAttributeValueTest {

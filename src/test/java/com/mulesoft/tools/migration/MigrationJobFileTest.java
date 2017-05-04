@@ -8,8 +8,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getDocument;
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.restoreTestDocument;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getDocument;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocument;
 
 public class MigrationJobFileTest {
     private MigrationJob migrationJob;

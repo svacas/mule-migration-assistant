@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getDocument;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getDocument;
 import static org.junit.Assert.*;
 
 public class MigrationTaskTest {

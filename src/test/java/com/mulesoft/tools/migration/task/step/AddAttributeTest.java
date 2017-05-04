@@ -3,7 +3,7 @@ package com.mulesoft.tools.migration.task.step;
 import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.junit.Test;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getNodesFromFile;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getNodesFromFile;
 import static org.junit.Assert.assertTrue;
 
 public class AddAttributeTest {

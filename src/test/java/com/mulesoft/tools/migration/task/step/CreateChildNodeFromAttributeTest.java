@@ -2,7 +2,7 @@ package com.mulesoft.tools.migration.task.step;
 
 import org.junit.Test;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getNodesFromFile;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getNodesFromFile;
 import static org.junit.Assert.*;
 
 public class CreateChildNodeFromAttributeTest {

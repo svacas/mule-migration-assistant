@@ -4,7 +4,7 @@ import org.jdom2.Element;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getNodesFromFile;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getNodesFromFile;
 
 public class MoveNodeToChildNodeTest {
 

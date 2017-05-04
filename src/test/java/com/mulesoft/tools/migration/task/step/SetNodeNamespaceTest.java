@@ -4,7 +4,7 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Document;
 import org.junit.Test;
 
-import static com.mulesoft.tools.migration.helpers.DocumentHelpers.getNodesFromFile;
+import static com.mulesoft.tools.migration.helper.DocumentHelper.getNodesFromFile;
 import static org.junit.Assert.*;
 
 public class SetNodeNamespaceTest {
