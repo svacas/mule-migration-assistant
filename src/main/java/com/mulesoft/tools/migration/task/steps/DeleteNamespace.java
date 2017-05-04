@@ -12,30 +12,6 @@ public class DeleteNamespace extends MigrationStep {
     private String namespaceUri;
     private String schemaLocationUrl;
 
-    public String getNamespace() {
-        return namespace;
-    }
-
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
-    }
-
-    public String getNamespaceUri() {
-        return namespaceUri;
-    }
-
-    public void setNamespaceUri(String namespaceUri) {
-        this.namespaceUri = namespaceUri;
-    }
-
-    public String getSchemaLocationUrl() {
-        return schemaLocationUrl;
-    }
-
-    public void setSchemaLocationUrl(String schemaLocationUrl) {
-        this.schemaLocationUrl = schemaLocationUrl;
-    }
-
     public DeleteNamespace(String namespace, String namespaceUri, String schemaLocationUrl) {
         setNamespace(namespace);
         setNamespaceUri(namespaceUri);
@@ -69,5 +45,29 @@ public class DeleteNamespace extends MigrationStep {
         } else {
             return false;
         }
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    public String getNamespaceUri() {
+        return namespaceUri;
+    }
+
+    public void setNamespaceUri(String namespaceUri) {
+        this.namespaceUri = namespaceUri;
+    }
+
+    public String getSchemaLocationUrl() {
+        return schemaLocationUrl;
+    }
+
+    public void setSchemaLocationUrl(String schemaLocationUrl) {
+        this.schemaLocationUrl = schemaLocationUrl;
     }
 }

@@ -10,6 +10,28 @@ public class DeleteChildNode extends MigrationStep {
     private String nodeNamespace;
     private String nodeNamespaceUri;
 
+    public DeleteChildNode(String node, String nodeNamespace, String nodeNamespaceUri) {
+        setNode(node);
+        setNodeNamespace(nodeNamespace);
+        setNodeNamespaceUri(nodeNamespaceUri);
+    }
+
+    public DeleteChildNode(){}
+
+    public void execute() throws Exception {
+        try {
+            Namespace namespace = Namespace.getNamespace(getNodeNamespace(), getNodeNamespaceUri());
+            for (Element node : getNodes()) {
+                Element element = node.getChild(getNode(),namespace);
+                if (element != null) {
+                    node.removeChild(getNode(),namespace);
+                }
+            }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Remove child node exception. " + ex.getMessage());
+        }
+    }
+
     public String getNode() {
         return node;
     }
@@ -32,27 +54,5 @@ public class DeleteChildNode extends MigrationStep {
 
     public void setNodeNamespaceUri(String nodeNamespaceUri) {
         this.nodeNamespaceUri = nodeNamespaceUri;
-    }
-
-    public DeleteChildNode(String node, String nodeNamespace, String nodeNamespaceUri) {
-        setNode(node);
-        setNodeNamespace(nodeNamespace);
-        setNodeNamespaceUri(nodeNamespaceUri);
-    }
-
-    public DeleteChildNode(){}
-
-    public void execute() throws Exception {
-        try {
-            Namespace namespace = Namespace.getNamespace(getNodeNamespace(), getNodeNamespaceUri());
-            for (Element node : getNodes()) {
-                Element element = node.getChild(getNode(),namespace);
-                if (element != null) {
-                    node.removeChild(getNode(),namespace);
-                }
-            }
-        }catch (Exception ex) {
-            throw new MigrationStepException("Remove child node exception. " + ex.getMessage());
-        }
     }
 }

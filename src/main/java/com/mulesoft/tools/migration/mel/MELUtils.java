@@ -9,6 +9,9 @@ import java.util.StringJoiner;
  */
 public class MELUtils {
 
+    private MELUtils() {
+    }
+
     private static final String SINGLE_QUOTE = "'";
 
     private static final String SEPARATOR = ":";

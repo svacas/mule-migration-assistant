@@ -9,22 +9,6 @@ public class MoveAttributeToChildNode extends MigrationStep {
     private String attribute;
     private String childNode;
 
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
-    }
-
-    public String getChildNode() {
-        return childNode;
-    }
-
-    public void setChildNode(String childNode) {
-        this.childNode = childNode;
-    }
-
     public MoveAttributeToChildNode(String attribute, String childNode) {
         setAttribute(attribute);
         setChildNode(childNode);
@@ -47,5 +31,21 @@ public class MoveAttributeToChildNode extends MigrationStep {
         }catch (Exception ex) {
             throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
         }
+    }
+
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public String getChildNode() {
+        return childNode;
+    }
+
+    public void setChildNode(String childNode) {
+        this.childNode = childNode;
     }
 }

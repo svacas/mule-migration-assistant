@@ -8,14 +8,6 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
 
     private String attribute;
 
-    public String getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
-    }
-
     public CreateChildNodeFromAttribute(String attribute) {
         setAttribute(attribute);
     }
@@ -40,4 +32,11 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
         }
     }
 
+    public String getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
 }

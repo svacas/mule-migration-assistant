@@ -6,6 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class TaskBuilder {
+
     public static final String STEPS_FIELD = "stepsDefinition";
 
     public static MigrationTask build(JSONObject taskDef) throws Exception {
@@ -21,5 +22,4 @@ public class TaskBuilder {
 
         return migrationTask;
     }
-
 }

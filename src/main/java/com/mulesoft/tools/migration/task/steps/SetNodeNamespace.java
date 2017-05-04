@@ -11,30 +11,6 @@ public class SetNodeNamespace extends MigrationStep {
     private String newNamespaceUri;
     private String schemaLocationUrl;
 
-    public String getNewNamespace() {
-        return newNamespace;
-    }
-
-    public void setNewNamespace(String newNamespace) {
-        this.newNamespace = newNamespace;
-    }
-
-    public String getNewNamespaceUri() {
-        return newNamespaceUri;
-    }
-
-    public void setNewNamespaceUri(String newNameSpaceUri) {
-        this.newNamespaceUri = newNameSpaceUri;
-    }
-
-    public String getSchemaLocationUrl() {
-        return schemaLocationUrl;
-    }
-
-    public void setSchemaLocationUrl(String schemaLocationUrl) {
-        this.schemaLocationUrl = schemaLocationUrl;
-    }
-
     public SetNodeNamespace(String newNamespace, String newNamespaceUri, String schemaLocationUrl) {
         setNewNamespace(newNamespace);
         setNewNamespaceUri(newNamespaceUri);
@@ -72,5 +48,29 @@ public class SetNodeNamespace extends MigrationStep {
         } else {
             return true;
         }
+    }
+
+    public String getNewNamespace() {
+        return newNamespace;
+    }
+
+    public void setNewNamespace(String newNamespace) {
+        this.newNamespace = newNamespace;
+    }
+
+    public String getNewNamespaceUri() {
+        return newNamespaceUri;
+    }
+
+    public void setNewNamespaceUri(String newNameSpaceUri) {
+        this.newNamespaceUri = newNameSpaceUri;
+    }
+
+    public String getSchemaLocationUrl() {
+        return schemaLocationUrl;
+    }
+
+    public void setSchemaLocationUrl(String schemaLocationUrl) {
+        this.schemaLocationUrl = schemaLocationUrl;
     }
 }

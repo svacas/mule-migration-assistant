@@ -13,6 +13,36 @@ public class MoveNodeToChildNode extends MigrationStep {
     private String targetNodeNamespace;
     private String targetNodeNamespaceUri;
 
+    public MoveNodeToChildNode(String sourceNode, String sourceNodeNamespace, String sourceNodeNamespaceUri, String targetNode, String targetNodeNamespace, String targetNodeNamespaceUri) {
+        setSourceNode(sourceNode);
+        setSourceNodeNamespace(sourceNodeNamespace);
+        setSourceNodeNamespaceUri(sourceNodeNamespaceUri);
+        setTargetNode(targetNode);
+        setTargetNodeNamespace(targetNodeNamespace);
+        setTargetNodeNamespaceUri(targetNodeNamespaceUri);
+    }
+
+    public MoveNodeToChildNode(){}
+
+    public void execute() throws Exception {
+        try {
+            Namespace sourceNamespace = Namespace.getNamespace(getSourceNodeNamespace(), getSourceNodeNamespaceUri());
+            Namespace targetNamespace = Namespace.getNamespace(getTargetNodeNamespace(), getTargetNodeNamespaceUri());
+            for (Element node : getNodes()) {
+                Element sourceElement = node.getChild(getSourceNode(),sourceNamespace);
+                if (sourceElement != null) {
+                    Element targetElement = node.getChild(getTargetNode(),targetNamespace);
+                    if (targetElement != null) {
+                        node.removeChild(getSourceNode(),sourceNamespace);
+                        targetElement.getChildren().add(sourceElement);
+                    }
+                }
+            }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
+        }
+    }
+
     public String getSourceNode() {
         return sourceNode;
     }
@@ -59,35 +89,5 @@ public class MoveNodeToChildNode extends MigrationStep {
 
     public void setTargetNodeNamespaceUri(String targetNodeNamespaceUri) {
         this.targetNodeNamespaceUri = targetNodeNamespaceUri;
-    }
-
-    public MoveNodeToChildNode(String sourceNode, String sourceNodeNamespace, String sourceNodeNamespaceUri, String targetNode, String targetNodeNamespace, String targetNodeNamespaceUri) {
-        setSourceNode(sourceNode);
-        setSourceNodeNamespace(sourceNodeNamespace);
-        setSourceNodeNamespaceUri(sourceNodeNamespaceUri);
-        setTargetNode(targetNode);
-        setTargetNodeNamespace(targetNodeNamespace);
-        setTargetNodeNamespaceUri(targetNodeNamespaceUri);
-    }
-
-    public MoveNodeToChildNode(){}
-
-    public void execute() throws Exception {
-        try {
-            Namespace sourceNamespace = Namespace.getNamespace(getSourceNodeNamespace(), getSourceNodeNamespaceUri());
-            Namespace targetNamespace = Namespace.getNamespace(getTargetNodeNamespace(), getTargetNodeNamespaceUri());
-            for (Element node : getNodes()) {
-                Element sourceElement = node.getChild(getSourceNode(),sourceNamespace);
-                if (sourceElement != null) {
-                    Element targetElement = node.getChild(getTargetNode(),targetNamespace);
-                    if (targetElement != null) {
-                        node.removeChild(getSourceNode(),sourceNamespace);
-                        targetElement.getChildren().add(sourceElement);
-                    }
-                }
-            }
-        }catch (Exception ex) {
-            throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
-        }
     }
 }

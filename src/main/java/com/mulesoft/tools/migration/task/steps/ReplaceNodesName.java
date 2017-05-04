@@ -9,22 +9,6 @@ public class ReplaceNodesName extends MigrationStep {
     private String nodeNamespace;
     private String newNodeName;
 
-    public String getNodeNamespace() {
-        return nodeNamespace;
-    }
-
-    public void setNodeNamespace(String nodeNamespace) {
-        this.nodeNamespace = nodeNamespace;
-    }
-
-    public String getNewNodeName() {
-        return newNodeName;
-    }
-
-    public void setNewNodeName(String newNodeName) {
-        this.newNodeName = newNodeName;
-    }
-
     public ReplaceNodesName(){}
 
     public ReplaceNodesName(String nodeNamespace, String newNodeName) {
@@ -48,5 +32,20 @@ public class ReplaceNodesName extends MigrationStep {
         }
     }
 
+    public String getNodeNamespace() {
+        return nodeNamespace;
+    }
+
+    public void setNodeNamespace(String nodeNamespace) {
+        this.nodeNamespace = nodeNamespace;
+    }
+
+    public String getNewNodeName() {
+        return newNodeName;
+    }
+
+    public void setNewNodeName(String newNodeName) {
+        this.newNodeName = newNodeName;
+    }
 
 }

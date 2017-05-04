@@ -8,14 +8,6 @@ public class CreateChildNode extends MigrationStep {
 
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public CreateChildNode(String name) {
         setName(name);
     }
@@ -36,4 +28,11 @@ public class CreateChildNode extends MigrationStep {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -21,18 +21,6 @@ public class MigrationTask {
     private List<Element> nodes;
     private String taskDescriptor;
 
-    public void setTaskDescriptor(String descriptor) {
-        this.taskDescriptor = descriptor;
-    }
-
-    public String getTaskDescriptor() {
-        return this.taskDescriptor;
-    }
-
-    public void setDocument(Document document) {
-        this.doc = document;
-    }
-
     public MigrationTask(String xpathSelector) {
         this.xpathSelector = xpathSelector;
         this.steps = new ArrayList<>();
@@ -69,5 +57,17 @@ public class MigrationTask {
         } else {
             return Collections.emptyList();
         }
+    }
+
+    public void setTaskDescriptor(String descriptor) {
+        this.taskDescriptor = descriptor;
+    }
+
+    public String getTaskDescriptor() {
+        return this.taskDescriptor;
+    }
+
+    public void setDocument(Document document) {
+        this.doc = document;
     }
 }

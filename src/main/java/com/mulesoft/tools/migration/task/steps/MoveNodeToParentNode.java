@@ -10,6 +10,29 @@ public class MoveNodeToParentNode extends MigrationStep {
     private String sourceNodeNamespace;
     private String sourceNodeNamespaceUri;
 
+    public MoveNodeToParentNode(String sourceNode, String sourceNodeNamespace, String sourceNodeNamespaceUri) {
+        setSourceNode(sourceNode);
+        setSourceNodeNamespace(sourceNodeNamespace);
+        setSourceNodeNamespaceUri(sourceNodeNamespaceUri);
+    }
+
+    public MoveNodeToParentNode(){}
+
+    public void execute() throws Exception {
+        try {
+            Namespace sourceNamespace = Namespace.getNamespace(getSourceNodeNamespace(), getSourceNodeNamespaceUri());
+            for (Element node : getNodes()) {
+                Element sourceElement = node.getChild(getSourceNode(),sourceNamespace);
+                if (sourceElement != null) {
+                    node.removeChild(getSourceNode(),sourceNamespace);
+                    node.getParentElement().getChildren().add(sourceElement);
+                }
+            }
+        } catch (Exception ex) {
+            throw new MigrationStepException("Move node to parent exception. " + ex.getMessage());
+        }
+    }
+
     public String getSourceNode() {
         return sourceNode;
     }
@@ -32,28 +55,5 @@ public class MoveNodeToParentNode extends MigrationStep {
 
     public void setSourceNodeNamespaceUri(String sourceNodeNamespaceUri) {
         this.sourceNodeNamespaceUri = sourceNodeNamespaceUri;
-    }
-
-    public MoveNodeToParentNode(String sourceNode, String sourceNodeNamespace, String sourceNodeNamespaceUri) {
-        setSourceNode(sourceNode);
-        setSourceNodeNamespace(sourceNodeNamespace);
-        setSourceNodeNamespaceUri(sourceNodeNamespaceUri);
-    }
-
-    public MoveNodeToParentNode(){}
-
-    public void execute() throws Exception {
-        try {
-            Namespace sourceNamespace = Namespace.getNamespace(getSourceNodeNamespace(), getSourceNodeNamespaceUri());
-            for (Element node : getNodes()) {
-                Element sourceElement = node.getChild(getSourceNode(),sourceNamespace);
-                if (sourceElement != null) {
-                    node.removeChild(getSourceNode(),sourceNamespace);
-                    node.getParentElement().getChildren().add(sourceElement);
-                }
-            }
-        } catch (Exception ex) {
-            throw new MigrationStepException("Move node to parent exception. " + ex.getMessage());
-        }
     }
 }

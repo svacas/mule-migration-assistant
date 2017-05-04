@@ -11,14 +11,6 @@ public class NegateAttributeValue extends MigrationStep {
 
     private String attributeName;
 
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
     public NegateAttributeValue(String attributeName) {
         setAttributeName(attributeName);
     }
@@ -48,5 +40,11 @@ public class NegateAttributeValue extends MigrationStep {
         }
     }
 
+    public String getAttributeName() {
+        return attributeName;
+    }
 
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
 }

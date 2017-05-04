@@ -24,6 +24,50 @@ public class CreateMELNodeFromAttributes extends MigrationStep {
 
     private String attributeValueName;
 
+    public CreateMELNodeFromAttributes(String originalNode, String newNodeName, String newNodeNamespace,
+                                       String newNodeNamespaceUri, String attributeKeyName, String attributeValueName) {
+        setOriginalNode(originalNode);
+        setNewNodeName(newNodeName);
+        setNewNodeNamespace(newNodeNamespace);
+        setNewNodeNamespaceUri(newNodeNamespaceUri);
+        setAttributeKeyName(attributeKeyName);
+        setAttributeValueName(attributeValueName);
+    }
+
+    public CreateMELNodeFromAttributes(){}
+
+    public void execute() throws Exception {
+        try {
+            for (Element node : getNodes()) {
+                Map<String,String> attributesMap = new HashMap<>();
+                List<Element> elementsToRemove = new ArrayList<>();
+
+                for (Element childNode : node.getChildren()) {
+                    if (childNode.getName().equals(getOriginalNode())) {
+                        Attribute keyAttribute = childNode.getAttribute(getAttributeKeyName());
+                        Attribute valueAttribute = childNode.getAttribute(getAttributeValueName());
+                        if (null != keyAttribute && null != valueAttribute) {
+                            elementsToRemove.add(childNode);
+                            attributesMap.put(keyAttribute.getValue(),valueAttribute.getValue());
+                        }
+                    }
+                }
+
+                if(attributesMap.size() > 0){
+                    for (Element elementToRemove: elementsToRemove) {
+                        node.removeContent(elementToRemove);
+                    }
+                    Namespace newNodeNamespace = Namespace.getNamespace(getNewNodeNamespace(), getNewNodeNamespaceUri());
+                    Element child = new Element(getNewNodeName(), newNodeNamespace);
+                    child.setText(getMELExpressionFromMap(attributesMap));
+                    node.addContent(child);
+                }
+            }
+        } catch (Exception ex) {
+            throw new MigrationStepException("Create mel node from attributes exception. " + ex.getMessage());
+        }
+    }
+
     public String getOriginalNode() {
         return originalNode;
     }
@@ -70,48 +114,5 @@ public class CreateMELNodeFromAttributes extends MigrationStep {
 
     public void setAttributeValueName(String attributeValueName) {
         this.attributeValueName = attributeValueName;
-    }
-
-    public CreateMELNodeFromAttributes(String originalNode, String newNodeName, String newNodeNamespace, String newNodeNamespaceUri, String attributeKeyName, String attributeValueName) {
-        setOriginalNode(originalNode);
-        setNewNodeName(newNodeName);
-        setNewNodeNamespace(newNodeNamespace);
-        setNewNodeNamespaceUri(newNodeNamespaceUri);
-        setAttributeKeyName(attributeKeyName);
-        setAttributeValueName(attributeValueName);
-    }
-
-    public CreateMELNodeFromAttributes(){}
-
-    public void execute() throws Exception {
-        try {
-            for (Element node : getNodes()) {
-                Map<String,String> attributesMap = new HashMap<>();
-                List<Element> elementsToRemove = new ArrayList<>();
-
-                for (Element childNode : node.getChildren()) {
-                    if (childNode.getName().equals(getOriginalNode())) {
-                        Attribute keyAttribute = childNode.getAttribute(getAttributeKeyName());
-                        Attribute valueAttribute = childNode.getAttribute(getAttributeValueName());
-                        if (null != keyAttribute && null != valueAttribute) {
-                            elementsToRemove.add(childNode);
-                            attributesMap.put(keyAttribute.getValue(),valueAttribute.getValue());
-                        }
-                    }
-                }
-
-                if(attributesMap.size() > 0){
-                    for (Element elementToRemove: elementsToRemove) {
-                        node.removeContent(elementToRemove);
-                    }
-                    Namespace newNodeNamespace = Namespace.getNamespace(getNewNodeNamespace(), getNewNodeNamespaceUri());
-                    Element child = new Element(getNewNodeName(), newNodeNamespace);
-                    child.setText(getMELExpressionFromMap(attributesMap));
-                    node.addContent(child);
-                }
-            }
-        } catch (Exception ex) {
-            throw new MigrationStepException("Create mel node from attributes exception. " + ex.getMessage());
-        }
     }
 }

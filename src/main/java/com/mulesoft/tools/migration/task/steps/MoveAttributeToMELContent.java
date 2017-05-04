@@ -10,14 +10,6 @@ public class MoveAttributeToMELContent extends MigrationStep {
 
     private String attributeName;
 
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
     public MoveAttributeToMELContent(String attributeName) {
         setAttributeName(attributeName);
     }
@@ -36,5 +28,13 @@ public class MoveAttributeToMELContent extends MigrationStep {
         }catch (Exception ex) {
             throw new MigrationStepException("Move attribute to MEL content exception. " + ex.getMessage());
         }
+    }
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
     }
 }

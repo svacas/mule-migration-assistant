@@ -11,7 +11,6 @@ import static com.mulesoft.tools.migration.MigrationRunner.MigrationConsoleOptio
 public class MigrationRunner {
 
     private ArrayList<String> files;
-    private String dir;
     private String migrationConfigFile;
     private String migrationConfigDir;
     private Boolean backup;

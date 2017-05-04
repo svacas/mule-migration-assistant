@@ -9,22 +9,6 @@ public class UpdateAttribute extends MigrationStep {
     private String attributeName;
     private String newValue;
 
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public String getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(String newValue) {
-        this.newValue = newValue;
-    }
-
     public UpdateAttribute(String attributeName, String newValue) {
         setAttributeName(attributeName);
         setNewValue(newValue);
@@ -43,5 +27,21 @@ public class UpdateAttribute extends MigrationStep {
         } catch (Exception ex) {
             throw new MigrationStepException("Update attribute exception. " + ex.getMessage());
         }
+    }
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public String getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(String newValue) {
+        this.newValue = newValue;
     }
 }

@@ -9,22 +9,6 @@ public class AddAttribute extends MigrationStep {
     private String attributeName;
     private String attributeValue;
 
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public void setAttributeValue(String attributeValue) {
-        this.attributeValue = attributeValue;
-    }
-
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public String getAttributeValue() {
-        return attributeValue;
-    }
-
     public AddAttribute(String attributeName, String attributeValue) {
         setAttributeValue(attributeValue);
         setAttributeName(attributeName);
@@ -41,5 +25,21 @@ public class AddAttribute extends MigrationStep {
         } catch (Exception ex) {
             throw new MigrationStepException("Add Attribute step exception. " + ex.getMessage());
         }
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public void setAttributeValue(String attributeValue) {
+        this.attributeValue = attributeValue;
+    }
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public String getAttributeValue() {
+        return attributeValue;
     }
 }

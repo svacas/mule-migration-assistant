@@ -17,6 +17,48 @@ public class MoveAttribute extends MigrationStep {
     private String sourceReferenceAttribute;
     private String targetReferenceAttribute;
 
+    public MoveAttribute(String attribute, String targetNode, String targetNodeNamespace, String targetNodeNamespaceUri,
+                         String sourceReferenceAttribute, String targetReferenceAttribute) {
+        setAttribute(attribute);
+        setTargetNode(targetNode);
+        setTargetNodeNamespace(targetNodeNamespace);
+        setTargetNodeNamespaceUri(targetNodeNamespaceUri);
+        setSourceReferenceAttribute(sourceReferenceAttribute);
+        setTargetReferenceAttribute(targetReferenceAttribute);
+    }
+
+    public MoveAttribute(){}
+
+    public void execute() throws Exception {
+        try {
+
+            if (!isBlank(getAttribute()) && !isBlank(getTargetNode())
+                    && !isBlank(getTargetNodeNamespace())
+                    && !isBlank(getTargetNodeNamespaceUri())) {
+
+                Attribute attribute;
+                String referenceValue;
+
+                for (Element node : getNodes()) {
+                    attribute = node.getAttribute(getAttribute());
+                    referenceValue = node.getAttributeValue(getSourceReferenceAttribute());
+                    if (attribute != null) {
+                        Namespace namespace = Namespace.getNamespace(getTargetNodeNamespace(), getTargetNodeNamespaceUri());
+                        if(null != namespace) {
+                            Element element = findChildElement(getTargetNode(), referenceValue, getTargetReferenceAttribute(), namespace, getDocument().getRootElement());
+                            if (null != element) {
+                                node.removeAttribute(attribute);
+                                element.setAttribute(attribute);
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
+        }
+    }
+
     public String getAttribute() {
         return attribute;
     }
@@ -63,47 +105,5 @@ public class MoveAttribute extends MigrationStep {
 
     public void setTargetReferenceAttribute(String targetReferenceAttribute) {
         this.targetReferenceAttribute = targetReferenceAttribute;
-    }
-
-    public MoveAttribute(String attribute, String targetNode, String targetNodeNamespace, String targetNodeNamespaceUri,
-                         String sourceReferenceAttribute, String targetReferenceAttribute) {
-        setAttribute(attribute);
-        setTargetNode(targetNode);
-        setTargetNodeNamespace(targetNodeNamespace);
-        setTargetNodeNamespaceUri(targetNodeNamespaceUri);
-        setSourceReferenceAttribute(sourceReferenceAttribute);
-        setTargetReferenceAttribute(targetReferenceAttribute);
-    }
-
-    public MoveAttribute(){}
-
-    public void execute() throws Exception {
-        try {
-
-            if (!isBlank(getAttribute()) && !isBlank(getTargetNode())
-                    && !isBlank(getTargetNodeNamespace())
-                    && !isBlank(getTargetNodeNamespaceUri())) {
-
-                Attribute attribute;
-                String referenceValue;
-
-                for (Element node : getNodes()) {
-                    attribute = node.getAttribute(getAttribute());
-                    referenceValue = node.getAttributeValue(getSourceReferenceAttribute());
-                    if (attribute != null) {
-                        Namespace namespace = Namespace.getNamespace(getTargetNodeNamespace(), getTargetNodeNamespaceUri());
-                        if(null != namespace) {
-                            Element element = findChildElement(getTargetNode(), referenceValue, getTargetReferenceAttribute(), namespace, getDocument().getRootElement());
-                            if (null != element) {
-                                node.removeAttribute(attribute);
-                                element.setAttribute(attribute);
-                            }
-                        }
-                    }
-                }
-            }
-        }catch (Exception ex) {
-            throw new MigrationStepException("Move attribute exception. " + ex.getMessage());
-        }
     }
 }

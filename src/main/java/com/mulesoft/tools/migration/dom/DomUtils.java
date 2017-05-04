@@ -8,6 +8,9 @@ import org.jdom2.Namespace;
  */
 public class DomUtils {
 
+    private DomUtils() {
+    }
+
     public static Element findChildElement(String nodeName, String referenceValue, String targetReferenceAttribute, Namespace namespace, Element element) {
 
         if (element.getNamespace().equals(namespace)

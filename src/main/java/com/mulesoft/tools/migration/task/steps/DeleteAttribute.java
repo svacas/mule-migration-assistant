@@ -8,14 +8,6 @@ public class DeleteAttribute extends MigrationStep {
 
     private String attributeName;
 
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public String getAttributeName() {
-        return attributeName;
-    }
-
     public DeleteAttribute(String attributeName) {
         setAttributeName(attributeName);
     }
@@ -30,5 +22,13 @@ public class DeleteAttribute extends MigrationStep {
         } catch (Exception ex) {
             throw new MigrationStepException("Remove Attribute step exception. " + ex.getMessage());
         }
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public String getAttributeName() {
+        return attributeName;
     }
 }

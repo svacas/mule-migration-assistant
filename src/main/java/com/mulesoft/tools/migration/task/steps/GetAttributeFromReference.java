@@ -19,6 +19,54 @@ public class GetAttributeFromReference extends MigrationStep {
     private String referenceChildNode;
     private String referenceAttribute;
 
+    public GetAttributeFromReference(String sourceReferenceAttribute, String targetReferenceAttribute,
+                                     String referenceNode, String referenceNodeNamespace,
+                                     String referenceNodeNamespaceUri, String referenceChildNode,
+                                     String referenceAttribute) {
+
+        this.sourceReferenceAttribute = sourceReferenceAttribute;
+        this.targetReferenceAttribute = targetReferenceAttribute;
+        this.referenceNode = referenceNode;
+        this.referenceNodeNamespace = referenceNodeNamespace;
+        this.referenceNodeNamespaceUri = referenceNodeNamespaceUri;
+        this.referenceChildNode = referenceChildNode;
+        this.referenceAttribute = referenceAttribute;
+    }
+
+    public GetAttributeFromReference(){}
+
+    public void execute() throws Exception {
+        try {
+
+            if (!isBlank(getSourceReferenceAttribute()) && !isBlank(getTargetReferenceAttribute())) {
+
+                String referenceValue;
+                Namespace namespace;
+
+                for (Element node : getNodes()) {
+                    referenceValue = node.getAttributeValue(getSourceReferenceAttribute());
+                    namespace = Namespace.getNamespace(getReferenceNodeNamespace(), getReferenceNodeNamespaceUri());
+                    if(null != namespace) {
+                        Element referenceElement = findChildElement(getReferenceNode(), referenceValue, getTargetReferenceAttribute(),
+                                namespace, getDocument().getRootElement());
+                        if (null != referenceElement && null != getReferenceChildNode()) {
+                            Element referenceChildElement = findChildElement(getReferenceChildNode(), referenceElement);
+                            if (null != referenceChildElement) {
+                                Attribute originalAttribute = referenceChildElement.getAttribute(getReferenceAttribute());
+                                if(null != originalAttribute) {
+                                    Attribute newAttribute = new Attribute(originalAttribute.getName(), originalAttribute.getValue());
+                                    node.setAttribute(newAttribute);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }catch (Exception ex) {
+            throw new MigrationStepException("Get attribute from reference exception. " + ex.getMessage());
+        }
+    }
+
     public String getSourceReferenceAttribute() {
         return sourceReferenceAttribute;
     }
@@ -74,53 +122,4 @@ public class GetAttributeFromReference extends MigrationStep {
     public void setReferenceAttribute(String referenceAttribute) {
         this.referenceAttribute = referenceAttribute;
     }
-
-    public GetAttributeFromReference(String sourceReferenceAttribute, String targetReferenceAttribute,
-                                     String referenceNode, String referenceNodeNamespace,
-                                     String referenceNodeNamespaceUri, String referenceChildNode,
-                                     String referenceAttribute) {
-
-        this.sourceReferenceAttribute = sourceReferenceAttribute;
-        this.targetReferenceAttribute = targetReferenceAttribute;
-        this.referenceNode = referenceNode;
-        this.referenceNodeNamespace = referenceNodeNamespace;
-        this.referenceNodeNamespaceUri = referenceNodeNamespaceUri;
-        this.referenceChildNode = referenceChildNode;
-        this.referenceAttribute = referenceAttribute;
-    }
-
-    public GetAttributeFromReference(){}
-
-    public void execute() throws Exception {
-        try {
-
-            if (!isBlank(getSourceReferenceAttribute()) && !isBlank(getTargetReferenceAttribute())) {
-
-                String referenceValue;
-                Namespace namespace;
-
-                for (Element node : getNodes()) {
-                    referenceValue = node.getAttributeValue(getSourceReferenceAttribute());
-                    namespace = Namespace.getNamespace(getReferenceNodeNamespace(), getReferenceNodeNamespaceUri());
-                    if(null != namespace) {
-                        Element referenceElement = findChildElement(getReferenceNode(), referenceValue, getTargetReferenceAttribute(),
-                                namespace, getDocument().getRootElement());
-                        if (null != referenceElement && null != getReferenceChildNode()) {
-                            Element referenceChildElement = findChildElement(getReferenceChildNode(), referenceElement);
-                            if (null != referenceChildElement) {
-                                Attribute originalAttribute = referenceChildElement.getAttribute(getReferenceAttribute());
-                                if(null != originalAttribute) {
-                                    Attribute newAttribute = new Attribute(originalAttribute.getName(), originalAttribute.getValue());
-                                    node.setAttribute(newAttribute);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }catch (Exception ex) {
-            throw new MigrationStepException("Get attribute from reference exception. " + ex.getMessage());
-        }
-    }
-
 }
