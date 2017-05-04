@@ -7,7 +7,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update assertion namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceNodesName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceNodesName",
           "parameters" : {
             "nodeNamespace" : "munit-ext",
             "newNodeName" : "assert-that"
@@ -15,7 +15,7 @@
         },
         {
           "stepDescriptor" : "Update attribute expectedValue to new DSL",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "expectedValue",
             "newName" : "is"
@@ -23,7 +23,7 @@
         },
         {
           "stepDescriptor" : "Update attribute actualValue to new DSL",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "actualValue",
             "newName" : "expression"

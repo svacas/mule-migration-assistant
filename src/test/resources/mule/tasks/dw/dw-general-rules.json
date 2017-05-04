@@ -7,7 +7,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Delete http namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.DeleteNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.DeleteNamespace",
           "parameters" : {
             "namespace" : "dw",
             "namespaceUri" : "http://www.mulesoft.org/schema/mule/ee/dw",
@@ -16,7 +16,7 @@
         },
         {
           "stepDescriptor" : "Update http namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.SetNodeNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.SetNodeNamespace",
           "parameters" : {
             "newNamespace" : "ee",
             "newNamespaceUri" : "http://www.mulesoft.org/schema/mule/ee/core",
@@ -32,7 +32,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Rename transform message",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "transform-message",
             "newValue" : "transform"

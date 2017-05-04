@@ -7,14 +7,14 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Create child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "listener-connection"
           }
         },
         {
           "stepDescriptor" : "Rename tlsContext attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "tlsContext-ref",
             "newName" : "tlsContext"
@@ -22,7 +22,7 @@
         },
         {
           "stepDescriptor" : "Move attributes to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributesToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributesToChildNode",
           "parameters" : {
             "attributes" : "host;protocol;port;basePath;usePersistentConnections;connectionIdleTimeout;tlsContext",
             "childNode" : "listener-connection"
@@ -30,7 +30,7 @@
         },
         {
           "stepDescriptor" : "Move tls node to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "context",
             "sourceNodeNamespace" : "tls",
@@ -48,7 +48,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Create Headers MEL expression node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateMELNodeFromAttributes",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateMELNodeFromAttributes",
           "parameters" : {
             "originalNode" : "header",
             "newNodeName" : "headers",
@@ -60,7 +60,7 @@
         },
         {
           "stepDescriptor" : "Rename response builder",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "response-builder",
             "newValue" : "response"
@@ -74,7 +74,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Create Headers MEL expression node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateMELNodeFromAttributes",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateMELNodeFromAttributes",
           "parameters" : {
             "originalNode" : "header",
             "newNodeName" : "headers",
@@ -86,7 +86,7 @@
         },
         {
           "stepDescriptor" : "Rename error response builder",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "error-response-builder",
             "newValue" : "error-response"

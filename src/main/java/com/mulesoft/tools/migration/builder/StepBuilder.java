@@ -2,7 +2,7 @@ package com.mulesoft.tools.migration.builder;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mulesoft.tools.migration.task.steps.MigrationStep;
+import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 

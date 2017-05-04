@@ -7,14 +7,14 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Create child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "connection"
           }
         },
         {
           "stepDescriptor" : "Move attributes to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributesToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributesToChildNode",
           "parameters" : {
             "attributes" : "outputPattern;writeToDirectory;readFromDirectory;workDirectory;workFileNamePattern;autoDelete;outputAppend;streaming;recursive;validateConnections;pollingFrequency;fileAge;moveToPattern;moveToDirectory;dynamicNotification;serialiseObjects;dispatcherPoolFactory-ref",
             "childNode" : "connection"
@@ -22,7 +22,7 @@
         },
         {
           "stepDescriptor" : "Rename db config",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "connector",
             "newValue" : "config"
@@ -36,7 +36,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Rename connector ref attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "connector-ref",
             "newName" : "config-ref"
@@ -44,7 +44,7 @@
         },
         {
           "stepDescriptor" : "Rename Inbound Endpoint",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "inbound-endpoint",
             "newValue" : "directory-listener"

@@ -2,7 +2,7 @@ package com.mulesoft.tools.migration;
 
 import com.mulesoft.tools.migration.task.MigrationTask;
 import com.mulesoft.tools.migration.helpers.DocumentHelpers;
-import com.mulesoft.tools.migration.task.steps.*;
+import com.mulesoft.tools.migration.task.step.*;
 import org.jdom2.Document;
 import org.junit.After;
 import org.junit.Before;

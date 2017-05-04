@@ -7,7 +7,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Delete http namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.DeleteNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.DeleteNamespace",
           "parameters" : {
             "namespace" : "http",
             "namespaceUri" : "http://www.mulesoft.org/schema/mule/http",
@@ -16,7 +16,7 @@
         },
         {
           "stepDescriptor" : "Update http namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.SetNodeNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.SetNodeNamespace",
           "parameters" : {
             "newNamespace" : "httpn",
             "newNamespaceUri" : "http://www.mulesoft.org/schema/mule/httpn",

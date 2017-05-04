@@ -1,6 +1,6 @@
 package com.mulesoft.tools.migration.helpers;
 
-import com.mulesoft.tools.migration.task.steps.MigrationStep;
+import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;

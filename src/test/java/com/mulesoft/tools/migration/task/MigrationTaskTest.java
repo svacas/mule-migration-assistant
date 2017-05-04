@@ -1,7 +1,7 @@
 package com.mulesoft.tools.migration.task;
 
-import com.mulesoft.tools.migration.task.steps.AddAttribute;
-import com.mulesoft.tools.migration.task.steps.MigrationStep;
+import com.mulesoft.tools.migration.task.step.AddAttribute;
+import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.junit.Test;
 
 import java.lang.reflect.Field;

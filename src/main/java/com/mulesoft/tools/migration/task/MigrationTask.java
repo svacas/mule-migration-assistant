@@ -2,7 +2,7 @@ package com.mulesoft.tools.migration.task;
 
 import com.google.common.base.Strings;
 import com.mulesoft.tools.migration.exception.MigrationTaskException;
-import com.mulesoft.tools.migration.task.steps.MigrationStep;
+import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;

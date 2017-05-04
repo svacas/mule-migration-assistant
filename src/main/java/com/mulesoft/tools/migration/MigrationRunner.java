@@ -36,7 +36,7 @@ public class MigrationRunner {
 
         Options options = new Options();
 
-        options.addOption(MIGRATION_CONFIG_FILE,true,"Migration config file (json) containing all the rules and steps" );
+        options.addOption(MIGRATION_CONFIG_FILE,true,"Migration config file (json) containing all the rules and step" );
         options.addOption(MIGRATION_CONFIG_DIR,true,"Migration config root directory containing all the json files with the rules configurations" );
         options.addOption(FILES,true,"List of paths separated by ';' example: path1;path2...etc");
         options.addOption(BACKUP,true,"Flag to determine if you want a backup of your original files");

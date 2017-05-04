@@ -7,7 +7,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Delete http namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.DeleteNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.DeleteNamespace",
           "parameters" : {
             "namespace" : "ws",
             "namespaceUri" : "http://www.mulesoft.org/schema/mule/ws",
@@ -16,7 +16,7 @@
         },
         {
           "stepDescriptor" : "Update wsc namespace",
-          "type" : "com.mulesoft.tools.migration.task.steps.SetNodeNamespace",
+          "type" : "com.mulesoft.tools.migration.task.step.SetNodeNamespace",
           "parameters" : {
             "newNamespace" : "wsc",
             "newNamespaceUri" : "http://www.mulesoft.org/schema/mule/wsc",
@@ -32,7 +32,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Move MTOM config to Consumer Config",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttribute",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttribute",
           "parameters" : {
             "attribute" : "mtomEnabled",
             "targetNode" : "consumer-config",
@@ -44,7 +44,7 @@
         },
         {
           "stepDescriptor" : "Update WSC Consumer Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "consumer",
             "newValue" : "consume"
@@ -58,14 +58,14 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Create child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "connection"
           }
         },
         {
           "stepDescriptor" : "Rename serviceAddress attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "serviceAddress",
             "newName" : "address"
@@ -73,7 +73,7 @@
         },
         {
           "stepDescriptor" : "Move attributes to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributesToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributesToChildNode",
           "parameters" : {
             "attributes" : "service;port;wsdlLocation;address;mtomEnabled",
             "childNode" : "connection"
@@ -81,7 +81,7 @@
         },
         {
           "stepDescriptor" : "Rename consumer config",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "consumer-config",
             "newValue" : "config"
@@ -89,7 +89,7 @@
         },
         {
           "stepDescriptor" : "Move security node to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveNodeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "security",
             "sourceNodeNamespace" : "wsc",
@@ -107,7 +107,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Rename security config",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "security",
             "newValue" : "security-strategies"
@@ -121,7 +121,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Username Token Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-username-token",
             "newValue" : "wss-username-token-security-strategy"
@@ -135,7 +135,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Timestamp Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-timestamp",
             "newValue" : "wss-timestamp-security-strategy"
@@ -143,7 +143,7 @@
         },
         {
           "stepDescriptor" : "Rename expires attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "expires",
             "newName" : "timeToLive"
@@ -157,7 +157,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Sign Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-sign",
             "newValue" : "wss-sign-security-strategy"
@@ -165,14 +165,14 @@
         },
         {
           "stepDescriptor" : "Create key-store child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "key-store-configuration"
           }
         },
         {
           "stepDescriptor" : "Move tlsContext to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToChildNode",
           "parameters" : {
             "attribute" : "tlsContext-ref",
             "childNode" : "key-store-configuration"
@@ -187,7 +187,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Verify Signature Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-verify-signature",
             "newValue" : "wss-verify-signature-security-strategy"
@@ -195,14 +195,14 @@
         },
         {
           "stepDescriptor" : "Create trust-store child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "trust-store-configuration"
           }
         },
         {
           "stepDescriptor" : "Move tlsContext to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToChildNode",
           "parameters" : {
             "attribute" : "tlsContext-ref",
             "childNode" : "trust-store-configuration"
@@ -217,7 +217,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Encrypt Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-encrypt",
             "newValue" : "wss-encrypt-security-strategy"
@@ -225,14 +225,14 @@
         },
         {
           "stepDescriptor" : "Create key-store child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "key-store-configuration"
           }
         },
         {
           "stepDescriptor" : "Move tlsContext to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToChildNode",
           "parameters" : {
             "attribute" : "tlsContext-ref",
             "childNode" : "key-store-configuration"
@@ -247,7 +247,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Update WSC WSS Decrypt Strategy Node Name",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "wss-decrypt",
             "newValue" : "wss-decrypt-security-strategy"
@@ -255,14 +255,14 @@
         },
         {
           "stepDescriptor" : "Create key-store child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "key-store-configuration"
           }
         },
         {
           "stepDescriptor" : "Move tlsContext to child node",
-          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributeToChildNode",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToChildNode",
           "parameters" : {
             "attribute" : "tlsContext-ref",
             "childNode" : "key-store-configuration"
@@ -276,7 +276,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Get Attributes From global TLS Context",
-          "type" : "com.mulesoft.tools.migration.task.steps.GetAttributesFromReference",
+          "type" : "com.mulesoft.tools.migration.task.step.GetAttributesFromReference",
           "parameters" : {
             "sourceReferenceAttribute" : "tlsContext-ref",
             "targetReferenceAttribute" : "name",
@@ -289,7 +289,7 @@
         },
         {
           "stepDescriptor" : "Rename path attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "path",
             "newName" : "keyStorePath"
@@ -297,7 +297,7 @@
         },
         {
           "stepDescriptor" : "Delete tlsContext attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.DeleteAttribute",
+          "type" : "com.mulesoft.tools.migration.task.step.DeleteAttribute",
           "parameters" : {
             "attributeName" : "tlsContext-ref"
           }
@@ -310,7 +310,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Get Attributes From global TLS Context",
-          "type" : "com.mulesoft.tools.migration.task.steps.GetAttributesFromReference",
+          "type" : "com.mulesoft.tools.migration.task.step.GetAttributesFromReference",
           "parameters" : {
             "sourceReferenceAttribute" : "tlsContext-ref",
             "targetReferenceAttribute" : "name",
@@ -323,7 +323,7 @@
         },
         {
           "stepDescriptor" : "Rename path attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "path",
             "newName" : "trustStorePath"
@@ -331,7 +331,7 @@
         },
         {
           "stepDescriptor" : "Delete tlsContext ref attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.DeleteAttribute",
+          "type" : "com.mulesoft.tools.migration.task.step.DeleteAttribute",
           "parameters" : {
             "attributeName" : "tlsContext-ref"
           }

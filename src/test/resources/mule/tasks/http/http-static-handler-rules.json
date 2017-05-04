@@ -7,7 +7,7 @@
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Rename static-resource-handler builder",
-          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "static-resource-handler",
             "newValue" : "load-static-resource"
@@ -15,7 +15,7 @@
         },
         {
           "stepDescriptor" : "Rename resourceBasePath attribute",
-          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
           "parameters" : {
             "attributeName" : "resourceBase",
             "newName" : "resourceBasePath"
