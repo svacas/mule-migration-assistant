@@ -1,0 +1,56 @@
+{
+  "tasks":
+  [
+    {
+      "xpathSelector" : "//file:connector",
+      "taskDescriptor" : "Update File Connector Configuration",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Create child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.CreateChildNode",
+          "parameters" : {
+            "name" : "connection"
+          }
+        },
+        {
+          "stepDescriptor" : "Move attributes to child node",
+          "type" : "com.mulesoft.tools.migration.task.steps.MoveAttributesToChildNode",
+          "parameters" : {
+            "attributes" : "outputPattern;writeToDirectory;readFromDirectory;workDirectory;workFileNamePattern;autoDelete;outputAppend;streaming;recursive;validateConnections;pollingFrequency;fileAge;moveToPattern;moveToDirectory;dynamicNotification;serialiseObjects;dispatcherPoolFactory-ref",
+            "childNode" : "connection"
+          }
+        },
+        {
+          "stepDescriptor" : "Rename db config",
+          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "parameters" : {
+            "stringToReplace" : "connector",
+            "newValue" : "config"
+          }
+        }
+      ]
+    },
+    {
+      "xpathSelector" : "//file:inbound-endpoint",
+      "taskDescriptor" : "Update Inbound Endpoint Configuration",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Rename connector ref attribute",
+          "type" : "com.mulesoft.tools.migration.task.steps.UpdateAttributeName",
+          "parameters" : {
+            "attributeName" : "connector-ref",
+            "newName" : "config-ref"
+          }
+        },
+        {
+          "stepDescriptor" : "Rename Inbound Endpoint",
+          "type" : "com.mulesoft.tools.migration.task.steps.ReplaceStringOnNodeName",
+          "parameters" : {
+            "stringToReplace" : "inbound-endpoint",
+            "newValue" : "directory-listener"
+          }
+        }
+      ]
+    }
+  ]
+}
