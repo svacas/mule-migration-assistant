@@ -15,7 +15,7 @@ public class MigrationJobHttpTest {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
     private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/http/http-all-use-case.xml";
-    private String TASKS_FILE_PATH = "src/test/resources/mule/tasks/all-tasks.json";
+    private String TASKS_FILE_DIR = "src/test/resources/mule/tasks/http";
 
     @Before
     public void setUp() throws Exception {
@@ -30,10 +30,10 @@ public class MigrationJobHttpTest {
 
     @Test
     public void jobWithTasksOnConfigFile() throws Exception {
-        ArrayList<String> files = new ArrayList<String>(Arrays.asList(USE_CASE_FILE_PATH));
+        ArrayList<String> files = new ArrayList<>(Arrays.asList(USE_CASE_FILE_PATH));
 
         migrationJob.setDocuments(files);
-        migrationJob.setConfigFilePath(TASKS_FILE_PATH);
+        migrationJob.setConfigFileDir(TASKS_FILE_DIR);
         migrationJob.execute();
     }
 

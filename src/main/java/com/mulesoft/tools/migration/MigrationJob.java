@@ -26,23 +26,12 @@ public class MigrationJob {
     public static final String BACKUP_FOLDER = "backup";
 
     private ArrayList<String> filePaths;
-    private ArrayList<MigrationTask> tasks = new ArrayList<MigrationTask>();
+    private ArrayList<MigrationTask> tasks = new ArrayList<>();
     private String configFilePath;
+    private String configFileDir;
     private Document document;
     private Boolean backup = false;
     private File destFolder = new File(BACKUP_FOLDER);
-
-    public void setBackUpProfile(Boolean backUpProfile) {
-        this.backup = backUpProfile;
-    }
-
-    public void setConfigFilePath(String configFile) {
-        this.configFilePath = configFile;
-    }
-
-    public void setDocuments(ArrayList<String> filePaths) {
-        this.filePaths = filePaths;
-    }
 
     public void addTask(MigrationTask task) {
         this.tasks.add(task);
@@ -50,7 +39,11 @@ public class MigrationJob {
 
     public void execute() throws Exception {
 
-        parseConfigurationFile(configFilePath);
+        if (null != configFilePath) {
+            parseConfigurationFile(configFilePath);
+        } else {
+            parseConfigurationFiles(configFileDir);
+        }
 
         if (backup) {
             saveCopyOfFiles(filePaths);
@@ -95,8 +88,21 @@ public class MigrationJob {
         }
     }
 
-    public void saveCopyOfFiles(ArrayList<String> filePaths) throws Exception{
+    public void parseConfigurationFiles(String rootDirectoryPath) throws Exception {
+        try {
+            File rootDirectory = new File(rootDirectoryPath);
+            File[] files = rootDirectory.listFiles((dir, name) -> name.endsWith(".json"));
 
+            for (File file : files) {
+                parseConfigurationFile(file.getAbsolutePath());
+            }
+
+        } catch (Exception ex) {
+            throw new Exception("Failed to parse Configuration files" + rootDirectoryPath + ". " + ex.getMessage());
+        }
+    }
+
+    public void saveCopyOfFiles(ArrayList<String> filePaths) throws Exception{
         try {
             for (String filePath : filePaths) {
                 File copyFile = new File(filePath);
@@ -113,4 +119,19 @@ public class MigrationJob {
         }
     }
 
+    public void setBackUpProfile(Boolean backUpProfile) {
+        this.backup = backUpProfile;
+    }
+
+    public void setConfigFilePath(String configFile) {
+        this.configFilePath = configFile;
+    }
+
+    public void setDocuments(ArrayList<String> filePaths) {
+        this.filePaths = filePaths;
+    }
+
+    public void setConfigFileDir(String configFileDir) {
+        this.configFileDir = configFileDir;
+    }
 }
