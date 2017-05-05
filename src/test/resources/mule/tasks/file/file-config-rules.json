@@ -29,28 +29,6 @@
           }
         }
       ]
-    },
-    {
-      "xpathSelector" : "//file:inbound-endpoint",
-      "taskDescriptor" : "Update Inbound Endpoint Configuration",
-      "stepsDefinition" : [
-        {
-          "stepDescriptor" : "Rename connector ref attribute",
-          "type" : "com.mulesoft.tools.migration.task.step.UpdateAttributeName",
-          "parameters" : {
-            "attributeName" : "connector-ref",
-            "newName" : "config-ref"
-          }
-        },
-        {
-          "stepDescriptor" : "Rename Inbound Endpoint",
-          "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
-          "parameters" : {
-            "stringToReplace" : "inbound-endpoint",
-            "newValue" : "directory-listener"
-          }
-        }
-      ]
     }
   ]
 }
