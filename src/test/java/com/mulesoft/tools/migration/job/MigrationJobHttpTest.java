@@ -1,5 +1,6 @@
-package com.mulesoft.tools.migration;
+package com.mulesoft.tools.migration.job;
 
+import com.mulesoft.tools.migration.MigrationJob;
 import org.jdom2.Document;
 import org.junit.After;
 import org.junit.Before;

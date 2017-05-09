@@ -1,5 +1,6 @@
-package com.mulesoft.tools.migration;
+package com.mulesoft.tools.migration.job;
 
+import com.mulesoft.tools.migration.MigrationJob;
 import org.jdom2.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -11,15 +12,16 @@ import java.util.Arrays;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.getDocument;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocument;
 
-public class MigrationJobApiKitTest {
+public class MigrationJobWscTest {
+
     private MigrationJob migrationJob;
     private Document docRestoreFile;
-    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/apikit/apikit-use-case.xml";
-    private String TASKS_DIR_PATH = "src/test/resources/mule/tasks/apikit";
+    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/wsc/wsc-use-case.xml";
+    private String TASKS_FILE_PATH = "src/test/resources/mule/tasks/wsc/wsc-config-rules.json";
 
     @Before
     public void setUp() throws Exception {
-        ArrayList<String> filePath1 = new ArrayList<>();
+        ArrayList<String> filePath1 = new ArrayList<String>();
         filePath1.add(USE_CASE_FILE_PATH);
 
         migrationJob = new MigrationJob();
@@ -33,12 +35,12 @@ public class MigrationJobApiKitTest {
         ArrayList<String> files = new ArrayList<String>(Arrays.asList(USE_CASE_FILE_PATH));
 
         migrationJob.setDocuments(files);
-        migrationJob.setConfigFileDir(TASKS_DIR_PATH);
+        migrationJob.setConfigFilePath(TASKS_FILE_PATH);
         migrationJob.execute();
     }
 
     @After
     public void restoreFileState() throws Exception {
-        //restoreTestDocument(docRestoreFile,USE_CASE_FILE_PATH);
+        restoreTestDocument(docRestoreFile,USE_CASE_FILE_PATH);
     }
 }

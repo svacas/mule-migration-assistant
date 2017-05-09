@@ -1,5 +1,6 @@
-package com.mulesoft.tools.migration;
+package com.mulesoft.tools.migration.job;
 
+import com.mulesoft.tools.migration.MigrationJob;
 import org.jdom2.Document;
 import org.junit.After;
 import org.junit.Before;
@@ -11,11 +12,11 @@ import java.util.Arrays;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.getDocument;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocument;
 
-public class MigrationJobDBTest {
+public class MigrationJobAllTest {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
-    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/db/db-use-case.xml";
-    private String TASKS_FILE_PATH = "src/test/resources/mule/tasks/db/db-config-rules.json";
+    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/all-use-case.xml";
+    private String TASKS_FILE_DIR = "src/test/resources/mule/tasks/multiple";
 
     @Before
     public void setUp() throws Exception {
@@ -30,10 +31,10 @@ public class MigrationJobDBTest {
 
     @Test
     public void jobWithTasksOnConfigFile() throws Exception {
-        ArrayList<String> files = new ArrayList<String>(Arrays.asList(USE_CASE_FILE_PATH));
+        ArrayList<String> files = new ArrayList<>(Arrays.asList(USE_CASE_FILE_PATH));
 
         migrationJob.setDocuments(files);
-        migrationJob.setConfigFilePath(TASKS_FILE_PATH);
+        migrationJob.setConfigFileDir(TASKS_FILE_DIR);
         migrationJob.execute();
     }
 

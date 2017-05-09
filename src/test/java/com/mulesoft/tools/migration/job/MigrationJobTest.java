@@ -1,5 +1,6 @@
-package com.mulesoft.tools.migration;
+package com.mulesoft.tools.migration.job;
 
+import com.mulesoft.tools.migration.MigrationJob;
 import com.mulesoft.tools.migration.task.MigrationTask;
 import com.mulesoft.tools.migration.helper.DocumentHelper;
 import com.mulesoft.tools.migration.task.step.*;
