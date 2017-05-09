@@ -4,9 +4,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringJoiner;
 
-/**
- * Created by davidcisneros on 4/24/17.
- */
 public class MELUtils {
 
     private MELUtils() {

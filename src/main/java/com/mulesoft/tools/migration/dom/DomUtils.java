@@ -3,9 +3,6 @@ package com.mulesoft.tools.migration.dom;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
-/**
- * Created by davidcisneros on 4/24/17.
- */
 public class DomUtils {
 
     private DomUtils() {
