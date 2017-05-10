@@ -6,7 +6,7 @@
       "taskDescriptor" : "Update Mule DW Namespace",
       "stepsDefinition" : [
         {
-          "stepDescriptor" : "Delete http namespace",
+          "stepDescriptor" : "Delete dw namespace",
           "type" : "com.mulesoft.tools.migration.task.step.DeleteNamespace",
           "parameters" : {
             "namespace" : "dw",
@@ -15,7 +15,7 @@
           }
         },
         {
-          "stepDescriptor" : "Update http namespace",
+          "stepDescriptor" : "Update dw namespace",
           "type" : "com.mulesoft.tools.migration.task.step.SetNodeNamespace",
           "parameters" : {
             "newNamespace" : "ee",
