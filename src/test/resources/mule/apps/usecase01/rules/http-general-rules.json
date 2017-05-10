@@ -23,7 +23,6 @@
             "schemaLocationUrl":"http://www.mulesoft.org/schema/mule/httpn/current/mule-httpn.xsd"
           }
         }
-
       ]
     }
   ]

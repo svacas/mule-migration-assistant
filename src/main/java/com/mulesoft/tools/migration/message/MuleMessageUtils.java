@@ -14,8 +14,11 @@ public class MuleMessageUtils {
 
     public static String replaceContent(String content) {
         String newContent = content;
+        newContent = newContent.replace("message.inboundProperties","attributes");
         newContent = newContent.replace("inboundProperties","attributes");
+        newContent = newContent.replace("'http.query.params'","queryParams");
         newContent = newContent.replace("http.query.params","queryParams");
+        newContent = newContent.replace("'http.uri.params'","uriParams");
         newContent = newContent.replace("http.uri.params","uriParams");
         return newContent;
     }

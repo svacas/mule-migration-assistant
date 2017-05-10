@@ -39,6 +39,18 @@
           }
         }
       ]
+    },
+    {
+      "xpathSelector" : "//ee:set-payload",
+      "taskDescriptor" : "Update Mule Message",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Update mule message structure",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateMuleMessageContent",
+          "parameters" : {
+          }
+        }
+      ]
     }
   ]
 }

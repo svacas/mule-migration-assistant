@@ -11,7 +11,7 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
     <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
     <ws:consumer-config name="Web_Service_Consumer" service="CurrencyConvertor" port="CurrencyConvertorSoap" serviceAddress="http://www.webservicex.net/CurrencyConvertor.asmx" wsdlLocation="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" doc:name="Web Service Consumer"/>
-    <http:request-config name="HTTP_Request_Configuration" protocol="HTTPS" host="api.cheapweather.com" port="443" basePath="/v1" doc:name="HTTP Request Configuration">
+    <http:request-config name="HTTP_Request_Configuration" protocol="HTTPS" host="api.cheapweather.com" port="443" doc:name="HTTP Request Configuration">
         <tls:context>
             <tls:trust-store path="weather.jks" password="weather" type="jks"/>
         </tls:context>
@@ -32,45 +32,36 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]></dw:set-payload>
         </dw:transform-message>
         <ws:consumer config-ref="Web_Service_Consumer" operation="ConversionRate" doc:name="Call Currency Conversion Rate WS"/>
-        <dw:transform-message doc:name="Build Response Message" metadata:id="c98bef6c-7c39-4192-b704-6060f49d202d">
-            <dw:set-payload><![CDATA[%dw 1.0
-%output application/json
-%namespace ns0 http://www.webserviceX.NET/
----
-{
-	result: payload.ns0#ConversionRateResponse.ns0#ConversionRateResult
-}]]></dw:set-payload>
-        </dw:transform-message>
     </flow>
     <flow name="wsc-use-caseFlow1">
         <http:listener config-ref="HTTP_Listener_Configuration" path="/weather" doc:name="HTTP"/>
-        <http:request config-ref="HTTP_Request_Configuration" path="/zip/{zipCode}" method="GET" doc:name="Call HTTP Weather API">
+        <http:request config-ref="HTTP_Request_Configuration" path="/v1/zip/{zipCode}" method="GET" doc:name="Call HTTP Weather API">
             <http:request-builder>
                 <http:uri-param paramName="zipCode" value="#[message.inboundProperties.'http.query.params'.zipCode]"/>
                 <http:header headerName="token" value="23f5ec34-f412-4bb5-8b9b-731b8aa4b97c"/>
 
             </http:request-builder>
         </http:request>
+        <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
         <dw:transform-message doc:name="Build Response Message">
-            <dw:input-payload mimeType="application/json"/>
             <dw:set-payload><![CDATA[%dw 1.0
 %output application/json
 ---
 {
   "forecast": payload.forecast map  {
 	  "time": $.time,
-	  "genTime": $.gen-time,
+	  "genTime": $.'gen-time',
 	  "relativeHumidity": {
-	    "unit": $.relative-humidity.unit,
-	    "value": $.relative-humidity.value
+	    "unit": $.'relative-humidity'.unit,
+	    "value": $.'relative-humidity'.value
 	  },
 	  "apparentTemp": {
-	    "unit": $.apparent-temp.unit,
-	    "value": $.apparent-temp.value
+	    "unit": $.'apparent-temp'.unit,
+	    "value": $.'apparent-temp'.value
 	  },
 	  "skyCover": {
-	    "unit": $.sky-cover.unit,
-	    "value": $.sky-cover.value
+	    "unit": $.'sky-cover'.unit,
+	    "value": $.'sky-cover'.value
 	  },
 	  "temperature": {
 	    "unit": $.temperature.unit,
@@ -81,16 +72,16 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	    "value": $.dewpoint.value
 	  },
 	  "windDir": {
-	    "unit": $.wind-dir.unit,
-	    "value": $.wind-dir.value
+	    "unit": $.'wind-dir'.unit,
+	    "value": $.'wind-dir'.value
 	  },
 	  "windGust": {
-	    "unit": $.wind-gust.unit,
-	    "value": $.wind-gust.value
+	    "unit": $.'wind-gust'.unit,
+	    "value": $.'wind-gust'.value
 	  },
 	  "windSpeed": {
-	    "unit": $.wind-speed.unit,
-	    "value": $.wind-speed.value
+	    "unit": $.'wind-speed'.unit,
+	    "value": $.'wind-speed'.value
 	  },
 	  "weather": {
 	    "unit": $.weather.unit,

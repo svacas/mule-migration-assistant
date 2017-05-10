@@ -25,9 +25,15 @@ public class MELUtils {
             entryBuilder.append(pair.getKey());
             entryBuilder.append(SINGLE_QUOTE);
             entryBuilder.append(SEPARATOR);
-            entryBuilder.append(SINGLE_QUOTE);
-            entryBuilder.append(pair.getValue());
-            entryBuilder.append(SINGLE_QUOTE);
+
+            if(pair.getValue().contains("#[")) {
+                entryBuilder.append(pair.getValue().replace("#[","").replace("]",""));
+            } else {
+                entryBuilder.append(SINGLE_QUOTE);
+                entryBuilder.append(pair.getValue());
+                entryBuilder.append(SINGLE_QUOTE);
+            }
+
             mapJoiner.add(entryBuilder.toString());
         }
 

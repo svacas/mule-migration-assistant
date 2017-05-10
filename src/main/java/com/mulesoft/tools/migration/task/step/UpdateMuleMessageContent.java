@@ -11,7 +11,9 @@ public class UpdateMuleMessageContent extends MigrationStep {
     public void execute() throws Exception {
         try {
             for (Element node : getNodes()) {
-                node.setText(MuleMessageUtils.replaceContent(node.getText()));
+                if(null != node.getText()) {
+                    node.setText(MuleMessageUtils.replaceContent(node.getText()));
+                }
             }
         }catch (Exception ex) {
             throw new MigrationStepException("Remove node exception. " + ex.getMessage());

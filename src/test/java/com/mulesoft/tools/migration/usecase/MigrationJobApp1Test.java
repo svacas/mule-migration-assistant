@@ -12,7 +12,7 @@ import java.util.Arrays;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.getDocument;
 import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocument;
 
-public class MigrationJobAllTest {
+public class MigrationJobApp1Test {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
     private String USE_CASE_FILE_PATH = "src/test/resources/mule/apps/usecase01/use-case-01.xml";

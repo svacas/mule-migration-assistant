@@ -2,45 +2,6 @@
   "tasks":
   [
     {
-      "xpathSelector" : "//httpn:headers",
-      "taskDescriptor" : "Update HTTP Headers ",
-      "stepsDefinition" : [
-        {
-          "stepDescriptor" : "Move Headers expression attribute to node content",
-          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
-          "parameters" : {
-            "attributeName" : "expression",
-          }
-        }
-      ]
-    },
-    {
-      "xpathSelector" : "//httpn:uri-params",
-      "taskDescriptor" : "Update HTTP URI Parameters",
-      "stepsDefinition" : [
-        {
-          "stepDescriptor" : "Move URI Parameters expression attribute to node content",
-          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
-          "parameters" : {
-            "attributeName" : "expression",
-          }
-        }
-      ]
-    },
-    {
-      "xpathSelector" : "//httpn:query-params",
-      "taskDescriptor" : "Update HTTP Query Parameters",
-      "stepsDefinition" : [
-        {
-          "stepDescriptor" : "Move URI Parameters expression attribute to node content",
-          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
-          "parameters" : {
-            "attributeName" : "expression",
-          }
-        }
-      ]
-    },
-    {
       "xpathSelector" : "//httpn:request-config",
       "taskDescriptor" : "Update Mule HTTP Request",
       "stepsDefinition" : [
@@ -347,7 +308,60 @@
           }
         }
       ]
+    },
+    {
+      "xpathSelector" : "//httpn:headers",
+      "taskDescriptor" : "Update HTTP Headers ",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Move Headers expression attribute to node content",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
+          "parameters" : {
+            "attributeName" : "expression",
+          }
+        },
+        {
+          "stepDescriptor" : "Update mule message structure",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateMuleMessageContent",
+          "parameters" : {}
+        }
+      ]
+    },
+    {
+      "xpathSelector" : "//httpn:uri-params",
+      "taskDescriptor" : "Update HTTP URI Parameters",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Move URI Parameters expression attribute to node content",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
+          "parameters" : {
+            "attributeName" : "expression",
+          }
+        },
+        {
+          "stepDescriptor" : "Update mule message structure",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateMuleMessageContent",
+          "parameters" : {}
+        }
+      ]
+    },
+    {
+      "xpathSelector" : "//httpn:query-params",
+      "taskDescriptor" : "Update HTTP Query Parameters",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Move URI Parameters expression attribute to node content",
+          "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToMELContent",
+          "parameters" : {
+            "attributeName" : "expression",
+          }
+        },
+        {
+          "stepDescriptor" : "Update mule message structure",
+          "type" : "com.mulesoft.tools.migration.task.step.UpdateMuleMessageContent",
+          "parameters" : {}
+        }
+      ]
     }
   ]
 }
-
