@@ -1,4 +1,4 @@
-package com.mulesoft.tools.migration.job;
+package com.mulesoft.tools.migration.usecase;
 
 import com.mulesoft.tools.migration.MigrationJob;
 import org.jdom2.Document;
@@ -15,8 +15,8 @@ import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocu
 public class MigrationJobAllTest {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
-    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/all-use-case.xml";
-    private String TASKS_FILE_DIR = "src/test/resources/mule/tasks/multiple";
+    private String USE_CASE_FILE_PATH = "src/test/resources/mule/apps/usecase01/use-case-01.xml";
+    private String TASKS_FILE_DIR = "src/test/resources/mule/apps/usecase01/rules";
 
     @Before
     public void setUp() throws Exception {
