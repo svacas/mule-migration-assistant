@@ -24,6 +24,7 @@ public class MigrationJobApp1Test {
         filePath1.add(USE_CASE_FILE_PATH);
 
         migrationJob = new MigrationJob();
+
         migrationJob.setDocuments(filePath1);
         migrationJob.setBackUpProfile(Boolean.FALSE);
         docRestoreFile = getDocument(filePath1.get(0));

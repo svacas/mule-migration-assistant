@@ -3,6 +3,8 @@ package com.mulesoft.tools.migration;
 
 import com.mulesoft.tools.migration.builder.TaskBuilder;
 import com.mulesoft.tools.migration.exception.MigrationJobException;
+import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
+import com.mulesoft.tools.migration.report.ReportingStrategy;
 import com.mulesoft.tools.migration.task.MigrationTask;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
@@ -30,6 +32,7 @@ public class MigrationJob {
     private String configFilePath;
     private String configFileDir;
     private Document document;
+    private ReportingStrategy reportingStrategy;
     private Boolean backup = false;
     private File destFolder = new File(BACKUP_FOLDER);
 
@@ -52,7 +55,9 @@ public class MigrationJob {
         try {
             for (String filePath : this.filePaths){
                 this.document = generateDoc(filePath);
+                getReportingStrategy().log("################# Working FILE:" + filePath);
                 for (MigrationTask task : tasks) {
+                    task.setReportingStrategy(this.reportingStrategy);
                     task.setDocument(this.document);
                     task.execute();
                 }
@@ -133,5 +138,16 @@ public class MigrationJob {
 
     public void setConfigFileDir(String configFileDir) {
         this.configFileDir = configFileDir;
+    }
+
+    public void setReportingStrategy(ReportingStrategy reportingStrategy) {
+        this.reportingStrategy = reportingStrategy;
+    }
+
+    public ReportingStrategy getReportingStrategy() {
+        if (null == this.reportingStrategy) {
+            this.reportingStrategy = new ConsoleReportStrategy();
+        }
+        return reportingStrategy;
     }
 }

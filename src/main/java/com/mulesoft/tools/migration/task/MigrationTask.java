@@ -2,6 +2,8 @@ package com.mulesoft.tools.migration.task;
 
 import com.google.common.base.Strings;
 import com.mulesoft.tools.migration.exception.MigrationTaskException;
+import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
+import com.mulesoft.tools.migration.report.ReportingStrategy;
 import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -17,6 +19,7 @@ public class MigrationTask {
 
     private String xpathSelector;
     private Document doc;
+    private ReportingStrategy reportingStrategy;
     private ArrayList<MigrationStep> steps;
     private List<Element> nodes;
     private String taskDescriptor;
@@ -38,8 +41,13 @@ public class MigrationTask {
 
     public void execute() throws Exception {
         try {
+            if (null == reportingStrategy) {
+                reportingStrategy = new ConsoleReportStrategy();
+            }
             nodes = getNodesFromXPath(this.xpathSelector);
+            getReportingStrategy().log("******************** Working over:" + this.xpathSelector);
             for (MigrationStep step : steps) {
+                step.setReportingStrategy(this.reportingStrategy);
                 step.setDocument(this.doc);
                 step.setNodes(nodes);
                 step.execute();
@@ -69,5 +77,16 @@ public class MigrationTask {
 
     public void setDocument(Document document) {
         this.doc = document;
+    }
+
+    public void setReportingStrategy(ReportingStrategy reportingStrategy) {
+        this.reportingStrategy = reportingStrategy;
+    }
+
+    public ReportingStrategy getReportingStrategy() {
+        if (null == this.reportingStrategy) {
+            this.reportingStrategy = new ConsoleReportStrategy();
+        }
+        return reportingStrategy;
     }
 }

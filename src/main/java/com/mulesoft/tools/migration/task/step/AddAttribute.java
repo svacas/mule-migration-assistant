@@ -21,6 +21,8 @@ public class AddAttribute extends MigrationStep {
             for (Element node : this.getNodes()) {
                 Attribute att = new Attribute(getAttributeName(), getAttributeValue());
                 node.setAttribute(att);
+
+                getReportingStrategy().log("Attribute added:" + attributeName + ":" + attributeValue);
             }
         } catch (Exception ex) {
             throw new MigrationStepException("Add Attribute step exception. " + ex.getMessage());

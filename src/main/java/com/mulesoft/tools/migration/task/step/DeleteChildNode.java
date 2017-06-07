@@ -25,6 +25,8 @@ public class DeleteChildNode extends MigrationStep {
                 Element element = node.getChild(getNode(),namespace);
                 if (element != null) {
                     node.removeChild(getNode(),namespace);
+
+                    getReportingStrategy().log("Child Node deleted:" + node);
                 }
             }
         }catch (Exception ex) {

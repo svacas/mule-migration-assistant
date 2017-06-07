@@ -25,6 +25,8 @@ public class CreateChildNodeFromAttribute extends MigrationStep {
                     child.setAttribute(newAtt);
                     node.addContent(child);
                     node.removeAttribute(att);
+
+                    getReportingStrategy().log("Child node from attribute created:" + attribute);
                 }
             }
         }catch (Exception ex) {

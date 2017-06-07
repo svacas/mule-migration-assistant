@@ -1,5 +1,7 @@
 package com.mulesoft.tools.migration.task.step;
 
+import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
+import com.mulesoft.tools.migration.report.ReportingStrategy;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -9,6 +11,7 @@ public abstract class MigrationStep {
 
     private List<Element> nodes;
     private Document document;
+    private ReportingStrategy reportingStrategy;
     private String stepDescriptor;
 
     public void setStepDescriptor(String descriptor) {
@@ -33,6 +36,17 @@ public abstract class MigrationStep {
 
     public Document getDocument() {
         return this.document;
+    }
+
+    public ReportingStrategy getReportingStrategy() {
+        if (null == this.reportingStrategy) {
+            this.reportingStrategy = new ConsoleReportStrategy();
+        }
+        return reportingStrategy;
+    }
+
+    public void setReportingStrategy(ReportingStrategy reportingStrategy) {
+        this.reportingStrategy = reportingStrategy;
     }
 
     public abstract void execute() throws Exception;

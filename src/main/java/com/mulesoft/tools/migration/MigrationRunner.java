@@ -1,6 +1,8 @@
 package com.mulesoft.tools.migration;
 
 import com.mulesoft.tools.migration.exception.ConsoleOptionsException;
+import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
+import com.mulesoft.tools.migration.report.ReportingStrategy;
 import org.apache.commons.cli.*;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class MigrationRunner {
     private String migrationConfigFile;
     private String migrationConfigDir;
     private Boolean backup;
+    private ReportingStrategy reportingStrategy;
 
     public static void main(String args[]) throws Exception {
         MigrationRunner migrationRunner = new MigrationRunner();
@@ -24,7 +27,7 @@ public class MigrationRunner {
         job.setDocuments(migrationRunner.files);
         job.setConfigFilePath(migrationRunner.migrationConfigFile);
         job.setConfigFileDir(migrationRunner.migrationConfigDir);
-
+        job.setReportingStrategy(migrationRunner.reportingStrategy);
         job.execute();
     }
 
@@ -41,6 +44,7 @@ public class MigrationRunner {
         options.addOption(FILES,true,"List of paths separated by ';' example: path1;path2...etc");
         options.addOption(BACKUP,true,"Flag to determine if you want a backup of your original files");
         options.addOption(HELP,false,"Shows the help");
+        options.addOption(REPORT,false,"Reporting strategy (default: console)");
 
         try {
             CommandLineParser parser = new DefaultParser();
@@ -66,6 +70,13 @@ public class MigrationRunner {
                 this.backup = Boolean.FALSE;
             }
 
+            if(line.hasOption(REPORT)) {
+                //change this to the specific strategy
+                this.reportingStrategy = new ConsoleReportStrategy();
+            }else{
+                this.reportingStrategy = new ConsoleReportStrategy();
+            }
+
             if(line.hasOption(HELP)) {
                 printHelp(options);
             }
@@ -88,6 +99,7 @@ public class MigrationRunner {
         public final static String MIGRATION_CONFIG_DIR= "migrationConfigDir";
         public final static String FILES= "files";
         public final static String BACKUP= "backup";
+        public final static String REPORT= "report";
         public final static String HELP= "help";
     }
 }
