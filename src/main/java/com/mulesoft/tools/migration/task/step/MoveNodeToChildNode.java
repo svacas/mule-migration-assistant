@@ -35,6 +35,8 @@ public class MoveNodeToChildNode extends MigrationStep {
                     if (targetElement != null) {
                         node.removeChild(getSourceNode(),sourceNamespace);
                         targetElement.getChildren().add(sourceElement);
+
+                        getReportingStrategy().log("Node moved to child node:" + sourceElement);
                     }
                 }
             }

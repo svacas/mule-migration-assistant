@@ -49,6 +49,8 @@ public class MoveAttribute extends MigrationStep {
                             if (null != element) {
                                 node.removeAttribute(attribute);
                                 element.setAttribute(attribute);
+
+                                getReportingStrategy().log("Attribute moved:" + attribute);
                             }
                         }
                     }

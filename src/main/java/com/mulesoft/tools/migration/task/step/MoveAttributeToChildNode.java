@@ -25,6 +25,8 @@ public class MoveAttributeToChildNode extends MigrationStep {
                     if (child != null) {
                         node.removeAttribute(att);
                         child.setAttribute(att);
+
+                        getReportingStrategy().log("Attribute moved to child:" + att);
                     }
                 }
             }

@@ -33,6 +33,8 @@ public class SetNodeNamespace extends MigrationStep {
                 if (this.getNodes() != null) {
                     for (Element node : this.getNodes()) {
                         node.setNamespace(nspc);
+
+                        getReportingStrategy().log("Node namespace changed, node: " + node + " changed namespace to:" + nspc);
                     }
                 }
             }

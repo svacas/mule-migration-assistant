@@ -22,6 +22,8 @@ public class UpdateAttribute extends MigrationStep {
                 Attribute att = node.getAttribute(getAttributeName());
                 if (att != null) {
                     att.setValue(getNewValue());
+
+                    getReportingStrategy().log("Attribute updated:" + att);
                 }
             }
         } catch (Exception ex) {

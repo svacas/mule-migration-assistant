@@ -41,6 +41,7 @@ public class MoveNodeToNewChildNode extends MigrationStep {
                         newTargetElement.getChildren().add(sourceElement);
                         node.addContent(newTargetElement);
                     }
+                    getReportingStrategy().log("Node moved to new child node:" + sourceElement);
                 }
             }
         }catch (Exception ex) {

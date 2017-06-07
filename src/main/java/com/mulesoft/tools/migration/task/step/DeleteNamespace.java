@@ -30,6 +30,8 @@ public class DeleteNamespace extends MigrationStep {
                     Attribute muleSchemaLocation = muleNode.getAttributes().get(0);
                     if (schemaLocationDefined(muleNode)) {
                         muleSchemaLocation.setValue(muleSchemaLocation.getValue().replace(getSchemaLocationUrl(), "").replace(getNamespaceUri(), ""));
+
+                        getReportingStrategy().log("Namespace deleted:" + namespace);
                     }
                 }
             }

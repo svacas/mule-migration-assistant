@@ -11,6 +11,8 @@ public class DeleteNode extends MigrationStep {
         try {
             for (Element node : getNodes()) {
                 node.detach();
+
+                getReportingStrategy().log("Node deleted:" + node);
             }
         }catch (Exception ex) {
             throw new MigrationStepException("Remove node exception. " + ex.getMessage());

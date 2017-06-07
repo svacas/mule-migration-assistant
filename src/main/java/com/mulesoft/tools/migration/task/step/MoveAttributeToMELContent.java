@@ -23,6 +23,8 @@ public class MoveAttributeToMELContent extends MigrationStep {
                 if (att != null) {
                     node.removeAttribute(att);
                     node.setText(getMELExpressionFromValue(att.getValue()));
+
+                    getReportingStrategy().log("Attribute moved to MEL content:" + att);
                 }
             }
         }catch (Exception ex) {

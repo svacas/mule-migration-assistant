@@ -20,6 +20,8 @@ public class ReplaceStringOnNodeName extends MigrationStep{
             for (Element node : this.getNodes()) {
                 if (node.getName().contains(getStringToReplace())) {
                     node.setName(node.getName().replace(getStringToReplace(), getNewValue()));
+
+                    getReportingStrategy().log("Node string replaced:" + stringToReplace);
                 }
             }
         } catch (Exception ex) {

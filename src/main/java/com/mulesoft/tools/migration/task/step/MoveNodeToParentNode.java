@@ -26,6 +26,8 @@ public class MoveNodeToParentNode extends MigrationStep {
                 if (sourceElement != null) {
                     node.removeChild(getSourceNode(),sourceNamespace);
                     node.getParentElement().getChildren().add(sourceElement);
+
+                    getReportingStrategy().log("Node moved to parent node:" + sourceElement);
                 }
             }
         } catch (Exception ex) {

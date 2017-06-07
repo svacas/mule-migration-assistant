@@ -24,6 +24,8 @@ public class ReplaceNodesName extends MigrationStep {
                     for (Element node : getNodes()) {
                         node.setNamespace(namespace);
                         node.setName(getNewNodeName());
+
+                        getReportingStrategy().log("Node replaced:" + newNodeName);
                     }
                 }
             }

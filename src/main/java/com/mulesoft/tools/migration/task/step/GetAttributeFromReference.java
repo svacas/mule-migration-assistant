@@ -56,6 +56,8 @@ public class GetAttributeFromReference extends MigrationStep {
                                 if(null != originalAttribute) {
                                     Attribute newAttribute = new Attribute(originalAttribute.getName(), originalAttribute.getValue());
                                     node.setAttribute(newAttribute);
+
+                                    getReportingStrategy().log("Get attribute from reference:" + newAttribute);
                                 }
                             }
                         }

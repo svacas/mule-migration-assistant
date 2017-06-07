@@ -13,6 +13,8 @@ public class UpdateMuleMessageContent extends MigrationStep {
             for (Element node : getNodes()) {
                 if(null != node.getText()) {
                     node.setText(MuleMessageUtils.replaceContent(node.getText()));
+
+                    getReportingStrategy().log("Mule Message content updated for node:" + node);
                 }
             }
         }catch (Exception ex) {
