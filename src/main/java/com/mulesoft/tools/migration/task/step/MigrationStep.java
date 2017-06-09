@@ -11,6 +11,7 @@ public abstract class MigrationStep {
 
     private List<Element> nodes;
     private Document document;
+    private Boolean onErrorStop;
     private ReportingStrategy reportingStrategy;
     private String stepDescriptor;
 
@@ -47,6 +48,14 @@ public abstract class MigrationStep {
 
     public void setReportingStrategy(ReportingStrategy reportingStrategy) {
         this.reportingStrategy = reportingStrategy;
+    }
+
+    public Boolean getOnErrorStop() {
+        return onErrorStop;
+    }
+
+    public void setOnErrorStop(Boolean onErrorStop) {
+        this.onErrorStop = onErrorStop;
     }
 
     public abstract void execute() throws Exception;

@@ -16,6 +16,7 @@ public class MigrationRunner {
     private String migrationConfigFile;
     private String migrationConfigDir;
     private Boolean backup;
+    private Boolean onErrorStop;
     private ReportingStrategy reportingStrategy;
 
     public static void main(String args[]) throws Exception {
@@ -24,6 +25,7 @@ public class MigrationRunner {
 
         MigrationJob job = new MigrationJob();
         job.setBackUpProfile(migrationRunner.backup);
+        job.setOnErrorStop(migrationRunner.onErrorStop);
         job.setDocuments(migrationRunner.files);
         job.setConfigFilePath(migrationRunner.migrationConfigFile);
         job.setConfigFileDir(migrationRunner.migrationConfigDir);
@@ -45,6 +47,7 @@ public class MigrationRunner {
         options.addOption(BACKUP,true,"Flag to determine if you want a backup of your original files");
         options.addOption(HELP,false,"Shows the help");
         options.addOption(REPORT,false,"Reporting strategy (default: console)");
+        options.addOption(ON_ERROR_STOP,false,"Defines if the tool should stop when an error happens (default:true)");
 
         try {
             CommandLineParser parser = new DefaultParser();
@@ -73,8 +76,14 @@ public class MigrationRunner {
             if(line.hasOption(REPORT)) {
                 //change this to the specific strategy
                 this.reportingStrategy = new ConsoleReportStrategy();
-            }else{
+            }else {
                 this.reportingStrategy = new ConsoleReportStrategy();
+            }
+
+            if(line.hasOption(ON_ERROR_STOP)) {
+                this.onErrorStop = Boolean.parseBoolean(line.getOptionValue(ON_ERROR_STOP));
+            }else {
+                this.onErrorStop = Boolean.TRUE;
             }
 
             if(line.hasOption(HELP)) {
@@ -100,6 +109,7 @@ public class MigrationRunner {
         public final static String FILES= "files";
         public final static String BACKUP= "backup";
         public final static String REPORT= "report";
+        public final static String ON_ERROR_STOP= "onErrorStop";
         public final static String HELP= "help";
     }
 }

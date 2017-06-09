@@ -19,6 +19,7 @@ public class MigrationTask {
 
     private String xpathSelector;
     private Document doc;
+    private Boolean onErrorStop;
     private ReportingStrategy reportingStrategy;
     private ArrayList<MigrationStep> steps;
     private List<Element> nodes;
@@ -49,11 +50,15 @@ public class MigrationTask {
             for (MigrationStep step : steps) {
                 step.setReportingStrategy(this.reportingStrategy);
                 step.setDocument(this.doc);
+                step.setOnErrorStop(this.onErrorStop);
                 step.setNodes(nodes);
                 step.execute();
             }
         } catch (Exception ex) {
-            throw new MigrationTaskException("Task execution exception. " + ex.getMessage());
+            getReportingStrategy().log("ERROR: executing the task for:" + this.xpathSelector);
+            if(onErrorStop) {
+                throw new MigrationTaskException("Task execution exception. " + ex.getMessage());
+            }
         }
     }
 
@@ -81,6 +86,10 @@ public class MigrationTask {
 
     public void setReportingStrategy(ReportingStrategy reportingStrategy) {
         this.reportingStrategy = reportingStrategy;
+    }
+
+    public void setOnErrorStop(Boolean onErrorStop) {
+        this.onErrorStop = onErrorStop;
     }
 
     public ReportingStrategy getReportingStrategy() {

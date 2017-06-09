@@ -34,6 +34,7 @@ public class MigrationJob {
     private Document document;
     private ReportingStrategy reportingStrategy;
     private Boolean backup = false;
+    private Boolean onErrorStop;
     private File destFolder = new File(BACKUP_FOLDER);
 
     public void addTask(MigrationTask task) {
@@ -59,6 +60,7 @@ public class MigrationJob {
                 for (MigrationTask task : tasks) {
                     task.setReportingStrategy(this.reportingStrategy);
                     task.setDocument(this.document);
+                    task.setOnErrorStop(this.onErrorStop);
                     task.execute();
                 }
                 XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
@@ -142,6 +144,10 @@ public class MigrationJob {
 
     public void setReportingStrategy(ReportingStrategy reportingStrategy) {
         this.reportingStrategy = reportingStrategy;
+    }
+
+    public void setOnErrorStop(Boolean onErrorStop) {
+        this.onErrorStop = onErrorStop;
     }
 
     public ReportingStrategy getReportingStrategy() {
