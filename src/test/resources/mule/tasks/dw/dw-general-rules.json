@@ -2,6 +2,18 @@
   "tasks":
   [
     {
+      "xpathSelector" : "//dw:set-payload",
+      "taskDescriptor" : "Migrate dw script",
+      "stepsDefinition" : [
+        {
+          "stepDescriptor" : "Migrate dataweave script",
+          "type" : "com.mulesoft.tools.migration.task.step.MigrateDataweaveScript",
+          "parameters" : {
+          }
+        }
+      ]
+    },
+    {
       "xpathSelector" : "//dw:*",
       "taskDescriptor" : "Update Mule DW Namespace",
       "stepsDefinition" : [
