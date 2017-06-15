@@ -16,7 +16,7 @@ public class MigrationJobApp1Test {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
     private String USE_CASE_FILE_PATH = "src/test/resources/mule/apps/usecase01/use-case-01.xml";
-    private String TASKS_FILE_DIR = "src/test/resources/mule/apps/usecase01/rules";
+    private String TASKS_FILE_DIR = "src/test/resources/mule/tasks";
 
     @Before
     public void setUp() throws Exception {

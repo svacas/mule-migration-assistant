@@ -7,12 +7,14 @@ import org.apache.commons.cli.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.mulesoft.tools.migration.MigrationRunner.MigrationConsoleOptions.*;
 
 public class MigrationRunner {
 
-    private ArrayList<String> files;
+    private List<String> files;
+    private String filesDir;
     private String migrationConfigFile;
     private String migrationConfigDir;
     private Boolean backup;
@@ -27,6 +29,7 @@ public class MigrationRunner {
         job.setBackUpProfile(migrationRunner.backup);
         job.setOnErrorStop(migrationRunner.onErrorStop);
         job.setDocuments(migrationRunner.files);
+        job.setFilesDir(migrationRunner.filesDir);
         job.setConfigFilePath(migrationRunner.migrationConfigFile);
         job.setConfigFileDir(migrationRunner.migrationConfigDir);
         job.setReportingStrategy(migrationRunner.reportingStrategy);
@@ -44,6 +47,7 @@ public class MigrationRunner {
         options.addOption(MIGRATION_CONFIG_FILE,true,"Migration config file (json) containing all the rules and step" );
         options.addOption(MIGRATION_CONFIG_DIR,true,"Migration config root directory containing all the json files with the rules configurations" );
         options.addOption(FILES,true,"List of paths separated by ';' example: path1;path2...etc");
+        options.addOption(FILES_DIR,true,"Root directory of the files to be migrated");
         options.addOption(BACKUP,true,"Flag to determine if you want a backup of your original files");
         options.addOption(HELP,false,"Shows the help");
         options.addOption(REPORT,false,"Reporting strategy (default: console)");
@@ -61,15 +65,18 @@ public class MigrationRunner {
                 throw new ConsoleOptionsException("You must specify a migration config file OR a config dir");
             }
 
-            if(line.hasOption(FILES)) {
+            if(line.hasOption(FILES) && !line.hasOption(FILES_DIR)) {
                 this.files = new ArrayList<>(Arrays.asList(line.getOptionValue(FILES).split(";")));
-            }else{
-                throw new ConsoleOptionsException("You must specify a file path or a list of paths separated by ';' example: path1;path2...etc");
+            } else if (!line.hasOption(FILES) && line.hasOption(FILES_DIR)) {
+                this.filesDir = line.getOptionValue(FILES_DIR);
+            } else {
+                throw new ConsoleOptionsException("You must specify a root directory of the files to be migrated OR a list " +
+                        "of paths separated by ';' example: path1;path2...etc");
             }
 
             if(line.hasOption(BACKUP)) {
                 this.backup = Boolean.parseBoolean(line.getOptionValue(BACKUP));
-            }else{
+            } else {
                 this.backup = Boolean.FALSE;
             }
 
@@ -82,7 +89,7 @@ public class MigrationRunner {
 
             if(line.hasOption(ON_ERROR_STOP)) {
                 this.onErrorStop = Boolean.parseBoolean(line.getOptionValue(ON_ERROR_STOP));
-            }else {
+            } else {
                 this.onErrorStop = Boolean.TRUE;
             }
 
@@ -107,6 +114,7 @@ public class MigrationRunner {
         public final static String MIGRATION_CONFIG_FILE = "migrationConfigFile";
         public final static String MIGRATION_CONFIG_DIR= "migrationConfigDir";
         public final static String FILES= "files";
+        public final static String FILES_DIR= "filesDir";
         public final static String BACKUP= "backup";
         public final static String REPORT= "report";
         public final static String ON_ERROR_STOP= "onErrorStop";

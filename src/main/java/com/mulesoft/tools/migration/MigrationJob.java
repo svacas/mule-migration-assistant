@@ -6,6 +6,7 @@ import com.mulesoft.tools.migration.exception.MigrationJobException;
 import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
 import com.mulesoft.tools.migration.report.ReportingStrategy;
 import com.mulesoft.tools.migration.task.MigrationTask;
+import org.apache.commons.io.FileUtils;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -14,28 +15,28 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MigrationJob {
 
     public static final String TASK_FIELD = "tasks";
     public static final String BACKUP_FOLDER = "backup";
 
-    private ArrayList<String> filePaths;
-    private ArrayList<MigrationTask> tasks = new ArrayList<>();
+    private List<String> filePaths;
+    private String filesDir;
     private String configFilePath;
     private String configFileDir;
-    private Document document;
-    private ReportingStrategy reportingStrategy;
+    private List<MigrationTask> tasks = new ArrayList<>();
     private Boolean backup = false;
     private Boolean onErrorStop;
     private File destFolder = new File(BACKUP_FOLDER);
+    private Document document;
+    private ReportingStrategy reportingStrategy;
 
     public void addTask(MigrationTask task) {
         this.tasks.add(task);
@@ -47,6 +48,10 @@ public class MigrationJob {
             parseConfigurationFile(configFilePath);
         } else {
             parseConfigurationFiles(configFileDir);
+        }
+
+        if (null != this.filesDir) {
+            this.filePaths = getXmlPaths(this.filesDir);
         }
 
         if (backup) {
@@ -98,7 +103,8 @@ public class MigrationJob {
     public void parseConfigurationFiles(String rootDirectoryPath) throws Exception {
         try {
             File rootDirectory = new File(rootDirectoryPath);
-            File[] files = rootDirectory.listFiles((dir, name) -> name.endsWith(".json"));
+
+            List<File> files = (List<File>) FileUtils.listFiles(rootDirectory, new String[] { "json" }, true);
 
             for (File file : files) {
                 parseConfigurationFile(file.getAbsolutePath());
@@ -109,7 +115,21 @@ public class MigrationJob {
         }
     }
 
-    public void saveCopyOfFiles(ArrayList<String> filePaths) throws Exception{
+    public List<String> getXmlPaths(String rootDirectoryPath) throws Exception {
+
+        File rootDirectory = new File(rootDirectoryPath);
+
+        List<File> files = (List<File>) FileUtils.listFiles(rootDirectory, new String[] { "xml" }, true);
+
+        List<String> filesPaths = new ArrayList<>();
+        for (File file : files) {
+            filesPaths.add(file.getAbsolutePath());
+        }
+
+        return filesPaths;
+    }
+
+    public void saveCopyOfFiles(List<String> filePaths) throws Exception{
         try {
             for (String filePath : filePaths) {
                 File copyFile = new File(filePath);
@@ -134,8 +154,12 @@ public class MigrationJob {
         this.configFilePath = configFile;
     }
 
-    public void setDocuments(ArrayList<String> filePaths) {
+    public void setDocuments(List<String> filePaths) {
         this.filePaths = filePaths;
+    }
+
+    public void setFilesDir(String filesDir) {
+        this.filesDir = filesDir;
     }
 
     public void setConfigFileDir(String configFileDir) {
