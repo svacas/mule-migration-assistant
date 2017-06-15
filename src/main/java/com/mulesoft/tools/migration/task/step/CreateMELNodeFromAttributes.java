@@ -8,6 +8,7 @@ import org.jdom2.Namespace;
 import java.util.*;
 
 import static com.mulesoft.tools.migration.mel.MELUtils.getMELExpressionFromMap;
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
 
 
 public class CreateMELNodeFromAttributes extends MigrationStep {
@@ -62,7 +63,7 @@ public class CreateMELNodeFromAttributes extends MigrationStep {
                     child.setText(getMELExpressionFromMap(attributesMap));
                     node.addContent(child);
 
-                    getReportingStrategy().log("MEL node created node:" + newNodeName + " attributes-map:" + attributesMap);
+                    getReportingStrategy().log("MEL node created node:" + newNodeName + " attributes-map:" + attributesMap, RULE_APPLIED);
                 }
             }
         } catch (Exception ex) {

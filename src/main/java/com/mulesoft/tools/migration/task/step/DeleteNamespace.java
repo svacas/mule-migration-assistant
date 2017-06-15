@@ -6,6 +6,8 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class DeleteNamespace extends MigrationStep {
 
     private String namespace;
@@ -31,7 +33,7 @@ public class DeleteNamespace extends MigrationStep {
                     if (schemaLocationDefined(muleNode)) {
                         muleSchemaLocation.setValue(muleSchemaLocation.getValue().replace(getSchemaLocationUrl(), "").replace(getNamespaceUri(), ""));
 
-                        getReportingStrategy().log("Namespace deleted:" + namespace);
+                        getReportingStrategy().log("Namespace deleted:" + namespace, RULE_APPLIED);
                     }
                 }
             }

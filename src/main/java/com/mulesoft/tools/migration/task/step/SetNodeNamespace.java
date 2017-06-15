@@ -5,6 +5,8 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class SetNodeNamespace extends MigrationStep {
 
     private String newNamespace;
@@ -34,7 +36,7 @@ public class SetNodeNamespace extends MigrationStep {
                     for (Element node : this.getNodes()) {
                         node.setNamespace(nspc);
 
-                        getReportingStrategy().log("Node namespace changed, node: " + node + " changed namespace to:" + nspc);
+                        getReportingStrategy().log("Node namespace changed, node: " + node + " changed namespace to:" + nspc, RULE_APPLIED);
                     }
                 }
             }

@@ -5,6 +5,7 @@ import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 import static com.mulesoft.tools.migration.mel.MELUtils.getMELExpressionFromValue;
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
 
 public class MoveAttributeToMELContent extends MigrationStep {
 
@@ -24,7 +25,7 @@ public class MoveAttributeToMELContent extends MigrationStep {
                     node.removeAttribute(att);
                     node.setText(getMELExpressionFromValue(att.getValue()));
 
-                    getReportingStrategy().log("Attribute moved to MEL content:" + att);
+                    getReportingStrategy().log("Attribute moved to MEL content:" + att, RULE_APPLIED);
                 }
             }
         }catch (Exception ex) {

@@ -5,5 +5,5 @@ package com.mulesoft.tools.migration.report;
  */
 public interface ReportingStrategy {
 
-    void log(String message);
+    void log(String message, ReportCategory reportCategory);
 }

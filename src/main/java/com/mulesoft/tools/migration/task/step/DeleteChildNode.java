@@ -4,6 +4,8 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class DeleteChildNode extends MigrationStep {
 
     private String node;
@@ -26,7 +28,7 @@ public class DeleteChildNode extends MigrationStep {
                 if (element != null) {
                     node.removeChild(getNode(),namespace);
 
-                    getReportingStrategy().log("Child Node deleted:" + node);
+                    getReportingStrategy().log("Child Node deleted:" + node, RULE_APPLIED);
                 }
             }
         }catch (Exception ex) {

@@ -4,6 +4,8 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class ReplaceNodesName extends MigrationStep {
 
     private String nodeNamespace;
@@ -25,7 +27,7 @@ public class ReplaceNodesName extends MigrationStep {
                         node.setNamespace(namespace);
                         node.setName(getNewNodeName());
 
-                        getReportingStrategy().log("Node replaced:" + newNodeName);
+                        getReportingStrategy().log("Node replaced:" + newNodeName, RULE_APPLIED);
                     }
                 }
             }

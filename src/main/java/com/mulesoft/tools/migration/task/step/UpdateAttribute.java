@@ -4,6 +4,8 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class UpdateAttribute extends MigrationStep {
 
     private String attributeName;
@@ -23,7 +25,7 @@ public class UpdateAttribute extends MigrationStep {
                 if (att != null) {
                     att.setValue(getNewValue());
 
-                    getReportingStrategy().log("Attribute updated:" + att);
+                    getReportingStrategy().log("Attribute updated:" + att, RULE_APPLIED);
                 }
             }
         } catch (Exception ex) {

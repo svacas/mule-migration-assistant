@@ -6,6 +6,7 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 
 import static com.mulesoft.tools.migration.dom.DomUtils.findChildElement;
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class GetAttributeFromReference extends MigrationStep {
@@ -57,7 +58,7 @@ public class GetAttributeFromReference extends MigrationStep {
                                     Attribute newAttribute = new Attribute(originalAttribute.getName(), originalAttribute.getValue());
                                     node.setAttribute(newAttribute);
 
-                                    getReportingStrategy().log("Get attribute from reference:" + newAttribute);
+                                    getReportingStrategy().log("Get attribute from reference:" + newAttribute, RULE_APPLIED);
                                 }
                             }
                         }

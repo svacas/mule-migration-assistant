@@ -7,6 +7,8 @@ import org.jdom2.Element;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class NegateAttributeValue extends MigrationStep {
 
     private String attributeName;
@@ -33,7 +35,7 @@ public class NegateAttributeValue extends MigrationStep {
                             att.setValue("#[not(" + attValue + ")]");
                         }
 
-                        getReportingStrategy().log("Attribute negated:" + att);
+                        getReportingStrategy().log("Attribute negated:" + att, RULE_APPLIED);
                     }
                 }
             }

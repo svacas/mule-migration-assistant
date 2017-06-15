@@ -3,6 +3,8 @@ package com.mulesoft.tools.migration.task.step;
 import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class ReplaceStringOnNodeName extends MigrationStep{
 
     private String stringToReplace;
@@ -21,7 +23,7 @@ public class ReplaceStringOnNodeName extends MigrationStep{
                 if (node.getName().contains(getStringToReplace())) {
                     node.setName(node.getName().replace(getStringToReplace(), getNewValue()));
 
-                    getReportingStrategy().log("Node string replaced:" + stringToReplace);
+                    getReportingStrategy().log("Node string replaced:" + stringToReplace, RULE_APPLIED);
                 }
             }
         } catch (Exception ex) {

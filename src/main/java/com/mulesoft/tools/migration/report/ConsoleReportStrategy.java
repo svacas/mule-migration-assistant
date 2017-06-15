@@ -6,7 +6,7 @@ package com.mulesoft.tools.migration.report;
 public class ConsoleReportStrategy implements ReportingStrategy {
 
     @Override
-    public void log(String message) {
-        System.out.println(message);
+    public void log(String message, ReportCategory reportCategory) {
+        System.out.println(reportCategory.getDescription() + " : " + message);
     }
 }

@@ -1,8 +1,11 @@
 package com.mulesoft.tools.migration.task.step;
 
 import com.mulesoft.tools.migration.exception.MigrationStepException;
+import com.mulesoft.tools.migration.report.ReportCategory;
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Element;
+
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
 
 public class CreateChildNode extends MigrationStep {
 
@@ -22,7 +25,7 @@ public class CreateChildNode extends MigrationStep {
                     child.setNamespace(node.getNamespace());
                     node.addContent(child);
 
-                    getReportingStrategy().log("Child node created:" + name);
+                    getReportingStrategy().log("Child node created:" + name, RULE_APPLIED);
                 }
             }
         }catch (Exception ex) {

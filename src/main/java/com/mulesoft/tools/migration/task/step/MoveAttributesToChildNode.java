@@ -4,6 +4,8 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class MoveAttributesToChildNode extends MigrationStep {
 
     private String attributes;
@@ -28,7 +30,7 @@ public class MoveAttributesToChildNode extends MigrationStep {
                             node.removeAttribute(att);
                             child.setAttribute(att);
 
-                            getReportingStrategy().log("Attribute moved to child:" + att);
+                            getReportingStrategy().log("Attribute moved to child:" + att, RULE_APPLIED);
                         }
                     }
                 }

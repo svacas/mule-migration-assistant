@@ -3,6 +3,7 @@ package com.mulesoft.tools.migration.task;
 import com.google.common.base.Strings;
 import com.mulesoft.tools.migration.exception.MigrationTaskException;
 import com.mulesoft.tools.migration.report.ConsoleReportStrategy;
+import com.mulesoft.tools.migration.report.ReportCategory;
 import com.mulesoft.tools.migration.report.ReportingStrategy;
 import com.mulesoft.tools.migration.task.step.MigrationStep;
 import org.jdom2.Document;
@@ -14,6 +15,9 @@ import org.jdom2.xpath.XPathFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.mulesoft.tools.migration.report.ReportCategory.ERROR;
+import static com.mulesoft.tools.migration.report.ReportCategory.WORKING_WITH_NODES;
 
 public class MigrationTask {
 
@@ -46,7 +50,7 @@ public class MigrationTask {
                 reportingStrategy = new ConsoleReportStrategy();
             }
             nodes = getNodesFromXPath(this.xpathSelector);
-            getReportingStrategy().log("******************** Working over:" + this.xpathSelector);
+            getReportingStrategy().log(this.xpathSelector, WORKING_WITH_NODES);
             for (MigrationStep step : steps) {
                 step.setReportingStrategy(this.reportingStrategy);
                 step.setDocument(this.doc);
@@ -55,7 +59,7 @@ public class MigrationTask {
                 step.execute();
             }
         } catch (Exception ex) {
-            getReportingStrategy().log("ERROR: executing the task for:" + this.xpathSelector);
+            getReportingStrategy().log("Executing the task for:" + this.xpathSelector, ERROR);
             if(onErrorStop) {
                 throw new MigrationTaskException("Task execution exception. " + ex.getMessage());
             }

@@ -4,6 +4,8 @@ import com.mulesoft.tools.migration.exception.MigrationStepException;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
+
 public class MoveNodeToParentNode extends MigrationStep {
 
     private String sourceNode;
@@ -27,7 +29,7 @@ public class MoveNodeToParentNode extends MigrationStep {
                     node.removeChild(getSourceNode(),sourceNamespace);
                     node.getParentElement().getChildren().add(sourceElement);
 
-                    getReportingStrategy().log("Node moved to parent node:" + sourceElement);
+                    getReportingStrategy().log("Node moved to parent node:" + sourceElement, RULE_APPLIED);
                 }
             }
         } catch (Exception ex) {

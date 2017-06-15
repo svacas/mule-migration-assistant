@@ -1,8 +1,11 @@
 package com.mulesoft.tools.migration.task.step;
 
 import com.mulesoft.tools.migration.exception.MigrationStepException;
+import com.mulesoft.tools.migration.report.ReportCategory;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+
+import static com.mulesoft.tools.migration.report.ReportCategory.RULE_APPLIED;
 
 public class AddAttribute extends MigrationStep {
 
@@ -22,7 +25,7 @@ public class AddAttribute extends MigrationStep {
                 Attribute att = new Attribute(getAttributeName(), getAttributeValue());
                 node.setAttribute(att);
 
-                getReportingStrategy().log("Attribute added:" + attributeName + ":" + attributeValue);
+                getReportingStrategy().log("Attribute added:" + attributeName + ":" + attributeValue, RULE_APPLIED);
             }
         } catch (Exception ex) {
             throw new MigrationStepException("Add Attribute step exception. " + ex.getMessage());
