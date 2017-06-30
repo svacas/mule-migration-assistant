@@ -3,7 +3,7 @@
   [
     {
       "xpathSelector" : "//dw:set-payload",
-      "taskDescriptor" : "Migrate dw script",
+      "taskDescriptor" : "Migrate Dataweave script",
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Migrate dataweave script",
@@ -15,10 +15,10 @@
     },
     {
       "xpathSelector" : "//dw:*",
-      "taskDescriptor" : "Update Mule DW Namespace",
+      "taskDescriptor" : "Update Dataweave Namespace",
       "stepsDefinition" : [
         {
-          "stepDescriptor" : "Delete dw namespace",
+          "stepDescriptor" : "Delete Dataweave namespace 'dw'",
           "type" : "com.mulesoft.tools.migration.task.step.DeleteNamespace",
           "parameters" : {
             "namespace" : "dw",
@@ -27,7 +27,7 @@
           }
         },
         {
-          "stepDescriptor" : "Update dw namespace",
+          "stepDescriptor" : "Update Dataweave namespace to 'ee'",
           "type" : "com.mulesoft.tools.migration.task.step.SetNodeNamespace",
           "parameters" : {
             "newNamespace" : "ee",
@@ -40,10 +40,10 @@
     },
     {
       "xpathSelector" : "//ee:*",
-      "taskDescriptor" : "Update Mule DW Components",
+      "taskDescriptor" : "Update Dataweave Components",
       "stepsDefinition" : [
         {
-          "stepDescriptor" : "Rename transform message",
+          "stepDescriptor" : "Rename dataweave 'transform-message' node",
           "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "transform-message",
@@ -69,14 +69,14 @@
       "taskDescriptor" : "Update transform children",
       "stepsDefinition" : [
         {
-          "stepDescriptor" : "Create child node",
+          "stepDescriptor" : "Create child node 'message'",
           "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "message"
           }
         },
         {
-          "stepDescriptor" : "Move set-payload node to child node",
+          "stepDescriptor" : "Move dataweave 'set-payload' node to 'message' child node",
           "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "set-payload",

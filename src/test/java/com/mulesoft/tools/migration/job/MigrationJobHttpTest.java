@@ -15,7 +15,7 @@ import static com.mulesoft.tools.migration.helper.DocumentHelper.restoreTestDocu
 public class MigrationJobHttpTest {
     private MigrationJob migrationJob;
     private Document docRestoreFile;
-    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/http/http-proxy-use-case.xml";
+    private String USE_CASE_FILE_PATH = "src/test/resources/mule/examples/http/http-all-use-case.xml";
     private String TASKS_FILE_DIR = "src/test/resources/mule/tasks/http";
 
     @Before
