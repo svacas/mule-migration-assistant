@@ -271,7 +271,7 @@
     },
     {
       "xpathSelector" : "//http:request",
-      "taskDescriptor" : "Update HTTP Request",
+      "taskDescriptor" : "Update HTTP Request Components",
       "stepsDefinition" : [
         {
           "stepDescriptor" : "Move 'success-status-code-validator' node to 'response-validator' child node",

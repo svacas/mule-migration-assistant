@@ -51,7 +51,7 @@ public class MigrationTask {
                 reportingStrategy = new ConsoleReportStrategy();
             }
             nodes = getNodesFromXPath(this.xpathSelector);
-            getReportingStrategy().log(this.xpathSelector, WORKING_WITH_NODES);
+            getReportingStrategy().log(this.xpathSelector + " (" + this.taskDescriptor + ")", WORKING_WITH_NODES);
             for (MigrationStep step : steps) {
                 step.setReportingStrategy(this.reportingStrategy);
                 step.setDocument(this.doc);
