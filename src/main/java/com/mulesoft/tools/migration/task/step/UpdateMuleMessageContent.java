@@ -20,7 +20,7 @@ public class UpdateMuleMessageContent extends MigrationStep {
                 }
             }
         } catch (Exception ex) {
-            throw new MigrationStepException("Remove node exception. " + ex.getMessage());
+            throw new MigrationStepException("Update Mule Message Content exception. " + ex.getMessage());
         }
     }
 }

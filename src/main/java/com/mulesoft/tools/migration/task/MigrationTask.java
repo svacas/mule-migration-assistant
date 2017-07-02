@@ -63,9 +63,9 @@ public class MigrationTask {
         } catch (Exception ex) {
             if(ex.getMessage().endsWith("has not been declared.")) {
                 getReportingStrategy().log("Task " + this.xpathSelector + " - " + ex.getMessage(), SKIPPED);
-            }
-            else {
-                getReportingStrategy().log("Executing the task for:" + this.xpathSelector, ERROR);
+            } else {
+                getReportingStrategy().log("Executing the task for:" + this.xpathSelector + ":" + ex.getMessage(), ERROR);
+                ex.printStackTrace();
             }
             if(onErrorStop) {
                 throw new MigrationTaskException("Task execution exception. " + ex.getMessage());
