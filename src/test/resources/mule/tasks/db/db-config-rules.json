@@ -3,10 +3,10 @@
   [
     {
       "xpathSelector" : "//db:derby-config",
-      "taskDescriptor" : "Update DB Derby Configuration",
+      "taskDescriptor" : "Update Database Derby Configuration",
       "stepsDefinition" : [
         {
-          "stepDescriptor" : "Move connectionTimeout to connection-properties node",
+          "stepDescriptor" : "Move 'connectionTimeout' attribute to new 'connection-properties' child node",
           "type" : "com.mulesoft.tools.migration.task.step.MoveAttributeToNewChildNode",
           "parameters" : {
             "attribute" : "connectionTimeout",
@@ -14,14 +14,14 @@
           }
         },
         {
-          "stepDescriptor" : "Create child node derby-connection",
+          "stepDescriptor" : "Create 'derby-connection' child node",
           "type" : "com.mulesoft.tools.migration.task.step.CreateChildNode",
           "parameters" : {
             "name" : "derby-connection"
           }
         },
         {
-          "stepDescriptor" : "Move attributes to child node derby-connection",
+          "stepDescriptor" : "Move attributes to 'derby-connection' child node: user;password;connectionTimeout;useXaTransactions;parameterTable",
           "type" : "com.mulesoft.tools.migration.task.step.MoveAttributesToChildNode",
           "parameters" : {
             "attributes" : "user;password;connectionTimeout;useXaTransactions;parameterTable",
@@ -29,7 +29,7 @@
           }
         },
         {
-          "stepDescriptor" : "Move pooling profile node to child node derby-connection",
+          "stepDescriptor" : "Move 'pooling-profile' node to 'derby-connection' child node",
           "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "pooling-profile",
@@ -41,7 +41,7 @@
           }
         },
         {
-          "stepDescriptor" : "Move connection properties node to child node derby-connection",
+          "stepDescriptor" : "Move 'connection-properties' node to 'derby-connection' child node",
           "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "connection-properties",
@@ -53,7 +53,7 @@
           }
         },
         {
-          "stepDescriptor" : "Move reconnect node to child node derby-connection",
+          "stepDescriptor" : "Move 'reconnect' node to 'derby-connection' child node",
           "type" : "com.mulesoft.tools.migration.task.step.MoveNodeToChildNode",
           "parameters" : {
             "sourceNode" : "reconnect",
@@ -65,7 +65,7 @@
           }
         },
         {
-          "stepDescriptor" : "Rename db config",
+          "stepDescriptor" : "Rename 'derby-config' name config to 'config'",
           "type" : "com.mulesoft.tools.migration.task.step.ReplaceStringOnNodeName",
           "parameters" : {
             "stringToReplace" : "derby-config",
