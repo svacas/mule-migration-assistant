@@ -19,6 +19,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,8 +137,10 @@ public class MigrationJob {
         try {
             for (String filePath : filePaths) {
                 File copyFile = new File(filePath);
-                Path targetPath = destFolder.toPath().resolve(copyFile.getParent());
 
+                //Path targetPath = destFolder.toPath().resolve(copyFile.getParent());
+                Path targetPath = Paths.get(copyFile.getParentFile().getAbsolutePath() + File.separator +
+                        BACKUP_FOLDER + File.separator + copyFile.getName());
                 if (!Files.exists(targetPath)) {
                     Files.createDirectories(targetPath);
                 }
