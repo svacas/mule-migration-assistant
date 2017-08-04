@@ -28,12 +28,25 @@ public class ReplaceNodesName extends MigrationStep {
                         node.setNamespace(namespace);
                         node.setName(getNewNodeName());
 
+                        for (Element childNode : node.getChildren()) {
+                            replaceChildNodesNamespace(childNode, namespace);
+                        }
+
                         getReportingStrategy().log("Node <" + legacyNode + "> has been replaced with <" + node.getQualifiedName() + "> node" , RULE_APPLIED);
                     }
                 }
             }
         } catch (Exception ex) {
             throw new MigrationStepException("Replace node name exception. " + ex.getMessage());
+        }
+    }
+
+    public void replaceChildNodesNamespace(Element node, Namespace namespace) {
+        node.setNamespace(namespace);
+        if (node.getChildren().size() > 0) {
+            for (Element childNode : node.getChildren()) {
+                replaceChildNodesNamespace(childNode, namespace);
+            }
         }
     }
 

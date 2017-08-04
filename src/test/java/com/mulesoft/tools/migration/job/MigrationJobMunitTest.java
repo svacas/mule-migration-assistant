@@ -23,7 +23,7 @@ public class MigrationJobMunitTest {
 
     private static final String EXAMPLE_1_FILE_PATH = "src/test/resources/munit/examples/sample-file.xml";
     private static final String EXAMPLE_2_FILE_PATH = "src/test/resources/munit/examples/set-payload.xml";
-    private static final String TASKS_FILE_PATH = "src/test/resources/munit/tasks/munit-tasks.json";
+    private static final String MUNIT_TASKS_PATH = "src/test/resources/munit/tasks";
 
     @Before
     public void setUp() throws Exception {
@@ -143,7 +143,7 @@ public class MigrationJobMunitTest {
         ArrayList<String> files = new ArrayList<String>(Arrays.asList(EXAMPLE_2_FILE_PATH, EXAMPLE_1_FILE_PATH));
 
         migrationJob.setDocuments(files);
-        migrationJob.setConfigFilePath(TASKS_FILE_PATH);
+        migrationJob.setConfigFileDir(MUNIT_TASKS_PATH);
         migrationJob.execute();
     }
 
