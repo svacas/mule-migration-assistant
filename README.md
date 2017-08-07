@@ -31,7 +31,7 @@ Id | Component | Description
 2 | Web Service Consumer | Includes all the changes for the WSC Consumer and WSS
 3 | Dataweave | Includes all the changes for the Dataweave Transformer + the migration of dw 1.0 scripts to 2.0
 4 | Database | Includes all the changes for the Database Module: Derby, MySQL, Oracle and Generic Configs
-4 | Message Structure | Mule Message Structure: payload, attributes, variables
+5 | Message Structure | Mule Message Structure: payload, attributes, variables
 
 ## Test Files
 Individual component-related tests located in: `src/test/resources/mule/examples`
