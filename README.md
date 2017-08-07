@@ -5,10 +5,10 @@ This tool is intended to help with the Mule 3.x - Mule 4.x migration effort.
 The tool works at xml level, making DOM operations/manipulation based on a set of configurable tasks and steps described in json files.
 
 ## Build and Package
-Execute: mvn clean package
+Execute: `mvn clean package`
 
 ## Run
-java -jar migration-tool-1.0.0-SNAPSHOT.jar [options]
+`java -jar migration-tool-1.0.0-SNAPSHOT.jar [options]`
 
 Option | Description | Mandatory | Default
 ------------ | ------------ | ------------ | ------------
@@ -21,7 +21,8 @@ Option | Description | Mandatory | Default
 -backup | Flag to determine if you want a backup of your original files, options: true, false | No | true
 
 ## List of Tasks
-The tasks are located in src/test/resources/mule/tasks and src/test/resources/munit/tasks
+The tasks are located in `src/test/resources/mule/tasks` and `src/test/resources/munit/tasks`
+
 NOTE: The order of the tasks matters!
 
 Id | Component | Description
@@ -33,8 +34,9 @@ Id | Component | Description
 4 | Message Structure | Mule Message Structure: payload, attributes, variables
 
 ## Test Files
-Individual component-related tests located in: src/test/resources/mule/examples
-Use Cases / Apps tests located in: src/test/resources/mule/apps
+Individual component-related tests located in: `src/test/resources/mule/examples`
+
+Use Cases / Apps tests located in: `src/test/resources/mule/apps`
 
 ## Limitations
 Id | Key | Description | Doable
