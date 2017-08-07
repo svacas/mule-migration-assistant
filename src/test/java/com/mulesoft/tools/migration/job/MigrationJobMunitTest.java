@@ -35,7 +35,7 @@ public class MigrationJobMunitTest {
         ArrayList<String> filePath2 = new ArrayList<String>();
         filePath2.add(EXAMPLE_2_FILE_PATH);
         ArrayList<String> filePath3 = new ArrayList<String>();
-        filePath2.add(EXAMPLE_3_FILE_PATH);
+        filePath3.add(EXAMPLE_3_FILE_PATH);
 
         migrationJob = new MigrationJob();
         migrationJob.setDocuments(filePath1);
