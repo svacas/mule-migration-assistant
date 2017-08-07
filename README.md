@@ -20,6 +20,11 @@ Option | Description | Mandatory | Default
 -report | Reporting strategy, options: console | No | console
 -backup | Flag to determine if you want a backup of your original files, options: true, false | No | true
 
+## Example
+`java -jar migration-tool-1.0.0-SNAPSHOT.jar -filesDir myApps/usecase01 -migrationConfigDir rules/mule/tasks -onErrorStop false -report console -backup true`
+
+![Output Example](/img/output_example.png)
+
 ## List of Tasks
 The tasks are located in `src/test/resources/mule/tasks` and `src/test/resources/munit/tasks`
 
