@@ -1,6 +1,5 @@
 {
-  "tasks":
-  [
+  "tasks": [
     {
       "xpathSelector" : "//munit:test/munit:set",
       "taskDescriptor" : "Update MUnit Set Event processor",
@@ -39,7 +38,7 @@
       ]
     },
     {
-      "xpathSelector" : "/descendant::*[attribute::mimeType]",
+      "xpathSelector" : "//munit:test/munit:set-event/descendant::*[attribute::mimeType]",
       "taskDescriptor" : "Update MUnit Set Event processor",
       "stepsDefinition" : [
         {

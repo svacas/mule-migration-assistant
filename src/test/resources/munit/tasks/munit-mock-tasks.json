@@ -113,7 +113,7 @@
       ]
     },
     {
-      "xpathSelector" : "/descendant::*[attribute::mimeType]",
+      "xpathSelector" : "//munit:test/munit-tools:mock-when/descendant::*[attribute::mimeType]",
       "taskDescriptor" : "Update mimeType property to mediaType",
       "stepsDefinition" : [
         {

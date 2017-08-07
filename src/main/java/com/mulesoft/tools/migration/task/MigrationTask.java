@@ -51,14 +51,18 @@ public class MigrationTask {
                 reportingStrategy = new ConsoleReportStrategy();
             }
             nodes = getNodesFromXPath(this.xpathSelector);
-            getReportingStrategy().log(this.xpathSelector + " (" + this.taskDescriptor + ")", WORKING_WITH_NODES);
-            for (MigrationStep step : steps) {
-                step.setReportingStrategy(this.reportingStrategy);
-                step.setDocument(this.doc);
-                step.setOnErrorStop(this.onErrorStop);
-                step.setNodes(nodes);
-                getReportingStrategy().log(step.getStepDescriptor(), TRYING_TO_APPLY);
-                step.execute();
+            if (nodes.size() > 0) {
+                getReportingStrategy().log(this.xpathSelector + " (" + this.taskDescriptor + ")", WORKING_WITH_NODES);
+                for (MigrationStep step : steps) {
+                    step.setReportingStrategy(this.reportingStrategy);
+                    step.setDocument(this.doc);
+                    step.setOnErrorStop(this.onErrorStop);
+                    step.setNodes(nodes);
+                    getReportingStrategy().log(step.getStepDescriptor(), TRYING_TO_APPLY);
+                    step.execute();
+                }
+            } else {
+                getReportingStrategy().log("Task " + this.xpathSelector + " - " + "No elements to migrate found.", SKIPPED);
             }
         } catch (Exception ex) {
             if(ex.getMessage().endsWith("has not been declared.")) {
