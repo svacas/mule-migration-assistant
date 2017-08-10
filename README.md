@@ -48,10 +48,12 @@ Id | Key | Description | Doable
 ------------ | ------------ | ------------ | ------------
 1 | Folder Structure | The new mule4 folder structure migration is not included | yes
 2 | pom.xml | Dependencies, plugins, and all the pom.xml content migration is not included | yes
-3 | Transports | Migration of transports not included: file, ftp, tcp, smtp, etc | no, use compatibility module
-4 | Domains | Migration of xml files depending on a domain configuration or in a separate file configuration is not supported | yes
-5 | APIKit | APIKit migration not included | yes
-6 | Error handling | Error handling new structure not included | yes
+3 | external log | External log strategy not included | yes, add a new strategy
+4 | Transports | Migration of transports not included: file, ftp, tcp, smtp, etc | no, use compatibility module
+5 | Domains | Migration of xml files depending on a domain configuration or in a separate file configuration is not supported | yes
+6 | APIKit | APIKit migration not included | yes, just add more rules
+7 | Connectors | Connectors (Object Store, SFDC, Workday, etc) not included | yes, just add more rules
+8 | Error handling | Error handling new structure not included | yes, just add more rules
 
 ## Final Note
 Enjoy and provide feedback / contribute :)
