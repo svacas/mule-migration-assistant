@@ -940,3 +940,10 @@ munit:
     message: "This parameter was deprecated on MUnit 2. You should mock each processor instead."
     docLinks:
       - https://docs.mulesoft.com/munit/latest/mock-event-processor
+
+salesforce:
+  create:
+    type: ERROR
+    message: "Fail during migrating create operation"
+    docLinks:
+      - https://docs.mulesoft.com/munit/latest/mock-event-processor
