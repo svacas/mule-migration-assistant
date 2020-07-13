@@ -946,4 +946,4 @@ salesforce:
     type: ERROR
     message: "Fail during migrating create operation"
     docLinks:
-      - https://docs.mulesoft.com/munit/latest/mock-event-processor
+      - https://docs.mulesoft.com/salesforce-connector/10.2/salesforce-connector-reference#create
