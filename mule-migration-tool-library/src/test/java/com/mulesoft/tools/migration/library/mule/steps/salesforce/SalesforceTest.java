@@ -57,6 +57,7 @@ public class SalesforceTest {
   private final Path configPath;
   private final Path targetPath;
   private CreateOperation createOperation;
+  private CachedBasicConfiguration cachedBasicConfiguration;
   private Document doc;
   private ApplicationModel appModel;
 
@@ -71,9 +72,12 @@ public class SalesforceTest {
     appModel = mockApplicationModel(doc, temp);
 
     createOperation = new CreateOperation();
+    cachedBasicConfiguration = new CachedBasicConfiguration();
+
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
+    cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
   }
 
   public void migrate(AbstractApplicationModelMigrationStep migrationStep) {
@@ -84,6 +88,7 @@ public class SalesforceTest {
   @Test
   public void execute() throws Exception {
     migrate(createOperation);
+    migrate(cachedBasicConfiguration);
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     String xmlString = outputter.outputString(doc);
