@@ -16,12 +16,4 @@
         <licensePath>../LICENSE_HEADER.txt</licensePath>
     </properties>
 
-    <dependencies>
-        <!-- CONTRIBUTIONS SHOULD BE ADDED HERE -->
-        <dependency>
-            <groupId>com.mulesoft.tools</groupId>
-            <artifactId>mule-migration-tool-gateway-plugin</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
 </project>
