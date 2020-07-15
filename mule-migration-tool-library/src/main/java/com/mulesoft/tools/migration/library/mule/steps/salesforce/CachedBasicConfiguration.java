@@ -28,7 +28,7 @@ public class CachedBasicConfiguration extends AbstractApplicationModelMigrationS
 
   private static final String MULE3_NAME = "cached-basic-config";
   private static final String MULE4_CONFIG = "sfdc-config";
-  private static final String MULE4_NAME = "cached-basic-connection";
+  private static final String MULE4_NAME = "basic-connection";
   private static final String MULE4_PROXY = "proxy-configuration";
 
   private
