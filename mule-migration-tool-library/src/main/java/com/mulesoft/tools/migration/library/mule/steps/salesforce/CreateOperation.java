@@ -60,6 +60,19 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
         String expression = expressionMigrator.migrateExpression(refHeaders, true, headers);
         mule4CreateOperation.setAttribute("headers", expression);
       }
+
+      List<Element> children = headers.getChildren();
+      if (children.size() > 0) {
+        Element mule4Headers = new Element("headers", SalesforceConstants.MULE4_SALESFORCE_NAMESPACE);
+        children.stream()
+          .forEach(header -> {
+            mule4Headers.addContent(
+              new Element("header", SalesforceConstants.MULE4_SALESFORCE_NAMESPACE)
+                .setAttribute("key", header.getText())
+                .setAttribute("value", header.getText()));
+            });
+        mule4CreateOperation.addContent(mule4Headers);
+      }
     });
 
     Optional<Element> objects =

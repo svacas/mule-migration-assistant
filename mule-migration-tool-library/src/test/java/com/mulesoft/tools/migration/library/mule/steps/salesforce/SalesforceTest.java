@@ -49,7 +49,8 @@ public class SalesforceTest {
         "salesforce-createWithoutHeaders",
         "salesforce-createWithoutConfig",
         "salesforce-createWithAccessTokenId",
-        "salesforce-createWithCreateObjectsManually"
+        "salesforce-createWithCreateObjectsManually",
+        "salesforce-createWithEditInlineHeaders"
     };
   }
 
