@@ -37,6 +37,9 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
 
   @Override
   public void execute(Element mule3CreateOperation, MigrationReport report) throws RuntimeException {
+    getApplicationModel().addNameSpace(SalesforceConstants.MULE4_SALESFORCE_NAMESPACE,
+                                       SalesforceConstants.MULE4_SALESFORCE_NAMESPACE_URI, mule3CreateOperation.getDocument());
+
     Element mule4CreateOperation = new Element(name, SalesforceConstants.MULE4_SALESFORCE_NAMESPACE);
     setAttributes(mule3CreateOperation, mule4CreateOperation, report);
 

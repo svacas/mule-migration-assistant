@@ -42,6 +42,9 @@ public class CachedBasicConfiguration extends AbstractApplicationModelMigrationS
 
   @Override
   public void execute(Element mule3CachedBasicConfig, MigrationReport report) throws RuntimeException {
+    getApplicationModel().addNameSpace(SalesforceConstants.MULE4_SALESFORCE_NAMESPACE,
+                                       SalesforceConstants.MULE4_SALESFORCE_NAMESPACE_URI, mule3CachedBasicConfig.getDocument());
+
     Element mule4Config = new Element(MULE4_CONFIG, SalesforceConstants.MULE4_SALESFORCE_NAMESPACE);
     setAttributes(mule3CachedBasicConfig, mule4Config, report);
   }
