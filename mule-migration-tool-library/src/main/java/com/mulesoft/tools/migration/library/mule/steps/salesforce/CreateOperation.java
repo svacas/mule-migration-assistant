@@ -45,10 +45,10 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
                                        SalesforceConstants.MULE4_SALESFORCE_NAMESPACE_URI, mule3CreateOperation.getDocument());
 
     Element mule4CreateOperation = new Element(name, SalesforceConstants.MULE4_SALESFORCE_NAMESPACE);
-    setAttributes(mule3CreateOperation, mule4CreateOperation, report);
+    setAttributes(mule3CreateOperation, mule4CreateOperation);
 
     if (mule3CreateOperation.getAttribute("accessTokenId") != null) {
-      report.report("salesforce.accessTokenId", mule4CreateOperation, mule4CreateOperation);
+      report.report("salesforce.accessTokenId", mule3CreateOperation, mule4CreateOperation);
     }
 
     Optional<Element> mule3Headers =
@@ -114,7 +114,7 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
     mule3CreateOperation.getParentElement().removeContent(mule3CreateOperation);
   }
 
-  private void setAttributes(Element mule3CreateOperation, Element mule4CreateOperation, MigrationReport report) {
+  private void setAttributes(Element mule3CreateOperation, Element mule4CreateOperation) {
     String docName = mule3CreateOperation.getAttributeValue("name", SalesforceConstants.DOC_NAMESPACE);
     if (docName != null) {
       mule4CreateOperation.setAttribute("name", docName, SalesforceConstants.DOC_NAMESPACE);
@@ -123,15 +123,11 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
     String configRef = mule3CreateOperation.getAttributeValue("config-ref");
     if (configRef != null && !configRef.isEmpty()) {
       mule4CreateOperation.setAttribute("config-ref", configRef);
-    } else {
-      report.report("salesforce.create", mule4CreateOperation, mule4CreateOperation);
     }
 
     String type = mule3CreateOperation.getAttributeValue("type");
     if (type != null && !type.isEmpty()) {
       mule4CreateOperation.setAttribute("type", type);
-    } else {
-      report.report("salesforce.create", mule4CreateOperation, mule4CreateOperation);
     }
   }
 
