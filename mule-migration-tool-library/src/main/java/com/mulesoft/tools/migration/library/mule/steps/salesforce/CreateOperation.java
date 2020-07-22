@@ -65,11 +65,11 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
       if (children.size() > 0) {
         Element mule4Headers = new Element("headers", SalesforceConstants.MULE4_SALESFORCE_NAMESPACE);
         children.stream()
-          .forEach(header -> {
-            mule4Headers.addContent(
-              new Element("header", SalesforceConstants.MULE4_SALESFORCE_NAMESPACE)
-                .setAttribute("key", header.getText())
-                .setAttribute("value", header.getText()));
+            .forEach(header -> {
+              mule4Headers.addContent(
+                                      new Element("header", SalesforceConstants.MULE4_SALESFORCE_NAMESPACE)
+                                          .setAttribute("key", header.getText())
+                                          .setAttribute("value", header.getText()));
             });
         mule4CreateOperation.addContent(mule4Headers);
       }
@@ -118,6 +118,11 @@ public class CreateOperation extends AbstractApplicationModelMigrationStep imple
     String docName = mule3CreateOperation.getAttributeValue("name", SalesforceConstants.DOC_NAMESPACE);
     if (docName != null) {
       mule4CreateOperation.setAttribute("name", docName, SalesforceConstants.DOC_NAMESPACE);
+    }
+
+    String notes = mule3CreateOperation.getAttributeValue("description", SalesforceConstants.DOC_NAMESPACE);
+    if (notes != null) {
+      mule4CreateOperation.setAttribute("description", notes, SalesforceConstants.DOC_NAMESPACE);
     }
 
     String configRef = mule3CreateOperation.getAttributeValue("config-ref");

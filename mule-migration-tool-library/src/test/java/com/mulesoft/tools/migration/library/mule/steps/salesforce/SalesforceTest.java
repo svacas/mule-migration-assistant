@@ -86,12 +86,12 @@ public class SalesforceTest {
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     String xmlString = outputter.outputString(doc);
 
-    if(doc.getBaseURI().contains("AccessTokenId")) {
+    if (doc.getBaseURI().contains("AccessTokenId")) {
       report.expectReportEntry("salesforce.accessTokenId");
     }
 
     assertThat(xmlString,
                isSimilarTo(IOUtils.toString(this.getClass().getClassLoader().getResource(targetPath.toString()).toURI(), UTF_8))
-                .ignoreComments().normalizeWhitespace());
+                   .ignoreComments().normalizeWhitespace());
   }
 }
