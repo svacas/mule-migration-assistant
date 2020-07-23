@@ -1058,3 +1058,8 @@ raml:
   noMatchingConfig:
     type: ERROR
     message: No matching config was found for RAML element.
+
+salesforce:
+  accessTokenId:
+    type: INFO
+    message: "The access token id parameter was removed in salesforce 10.x"
