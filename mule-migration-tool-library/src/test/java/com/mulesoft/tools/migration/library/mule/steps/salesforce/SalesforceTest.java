@@ -49,6 +49,9 @@ public class SalesforceTest {
         "salesforce-createWithAccessTokenId",
         "salesforce-createWithCreateObjectsManually",
         "salesforce-createWithEditInlineHeaders",
+        "salesforce-update",
+        "salesforce-updateManuallyObjectsAndHeaders",
+        "salesforce-updateWithAccessTokenId",
         "salesforce-upsert",
         "salesforce-upsertWithAccessTokenId",
         "salesforce-upsertWithoutHeaders",
@@ -61,6 +64,7 @@ public class SalesforceTest {
   private final Path configPath;
   private final Path targetPath;
   private CreateOperation createOperation;
+  private UpdateOperation updateOperation;
   private Document doc;
   private ApplicationModel appModel;
   private UpsertOperation upsertOperation;
@@ -76,10 +80,12 @@ public class SalesforceTest {
     appModel = mockApplicationModel(doc, temp);
 
     createOperation = new CreateOperation();
+    updateOperation = new UpdateOperation();
     upsertOperation = new UpsertOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
+    updateOperation.setExpressionMigrator(expressionMigrator);
     upsertOperation.setExpressionMigrator(expressionMigrator);
   }
 
@@ -91,6 +97,7 @@ public class SalesforceTest {
   @Test
   public void execute() throws Exception {
     migrate(createOperation);
+    migrate(updateOperation);
     migrate(upsertOperation);
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
