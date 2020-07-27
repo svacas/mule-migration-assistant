@@ -48,13 +48,21 @@ public class SalesforceTest {
         "salesforce-createWithoutHeaders",
         "salesforce-createWithAccessTokenId",
         "salesforce-createWithCreateObjectsManually",
-        "salesforce-createWithEditInlineHeaders"
+        "salesforce-createWithEditInlineHeaders",
+        "salesforce-queryDsqlDefaultFetchSize",
+        "salesforce-queryNativeNotDefaultFetchSize",
+        "salesforce-queryWithAccessTokenId",
+        "salesforce-queryWithEditInlineHeaders",
+        "salesforce-queryWithEditInlineHeadersDefaultFetchSize",
+        "salesforce-queryWithoutHeaders",
+        "salesforce-queryWithoutHeadersDefaultFetchSize"
     };
   }
 
   private final Path configPath;
   private final Path targetPath;
   private CreateOperation createOperation;
+  private QueryOperation queryOperation;
   private Document doc;
   private ApplicationModel appModel;
 
@@ -69,9 +77,11 @@ public class SalesforceTest {
     appModel = mockApplicationModel(doc, temp);
 
     createOperation = new CreateOperation();
+    queryOperation = new QueryOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
+    queryOperation.setExpressionMigrator(expressionMigrator);
   }
 
   public void migrate(AbstractApplicationModelMigrationStep migrationStep) {
@@ -82,12 +92,16 @@ public class SalesforceTest {
   @Test
   public void execute() throws Exception {
     migrate(createOperation);
+    migrate(queryOperation);
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     String xmlString = outputter.outputString(doc);
 
     if (doc.getBaseURI().contains("AccessTokenId")) {
       report.expectReportEntry("salesforce.accessTokenId");
+    }
+    if (doc.getBaseURI().contains("FetchSize")) {
+      report.expectReportEntry("salesforce.fetchSize");
     }
 
     assertThat(xmlString,
