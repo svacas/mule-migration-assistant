@@ -49,6 +49,21 @@ public class SalesforceTest {
         "salesforce-createWithAccessTokenId",
         "salesforce-createWithCreateObjectsManually",
         "salesforce-createWithEditInlineHeaders",
+        "salesforce-update",
+        "salesforce-updateManuallyObjectsAndHeaders",
+        "salesforce-updateWithAccessTokenId",
+        "salesforce-upsert",
+        "salesforce-upsertWithAccessTokenId",
+        "salesforce-upsertWithoutHeaders",
+        "salesforce-upsertWithCreateObjectsManually",
+        "salesforce-upsertWithEditInlineHeaders",
+        "salesforce-upsertWithoutExternalIdFieldName",
+        "salesforce-retrieveWithIdsAndFieldsAddedManually",
+        "salesforce-retrieveWithIdsAndFieldsFromExpression",
+        "salesforce-retrieveWithIdsAddedManuallyAndFieldsFromExpression",
+        "salesforce-retrieveWithEditInLineHeaders",
+        "salesforce-retrieveWithAccessTokenId",
+        "salesforce-retrieveWithoutIds",
         "salesforce-queryDsqlDefaultFetchSize",
         "salesforce-queryNativeNotDefaultFetchSize",
         "salesforce-queryWithAccessTokenId",
@@ -61,10 +76,13 @@ public class SalesforceTest {
 
   private final Path configPath;
   private final Path targetPath;
-  private CreateOperation createOperation;
-  private QueryOperation queryOperation;
   private Document doc;
   private ApplicationModel appModel;
+  private CreateOperation createOperation;
+  private UpsertOperation upsertOperation;
+  private RetrieveOperation retrieveOperation;
+  private UpdateOperation updateOperation;
+    private QueryOperation queryOperation;
 
   public SalesforceTest(String filePrefix) {
     this.configPath = SALESFORCE_CONFIG_EXAMPLES_PATH.resolve(filePrefix + "-original.xml");
@@ -77,10 +95,16 @@ public class SalesforceTest {
     appModel = mockApplicationModel(doc, temp);
 
     createOperation = new CreateOperation();
+    upsertOperation = new UpsertOperation();
+    retrieveOperation = new RetrieveOperation();
+    updateOperation = new UpdateOperation();
     queryOperation = new QueryOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
+    upsertOperation.setExpressionMigrator(expressionMigrator);
+    retrieveOperation.setExpressionMigrator(expressionMigrator);
+    updateOperation.setExpressionMigrator(expressionMigrator);
     queryOperation.setExpressionMigrator(expressionMigrator);
   }
 
@@ -92,7 +116,11 @@ public class SalesforceTest {
   @Test
   public void execute() throws Exception {
     migrate(createOperation);
+    migrate(upsertOperation);
+    migrate(retrieveOperation);
+    migrate(updateOperation);
     migrate(queryOperation);
+
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     String xmlString = outputter.outputString(doc);

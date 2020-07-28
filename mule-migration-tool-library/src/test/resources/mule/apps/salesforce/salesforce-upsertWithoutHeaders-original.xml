@@ -7,9 +7,9 @@
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd">
 
-    <flow name="salesforce-createWithoutHeaders-flow">
-        <sfdc:create config-ref="Salesforce_Config" type="Account" doc:name="Salesforce">
+    <flow name="salesforce-upsertWithoutHeaders-flow">
+        <sfdc:upsert config-ref="Salesforce_Config" type="Account" doc:name="Salesforce" externalIdFieldName="ExternalID__c">
             <sfdc:objects ref="#[payload]"/>
-        </sfdc:create>
+        </sfdc:upsert>
     </flow>
 </mule>
