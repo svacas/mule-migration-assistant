@@ -52,7 +52,7 @@ public class SalesforceTest {
         "salesforce-queryDsqlDefaultFetchSize",
         "salesforce-queryNativeNotDefaultFetchSize",
         "salesforce-queryWithAccessTokenId",
-        "salesforce-queryWithEditInlineHeaders",
+        "salesforce-queryWithEditInlineHeadersNotDefaultFetchSize",
         "salesforce-queryWithEditInlineHeadersDefaultFetchSize",
         "salesforce-queryWithoutHeaders",
         "salesforce-queryWithoutHeadersDefaultFetchSize"
