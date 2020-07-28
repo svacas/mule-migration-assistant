@@ -6,6 +6,7 @@
 package com.mulesoft.tools.migration.library.mule.tasks;
 
 import com.mulesoft.tools.migration.library.mule.steps.salesforce.CreateOperation;
+import com.mulesoft.tools.migration.library.mule.steps.salesforce.QueryOperation;
 import com.mulesoft.tools.migration.library.mule.steps.salesforce.RetrieveOperation;
 import com.mulesoft.tools.migration.library.mule.steps.salesforce.SalesforcePomContribution;
 import com.mulesoft.tools.migration.library.mule.steps.salesforce.UpdateOperation;
@@ -49,6 +50,7 @@ public class SalesforceMigrationTask extends AbstractMigrationTask {
                         new UpdateOperation(),
                         new UpsertOperation(),
                         new RetrieveOperation(),
+                        new QueryOperation(),
                         new SalesforcePomContribution());
   }
 }

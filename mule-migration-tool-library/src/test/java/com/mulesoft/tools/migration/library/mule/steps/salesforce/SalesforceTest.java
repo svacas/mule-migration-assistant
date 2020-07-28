@@ -63,18 +63,26 @@ public class SalesforceTest {
         "salesforce-retrieveWithIdsAddedManuallyAndFieldsFromExpression",
         "salesforce-retrieveWithEditInLineHeaders",
         "salesforce-retrieveWithAccessTokenId",
-        "salesforce-retrieveWithoutIds"
+        "salesforce-retrieveWithoutIds",
+        "salesforce-queryDsqlDefaultFetchSize",
+        "salesforce-queryNativeNotDefaultFetchSize",
+        "salesforce-queryWithAccessTokenId",
+        "salesforce-queryWithEditInlineHeadersNotDefaultFetchSize",
+        "salesforce-queryWithEditInlineHeadersDefaultFetchSize",
+        "salesforce-queryWithoutHeadersNotDefaultFetchSize",
+        "salesforce-queryWithoutHeadersDefaultFetchSize"
     };
   }
 
   private final Path configPath;
   private final Path targetPath;
-  private CreateOperation createOperation;
   private Document doc;
   private ApplicationModel appModel;
+  private CreateOperation createOperation;
   private UpsertOperation upsertOperation;
   private RetrieveOperation retrieveOperation;
   private UpdateOperation updateOperation;
+  private QueryOperation queryOperation;
 
   public SalesforceTest(String filePrefix) {
     this.configPath = SALESFORCE_CONFIG_EXAMPLES_PATH.resolve(filePrefix + "-original.xml");
@@ -90,12 +98,14 @@ public class SalesforceTest {
     upsertOperation = new UpsertOperation();
     retrieveOperation = new RetrieveOperation();
     updateOperation = new UpdateOperation();
+    queryOperation = new QueryOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
     upsertOperation.setExpressionMigrator(expressionMigrator);
     retrieveOperation.setExpressionMigrator(expressionMigrator);
     updateOperation.setExpressionMigrator(expressionMigrator);
+    queryOperation.setExpressionMigrator(expressionMigrator);
   }
 
   public void migrate(AbstractApplicationModelMigrationStep migrationStep) {
@@ -109,6 +119,7 @@ public class SalesforceTest {
     migrate(upsertOperation);
     migrate(retrieveOperation);
     migrate(updateOperation);
+    migrate(queryOperation);
 
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
@@ -116,6 +127,9 @@ public class SalesforceTest {
 
     if (doc.getBaseURI().contains("AccessTokenId")) {
       report.expectReportEntry("salesforce.accessTokenId");
+    }
+    if (doc.getBaseURI().contains("FetchSize")) {
+      report.expectReportEntry("salesforce.fetchSize");
     }
 
     assertThat(xmlString,
