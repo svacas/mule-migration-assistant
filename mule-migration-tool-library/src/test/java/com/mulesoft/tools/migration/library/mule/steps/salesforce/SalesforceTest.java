@@ -69,7 +69,7 @@ public class SalesforceTest {
         "salesforce-queryWithAccessTokenId",
         "salesforce-queryWithEditInlineHeadersNotDefaultFetchSize",
         "salesforce-queryWithEditInlineHeadersDefaultFetchSize",
-        "salesforce-queryWithoutHeaders",
+        "salesforce-queryWithoutHeadersNotDefaultFetchSize",
         "salesforce-queryWithoutHeadersDefaultFetchSize"
     };
   }
@@ -82,7 +82,7 @@ public class SalesforceTest {
   private UpsertOperation upsertOperation;
   private RetrieveOperation retrieveOperation;
   private UpdateOperation updateOperation;
-    private QueryOperation queryOperation;
+  private QueryOperation queryOperation;
 
   public SalesforceTest(String filePrefix) {
     this.configPath = SALESFORCE_CONFIG_EXAMPLES_PATH.resolve(filePrefix + "-original.xml");
