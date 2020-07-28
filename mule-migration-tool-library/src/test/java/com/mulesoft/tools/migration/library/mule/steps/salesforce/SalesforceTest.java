@@ -57,17 +57,24 @@ public class SalesforceTest {
         "salesforce-upsertWithoutHeaders",
         "salesforce-upsertWithCreateObjectsManually",
         "salesforce-upsertWithEditInlineHeaders",
-        "salesforce-upsertWithoutExternalIdFieldName"
+        "salesforce-upsertWithoutExternalIdFieldName",
+        "salesforce-retrieveWithIdsAndFieldsAddedManually",
+        "salesforce-retrieveWithIdsAndFieldsFromExpression",
+        "salesforce-retrieveWithIdsAddedManuallyAndFieldsFromExpression",
+        "salesforce-retrieveWithEditInLineHeaders",
+        "salesforce-retrieveWithAccessTokenId",
+        "salesforce-retrieveWithoutIds"
     };
   }
 
   private final Path configPath;
   private final Path targetPath;
   private CreateOperation createOperation;
-  private UpdateOperation updateOperation;
   private Document doc;
   private ApplicationModel appModel;
   private UpsertOperation upsertOperation;
+  private RetrieveOperation retrieveOperation;
+  private UpdateOperation updateOperation;
 
   public SalesforceTest(String filePrefix) {
     this.configPath = SALESFORCE_CONFIG_EXAMPLES_PATH.resolve(filePrefix + "-original.xml");
@@ -80,13 +87,15 @@ public class SalesforceTest {
     appModel = mockApplicationModel(doc, temp);
 
     createOperation = new CreateOperation();
-    updateOperation = new UpdateOperation();
     upsertOperation = new UpsertOperation();
+    retrieveOperation = new RetrieveOperation();
+    updateOperation = new UpdateOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
     createOperation.setExpressionMigrator(expressionMigrator);
-    updateOperation.setExpressionMigrator(expressionMigrator);
     upsertOperation.setExpressionMigrator(expressionMigrator);
+    retrieveOperation.setExpressionMigrator(expressionMigrator);
+    updateOperation.setExpressionMigrator(expressionMigrator);
   }
 
   public void migrate(AbstractApplicationModelMigrationStep migrationStep) {
@@ -97,8 +106,10 @@ public class SalesforceTest {
   @Test
   public void execute() throws Exception {
     migrate(createOperation);
-    migrate(updateOperation);
     migrate(upsertOperation);
+    migrate(retrieveOperation);
+    migrate(updateOperation);
+
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
     String xmlString = outputter.outputString(doc);
