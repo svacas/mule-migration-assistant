@@ -79,6 +79,11 @@ public class SalesforceTest {
         "salesforce-queryWithEditInlineHeadersDefaultFetchSize",
         "salesforce-queryWithoutHeadersNotDefaultFetchSize",
         "salesforce-queryWithoutHeadersDefaultFetchSize",
+        "salesforce-querySingleDsql",
+        "salesforce-querySingleNative",
+        "salesforce-querySingleWithAccessTokenId",
+        "salesforce-querySingleWithEditInlineHeaders",
+        "salesforce-querySingleWithoutHeaders",
         "salesforce-createJob",
         "salesforce-createJobWithoutRequest",
         "salesforce-createJobWithAccessTokenId",
@@ -98,6 +103,7 @@ public class SalesforceTest {
   private RetrieveOperation retrieveOperation;
   private UpdateOperation updateOperation;
   private QueryOperation queryOperation;
+  private QuerySingleOperation querySingleOperation;
   private CachedBasicConfiguration cachedBasicConfiguration;
   private CreateJobOperation createJobOperation;
 
@@ -117,6 +123,7 @@ public class SalesforceTest {
     retrieveOperation = new RetrieveOperation();
     updateOperation = new UpdateOperation();
     queryOperation = new QueryOperation();
+    querySingleOperation = new QuerySingleOperation();
     cachedBasicConfiguration = new CachedBasicConfiguration();
     createJobOperation = new CreateJobOperation();
 
@@ -127,6 +134,7 @@ public class SalesforceTest {
     retrieveOperation.setExpressionMigrator(expressionMigrator);
     updateOperation.setExpressionMigrator(expressionMigrator);
     queryOperation.setExpressionMigrator(expressionMigrator);
+    querySingleOperation.setExpressionMigrator(expressionMigrator);
     cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
     createJobOperation.setExpressionMigrator(expressionMigrator);
   }
@@ -144,6 +152,7 @@ public class SalesforceTest {
     migrate(retrieveOperation);
     migrate(updateOperation);
     migrate(queryOperation);
+    migrate(querySingleOperation);
     migrate(cachedBasicConfiguration);
     migrate(createJobOperation);
 
