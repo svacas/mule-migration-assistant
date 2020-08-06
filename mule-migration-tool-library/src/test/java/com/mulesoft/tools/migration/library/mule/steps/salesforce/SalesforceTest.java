@@ -84,6 +84,13 @@ public class SalesforceTest {
         "salesforce-querySingleWithAccessTokenId",
         "salesforce-querySingleWithEditInlineHeaders",
         "salesforce-querySingleWithoutHeaders",
+        "salesforce-queryAllDsqlDefaultFetchSize",
+        "salesforce-queryAllNativeNotDefaultFetchSize",
+        "salesforce-queryAllWithAccessTokenId",
+        "salesforce-queryAllWithEditInlineHeadersNotDefaultFetchSize",
+        "salesforce-queryAllWithEditInlineHeadersDefaultFetchSize",
+        "salesforce-queryAllWithoutHeadersNotDefaultFetchSize",
+        "salesforce-queryAllWithoutHeadersDefaultFetchSize",
         "salesforce-createJob",
         "salesforce-createJobWithoutRequest",
         "salesforce-createJobWithAccessTokenId",
@@ -104,6 +111,7 @@ public class SalesforceTest {
   private UpdateOperation updateOperation;
   private QueryOperation queryOperation;
   private QuerySingleOperation querySingleOperation;
+  private QueryAllOperation queryAllOperation;
   private CachedBasicConfiguration cachedBasicConfiguration;
   private CreateJobOperation createJobOperation;
 
@@ -124,6 +132,7 @@ public class SalesforceTest {
     updateOperation = new UpdateOperation();
     queryOperation = new QueryOperation();
     querySingleOperation = new QuerySingleOperation();
+    queryAllOperation = new QueryAllOperation();
     cachedBasicConfiguration = new CachedBasicConfiguration();
     createJobOperation = new CreateJobOperation();
 
@@ -135,6 +144,7 @@ public class SalesforceTest {
     updateOperation.setExpressionMigrator(expressionMigrator);
     queryOperation.setExpressionMigrator(expressionMigrator);
     querySingleOperation.setExpressionMigrator(expressionMigrator);
+    queryAllOperation.setExpressionMigrator(expressionMigrator);
     cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
     createJobOperation.setExpressionMigrator(expressionMigrator);
   }
@@ -153,6 +163,7 @@ public class SalesforceTest {
     migrate(updateOperation);
     migrate(queryOperation);
     migrate(querySingleOperation);
+    migrate(queryAllOperation);
     migrate(cachedBasicConfiguration);
     migrate(createJobOperation);
 
