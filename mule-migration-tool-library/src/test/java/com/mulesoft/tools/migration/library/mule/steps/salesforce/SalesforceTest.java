@@ -122,6 +122,8 @@ public class SalesforceTest {
 
   @Before
   public void setUp() throws Exception {
+    System.out.println("Reading: " + configPath.toString());
+
     doc = getDocument(this.getClass().getClassLoader().getResource(configPath.toString()).toURI().getPath());
     appModel = mockApplicationModel(doc, temp);
 
