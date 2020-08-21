@@ -97,6 +97,10 @@ public class SalesforceTest {
         "salesforce-createJobWithConcurrencyMode",
         "salesforce-createJobWithConcurrencyModeAndContentType",
         "salesforce-createJobWithEditInlineHeaders",
+        "salesforce-invokeApexRestMethod",
+        "salesforce-invokeApexRestMethodWithQueryParamsAddedManually",
+        "salesforce-invokeApexRestMethodWithAccessTokenId",
+        "salesforce-invokeApexRestMethodWithoutRequest",
         "salesforce-replayStreamingChannel",
         "salesforce-subscribeTopic",
         "salesforce-subscribeStreamingChannel",
@@ -122,6 +126,7 @@ public class SalesforceTest {
   private QueryAllOperation queryAllOperation;
   private CachedBasicConfiguration cachedBasicConfiguration;
   private CreateJobOperation createJobOperation;
+  private InvokeApexRestMethodOperation invokeApexRestMethodOperation;
   private ReplayStreamingChannelSource replayStreamingChannelSource;
   private SubscribeTopicSource subscribeTopicSource;
   private SubscribeStreamingChannelSource subscribeStreamingChannelSource;
@@ -147,6 +152,7 @@ public class SalesforceTest {
     queryAllOperation = new QueryAllOperation();
     cachedBasicConfiguration = new CachedBasicConfiguration();
     createJobOperation = new CreateJobOperation();
+    invokeApexRestMethodOperation = new InvokeApexRestMethodOperation();
     replayStreamingChannelSource = new ReplayStreamingChannelSource();
     subscribeTopicSource = new SubscribeTopicSource();
     subscribeStreamingChannelSource = new SubscribeStreamingChannelSource();
@@ -163,6 +169,7 @@ public class SalesforceTest {
     queryAllOperation.setExpressionMigrator(expressionMigrator);
     cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
     createJobOperation.setExpressionMigrator(expressionMigrator);
+    invokeApexRestMethodOperation.setExpressionMigrator(expressionMigrator);
     replayStreamingChannelSource.setExpressionMigrator(expressionMigrator);
     subscribeTopicSource.setExpressionMigrator(expressionMigrator);
     subscribeStreamingChannelSource.setExpressionMigrator(expressionMigrator);
@@ -186,6 +193,7 @@ public class SalesforceTest {
     migrate(queryAllOperation);
     migrate(cachedBasicConfiguration);
     migrate(createJobOperation);
+    migrate(invokeApexRestMethodOperation);
     migrate(replayStreamingChannelSource);
     migrate(subscribeTopicSource);
     migrate(subscribeStreamingChannelSource);
