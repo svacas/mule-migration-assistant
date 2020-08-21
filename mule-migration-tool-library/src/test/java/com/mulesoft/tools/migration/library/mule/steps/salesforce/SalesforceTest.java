@@ -97,6 +97,9 @@ public class SalesforceTest {
         "salesforce-createJobWithConcurrencyMode",
         "salesforce-createJobWithConcurrencyModeAndContentType",
         "salesforce-createJobWithEditInlineHeaders",
+        "salesforce-replayStreamingChannel",
+        "salesforce-subscribeTopic",
+        "salesforce-subscribeStreamingChannel",
         "salesforce-nonPaginatedQueryDsql",
         "salesforce-nonPaginatedQueryNative",
         "salesforce-nonPaginatedQueryWithAccessTokenId",
@@ -119,6 +122,9 @@ public class SalesforceTest {
   private QueryAllOperation queryAllOperation;
   private CachedBasicConfiguration cachedBasicConfiguration;
   private CreateJobOperation createJobOperation;
+  private ReplayStreamingChannelSource replayStreamingChannelSource;
+  private SubscribeTopicSource subscribeTopicSource;
+  private SubscribeStreamingChannelSource subscribeStreamingChannelSource;
   private NonPaginatedQueryOperation nonPaginatedQueryOperation;
 
   public SalesforceTest(String filePrefix) {
@@ -141,6 +147,9 @@ public class SalesforceTest {
     queryAllOperation = new QueryAllOperation();
     cachedBasicConfiguration = new CachedBasicConfiguration();
     createJobOperation = new CreateJobOperation();
+    replayStreamingChannelSource = new ReplayStreamingChannelSource();
+    subscribeTopicSource = new SubscribeTopicSource();
+    subscribeStreamingChannelSource = new SubscribeStreamingChannelSource();
     nonPaginatedQueryOperation = new NonPaginatedQueryOperation();
 
     MelToDwExpressionMigrator expressionMigrator = new MelToDwExpressionMigrator(report.getReport(), appModel);
@@ -154,6 +163,9 @@ public class SalesforceTest {
     queryAllOperation.setExpressionMigrator(expressionMigrator);
     cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
     createJobOperation.setExpressionMigrator(expressionMigrator);
+    replayStreamingChannelSource.setExpressionMigrator(expressionMigrator);
+    subscribeTopicSource.setExpressionMigrator(expressionMigrator);
+    subscribeStreamingChannelSource.setExpressionMigrator(expressionMigrator);
     nonPaginatedQueryOperation.setExpressionMigrator(expressionMigrator);
   }
 
@@ -174,6 +186,9 @@ public class SalesforceTest {
     migrate(queryAllOperation);
     migrate(cachedBasicConfiguration);
     migrate(createJobOperation);
+    migrate(replayStreamingChannelSource);
+    migrate(subscribeTopicSource);
+    migrate(subscribeStreamingChannelSource);
     migrate(nonPaginatedQueryOperation);
 
     XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
