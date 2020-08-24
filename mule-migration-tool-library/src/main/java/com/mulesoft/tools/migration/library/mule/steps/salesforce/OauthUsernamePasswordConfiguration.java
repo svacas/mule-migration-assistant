@@ -41,14 +41,4 @@ public class OauthUsernamePasswordConfiguration extends AbstractSalesforceConfig
     mule3Config.getParentElement().removeContent(mule3Config);
 
   }
-
-  @Override
-  public void setExpressionMigrator(ExpressionMigrator expressionMigrator) {
-    this.expressionMigrator = expressionMigrator;
-  }
-
-  @Override
-  public ExpressionMigrator getExpressionMigrator() {
-    return this.expressionMigrator;
-  }
 }

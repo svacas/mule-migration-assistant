@@ -164,6 +164,26 @@ public abstract class AbstractSalesforceConfigurationMigrationStep extends Abstr
       mule4Connection.setAttribute("consumerSecret", consumerSecret);
     }
 
+    String apiVersion = mule3Config.getAttributeValue("apiVersion");
+    if (apiVersion != null) {
+      mule4Connection.setAttribute("apiVersion", apiVersion);
+    }
+
+    String keyStore = mule3Config.getAttributeValue("keyStore");
+    if (keyStore != null) {
+      mule4Connection.setAttribute("keyStore", keyStore);
+    }
+
+    String storePassword = mule3Config.getAttributeValue("storePassword");
+    if (storePassword != null) {
+      mule4Connection.setAttribute("storePassword", storePassword);
+    }
+
+    String principal = mule3Config.getAttributeValue("principal");
+    if (principal != null) {
+      mule4Connection.setAttribute("principal", principal);
+    }
+
     setProxyConfiguration(mule3Config, mule4Connection);
     mule4Config.addContent(mule4Connection);
 
@@ -182,9 +202,21 @@ public abstract class AbstractSalesforceConfigurationMigrationStep extends Abstr
 
     Optional<Element> reconnectElement = Optional.ofNullable(mule3Config
         .getChild("reconnect", Namespace.getNamespace(XmlDslUtils.CORE_NS_URI)));
+
+    Optional<Element> reconnectForeverElement = Optional.ofNullable(mule3Config
+        .getChild("reconnect-forever", Namespace.getNamespace(XmlDslUtils.CORE_NS_URI)));
+
+    if (reconnectElement.isPresent()) {
+      migrateReconnection(mule4Connection, reconnectElement, "reconnect");
+    } else if (reconnectForeverElement.isPresent()) {
+      migrateReconnection(mule4Connection, reconnectForeverElement, "reconnect-forever");
+    }
+  }
+
+  private void migrateReconnection(Element mule4Connection, Optional<Element> reconnectElement, String elementName) {
     reconnectElement.ifPresent(reconnect -> {
       Element mule4Reconnection = new Element("reconnection");
-      Element mule4Reconnect = new Element("reconnect");
+      Element mule4Reconnect = new Element(elementName);
 
       String frequency = reconnect.getAttributeValue("frequency");
       if (frequency != null) {

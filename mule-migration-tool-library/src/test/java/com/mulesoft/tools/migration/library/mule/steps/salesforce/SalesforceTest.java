@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +42,7 @@ public class SalesforceTest {
 
   private static final Path SALESFORCE_CONFIG_EXAMPLES_PATH = Paths.get("mule/apps/salesforce");
 
-  @Parameterized.Parameters(name = "{0}")
+  @Parameters(name = "{0}")
   public static Object[] params() {
     return new Object[] {
         "salesforce-create",
@@ -69,7 +70,7 @@ public class SalesforceTest {
         "salesforce-retrieveWithIdsAndFieldsAddedManually",
         "salesforce-retrieveWithIdsAndFieldsFromExpression",
         "salesforce-retrieveWithIdsAddedManuallyAndFieldsFromExpression",
-        "salesforce-retrieveWithEditInLineHeaders",
+        "salesforce-retrieveWithEditInlineHeaders",
         "salesforce-retrieveWithAccessTokenId",
         "salesforce-retrieveWithoutIds",
         "salesforce-queryDsqlDefaultFetchSize",
@@ -99,6 +100,9 @@ public class SalesforceTest {
         "salesforce-createJobWithEditInlineHeaders",
         "salesforce-oauthUsernamePassword",
         "salesforce-oauthUsernamePasswordWithApexClassesAddedManually",
+        "salesforce-oauthJwtBearer",
+        "salesforce-oauthJwtBearerWithApexClassesAddedManually",
+        "salesforce-oauthJwtBearerWithReconnectForever",
         "salesforce-invokeApexRestMethod",
         "salesforce-invokeApexRestMethodWithQueryParamsAddedManually",
         "salesforce-invokeApexRestMethodWithAccessTokenId",
@@ -129,6 +133,7 @@ public class SalesforceTest {
   private CachedBasicConfiguration cachedBasicConfiguration;
   private CreateJobOperation createJobOperation;
   private OauthUsernamePasswordConfiguration oauthUsernamePasswordConfiguration;
+  private OAuthJwtBearerConfiguration oAuthJwtBearerConfiguration;
   private InvokeApexRestMethodOperation invokeApexRestMethodOperation;
   private ReplayStreamingChannelSource replayStreamingChannelSource;
   private SubscribeTopicSource subscribeTopicSource;
@@ -156,6 +161,7 @@ public class SalesforceTest {
     cachedBasicConfiguration = new CachedBasicConfiguration();
     createJobOperation = new CreateJobOperation();
     oauthUsernamePasswordConfiguration = new OauthUsernamePasswordConfiguration();
+    oAuthJwtBearerConfiguration = new OAuthJwtBearerConfiguration();
     invokeApexRestMethodOperation = new InvokeApexRestMethodOperation();
     replayStreamingChannelSource = new ReplayStreamingChannelSource();
     subscribeTopicSource = new SubscribeTopicSource();
@@ -174,6 +180,7 @@ public class SalesforceTest {
     cachedBasicConfiguration.setExpressionMigrator(expressionMigrator);
     createJobOperation.setExpressionMigrator(expressionMigrator);
     oauthUsernamePasswordConfiguration.setExpressionMigrator(expressionMigrator);
+    oAuthJwtBearerConfiguration.setExpressionMigrator(expressionMigrator);
     invokeApexRestMethodOperation.setExpressionMigrator(expressionMigrator);
     replayStreamingChannelSource.setExpressionMigrator(expressionMigrator);
     subscribeTopicSource.setExpressionMigrator(expressionMigrator);
@@ -199,6 +206,7 @@ public class SalesforceTest {
     migrate(cachedBasicConfiguration);
     migrate(createJobOperation);
     migrate(oauthUsernamePasswordConfiguration);
+    migrate(oAuthJwtBearerConfiguration);
     migrate(invokeApexRestMethodOperation);
     migrate(replayStreamingChannelSource);
     migrate(subscribeTopicSource);
