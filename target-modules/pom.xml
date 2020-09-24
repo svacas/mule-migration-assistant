@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mulesoft.tools</groupId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <artifactId>mule-migration-tool-target-modules</artifactId>
     <name>Mule Migration Assistant Library - Target Modules dependencies</name>
     <packaging>jar</packaging>
@@ -13,7 +13,7 @@
 
     <properties>
         <formatterConfigPath>../formatter.xml</formatterConfigPath>
-        <licensePath>../LICENSE_HEADER.txt</licensePath>
+        <licensePath>../LICENSE_HEADER.txt</        licensePath>
 
         <!-- Target versions for migrated components -->
         <mule.http.connector.version>1.5.6</mule.http.connector.version>
