@@ -50,14 +50,24 @@ jobs:
           draft: true
           prerelease: false
 
-      - name: Upload Release Asset
-        id: upload-release-asset
+      - name: Upload Release Asset tgz
+        id: upload-release-asset-tgz
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          # asset_path: ./data-weave-client-vscode/data-weave-100.100.100.vsix
+          asset_path: ./runner/target/mule-migration-assistant-runner-${{env.RELEASE_VERSION}}.tar.gz
+          asset_name: mule-migration-assistant-runner-${{env.RELEASE_VERSION}}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload Release Asset zip
+        id: upload-release-asset-zip
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./runner/target/mule-migration-assistant-runner-${{env.RELEASE_VERSION}}.zip
           asset_name: mule-migration-assistant-runner-${{env.RELEASE_VERSION}}.zip
           asset_content_type: application/zip
