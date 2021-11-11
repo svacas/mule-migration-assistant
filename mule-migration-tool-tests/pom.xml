@@ -139,6 +139,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-core</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.mule.runtime</groupId>
             <artifactId>mule-api</artifactId>
             <scope>test</scope>
