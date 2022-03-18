@@ -15,7 +15,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonPrimitive;
 import com.mulesoft.tools.migration.MigrationRunner;
+import com.mulesoft.tools.migration.project.model.pom.PomModel;
 import com.mulesoft.tools.migration.project.model.pom.PomModel.PomModelBuilder;
 
 import com.google.gson.JsonElement;
@@ -31,10 +34,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 import junitx.framework.FileAssert;
 import org.apache.commons.io.FileUtils;
@@ -59,6 +62,10 @@ public abstract class AbstractEndToEndTestCase {
   protected static final String ONLY_MIGRATE = getProperty("mule.test.migratorOnly");
 
   private static final String RUNTIME_VERSION = ofNullable(getProperty("mule.version")).orElse("4.3.0");
+  public static final String MULE_TOOLS_VERSION_POM_PROPERTY = "mule.tools.version";
+  public static final String MULE_VERSION_POM_PROPERTY = "mule.version";
+  public static final String VERSION_PLACEHOLDER = "VERSION";
+  private static final Pattern VERSION_REGEX_MATCHER = Pattern.compile("[0-9]{1,2}\\.[0-9]{0,2}\\.[0-9]{0,2}.*");
 
   @ClassRule
   public static TemporaryFolder mmaBinary = new TemporaryFolder();
@@ -149,8 +156,14 @@ public abstract class AbstractEndToEndTestCase {
       MavenXpp3Writer mavenWriter = new MavenXpp3Writer();
       StringWriter expectedOutput = new StringWriter();
       StringWriter migratedOutput = new StringWriter();
-      mavenWriter.write(expectedOutput, new PomModelBuilder().withPom(expectedPath).build().getMavenModelCopy());
-      mavenWriter.write(migratedOutput, new PomModelBuilder().withPom(migratedPath).build().getMavenModelCopy());
+      PomModel expectedPomModel = new PomModelBuilder().withPom(expectedPath).build();
+      normalizePomVersions(expectedPomModel);
+      mavenWriter.write(expectedOutput, expectedPomModel.getMavenModelCopy());
+
+      PomModel migratedPomModel = new PomModelBuilder().withPom(migratedPath).build();
+      normalizePomVersions(migratedPomModel);
+      mavenWriter.write(migratedOutput, migratedPomModel.getMavenModelCopy());
+
       Diff d = DiffBuilder.compare(Input.fromString(expectedOutput.toString()))
           .withTest(Input.fromString(migratedOutput.toString()))
           .build();
@@ -158,6 +171,19 @@ public abstract class AbstractEndToEndTestCase {
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private void normalizePomVersions(PomModel pomModel) {
+    pomModel.getDependencies().forEach(dep -> {
+      if (dep.getVersion() != null && VERSION_REGEX_MATCHER.matcher(dep.getVersion()).matches()) {
+        dep.setVersion(VERSION_PLACEHOLDER);
+      }
+    });
+    pomModel.getPlugins().forEach(plugin -> {
+      if (plugin.getVersion() != null && VERSION_REGEX_MATCHER.matcher(plugin.getVersion()).matches()) {
+        plugin.setVersion(VERSION_PLACEHOLDER);
+      }
+    });
   }
 
   private void compareJson(Path expected, Path migratedPath) {
@@ -168,11 +194,27 @@ public abstract class AbstractEndToEndTestCase {
         normalizeFilePath(expectedJson);
         normalizeFilePath(actualJson);
       }
+
+      normalizeJsonReportVersions(actualJson.getAsJsonObject().get("connectorsMigrated").getAsJsonArray());
+      normalizeJsonReportVersions(expectedJson.getAsJsonObject().get("connectorsMigrated").getAsJsonArray());
+
       assertEquals(expectedJson, actualJson);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
+
+  private void normalizeJsonReportVersions(JsonArray elementArray) {
+    List<String> elementsToAdd = new ArrayList<>();
+    elementArray.forEach(jsonElement -> {
+      elementsToAdd.add(jsonElement.getAsString()
+          .replaceAll("^(.*):(" + VERSION_REGEX_MATCHER + ")$", "$1:" + VERSION_PLACEHOLDER));
+    });
+
+    IntStream.range(0, elementArray.size())
+        .forEach(index -> elementArray.set(index, new JsonPrimitive(elementsToAdd.get(index))));
+  }
+
 
   private void normalizeFilePath(JsonElement report) {
     String messagesKey = "detailedMessages";
