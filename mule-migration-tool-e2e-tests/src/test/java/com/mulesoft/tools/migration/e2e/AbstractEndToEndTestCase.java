@@ -120,7 +120,7 @@ public abstract class AbstractEndToEndTestCase {
     command.add("-muleVersion");
     command.add(RUNTIME_VERSION);
     command.add("-projectGAV");
-    command.add(":" + projectName.replaceAll(".*/", "") + ":");
+    command.add(":" + projectName.replaceAll(".*[/\\\\]", "") + ":");
     command.add("-jsonReport");
 
     return command;
@@ -171,7 +171,7 @@ public abstract class AbstractEndToEndTestCase {
           .build();
       assertFalse(d.toString(), d.hasDifferences());
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      fail(e.toString());
     }
   }
 
@@ -234,7 +234,7 @@ public abstract class AbstractEndToEndTestCase {
     }
   }
 
-  protected URI getResourceUri(String path) throws URISyntaxException {
+  protected static URI getResourceUri(String path) throws URISyntaxException {
     URL resource = AbstractEndToEndTestCase.class.getClassLoader().getResource(path);
     assertNotNull("project not found at " + path, resource);
     return resource.toURI();
