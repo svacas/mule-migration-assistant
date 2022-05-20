@@ -5,6 +5,7 @@
  */
 package com.mulesoft.tools.migration.project.model.appgraph;
 
+import com.mulesoft.tools.migration.project.model.applicationgraph.PropertiesMigrationContext;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -71,4 +72,23 @@ public class ApplicationGraph2 {
     // TODO report error if not found
     return flowRefTargets.get(flowName);
   }
+
+  public void startPropertiesContextPropagation() {
+    Map<FlowComponent2, Integer> visited = new HashMap<>();
+    for (MessageSource2 source : sources) {
+//      Map<String, PropertiesMigrationContext> propertiesMigrationContextMap = source.getPropertiesMigrationContextMap();
+      continuePropertiesContextPropagation(source.getFirstProcessor(), source, visited);
+      source.mergeTerminalPropertiesContext();
+    }
+  }
+
+//  private FlowComponent2 continuePropertiesContextPropagation(FlowComponent2 flowComponent, Map<String, PropertiesMigrationContext> parentPropertiesMigrationContext, Map<FlowComponent2, Integer> visited) {
+  private FlowComponent2 continuePropertiesContextPropagation(FlowComponent2 flowComponent, FlowComponent2 parent, Map<FlowComponent2, Integer> visited) {
+    FlowComponent2 current = flowComponent;
+    while (!(current instanceof TerminalComponent)) {
+      current = current.propagatePropertiesContext(parent, visited);
+    }
+    return current;
+  }
+
 }

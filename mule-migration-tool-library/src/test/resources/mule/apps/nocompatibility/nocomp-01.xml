@@ -20,12 +20,24 @@
             <http:response-builder reasonPhrase="everything works!"/>
         </http:listener>
         <set-property propertyName="http.status" value="202" />
-        <flow-ref name="flow"/>
+<!--        <set-variable variableName="http.status" value="" />-->
+        <flow-ref name="subflow"/>
         <set-property propertyName="http.reason" value="override value" />
+        <flow-ref name="subflow"/>
+        <set-property propertyName="customHeader" value="howdy" />
     </flow>
 
-    <flow name="flow">
-        <logger/>
+    <flow name="flow_http_3">
+        <http:listener config-ref="listenerConfig" path="${path}">
+            <http:response-builder reasonPhrase="everything works!"/>
+        </http:listener>
+        <set-property propertyName="http3.status" value="203" />
+        <flow-ref name="subflow"/>
+        <set-property propertyName="http3.reason" value="override value" />
+    </flow>
+
+    <flow name="subflow">
+        <set-property propertyName="subflow_prop" value="x" />
     </flow>
 
 </mule>

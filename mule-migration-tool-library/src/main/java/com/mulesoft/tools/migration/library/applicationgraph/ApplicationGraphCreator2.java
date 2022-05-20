@@ -71,7 +71,7 @@ public class ApplicationGraphCreator2 {
     applicationGraph.startSemanticFlowWiring();
 
     // PropertyContext propagation
-    // TODO
+    applicationGraph.startPropertiesContextPropagation();
 
     return applicationGraph;
   }
